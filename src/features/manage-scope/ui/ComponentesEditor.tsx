@@ -155,6 +155,9 @@ export function ComponentesEditor({
                       label=""
                       hideLabel
                       hideSteppers
+                      // Vacío significa «usa el tope del tipo». Sin esto Carbon
+                      // lo valida contra min={1} y pinta la fila en rojo.
+                      allowEmpty
                       min={1}
                       max={10}
                       placeholder="auto"
