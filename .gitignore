@@ -25,3 +25,6 @@ dist-ssr
 
 # secretos locales
 .env
+
+# salida generada por graphify (regenerable con: graphify update .)
+graphify-out/
