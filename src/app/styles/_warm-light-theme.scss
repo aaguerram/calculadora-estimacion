@@ -1,125 +1,204 @@
+@use 'sass:color';
 @use 'sass:map';
 @use '@carbon/react/scss/themes';
 
 ///
-/// Paleta "Warm Light": el tema claro cálido oficial del proyecto.
-/// Parte del tema `white` de Carbon y solo reemplaza tokens semánticos.
-/// NUNCA se escriben estos hex en un componente: se consumen vía tokens.
+/// Paleta "Warm Light" de la calculadora: tema claro cálido construido
+/// SOBRE LA MARCA PRODUBANCO.
+///
+/// - Todo color de marca, estado o gráfico sale del GDS de Produbanco
+///   (https://www.produbanco.com.ec/assets/plugins/GDS/ y /css/RichTextGDSColors.css).
+/// - Los neutros son una rampa cálida (hueso/arena) en lugar de los grises
+///   fríos de Carbon: es la parte "cálida clara" del encargo.
+/// - Los tintes suaves NO se escriben a mano: se calculan con `color.mix()`
+///   a partir de un color de marca, para que no exista ningún hex inventado.
+///
+/// Este es el ÚNICO archivo del repositorio donde puede aparecer un color
+/// literal. Lo verifica `npm run lint:marca`.
 ///
 
-// Neutros cálidos (crema / arena / cacao)
-$cream-05: #fffdfa;
-$cream-10: #fcf7f1;
-$cream-20: #f6ede3;
-$cream-30: #f1e4d6;
-$sand-40: #e6d5c2;
-$sand-50: #c9b49d;
-$cocoa-60: #8b7462;
-$cocoa-70: #6e5a4b;
-$cocoa-80: #4a3a30;
-$cocoa-90: #2c211b;
+// ─────────────────────────────────────────────────────────────────────
+// 1. Marca Produbanco — verde primario (GDS "Verde Primario")
+// ─────────────────────────────────────────────────────────────────────
+$pb-verde-100: #002a18;
+$pb-verde-80: #003f24;
+$pb-verde-70: #00693c; // color de marca
+$pb-verde-60: #338763;
+$pb-verde-40: #66a58a;
+$pb-verde-30: #99c3b1;
+$pb-verde-20: #cce1d8;
+$pb-verde-10: #e7f7ee;
 
-// Acento cálido (terracota) — cumple contraste AA sobre texto blanco
-$terracotta-50: #a8480f;
-$terracotta-60: #8c3b0c;
-$terracotta-70: #70300a;
+// Marca Produbanco — verde secundario / lima (GDS "Verde Secundario")
+$pb-lima-100: #2a4c10;
+$pb-lima-80: #549820;
+$pb-lima-70: #69be28;
+$pb-lima-60: #87cb53;
+$pb-lima-40: #a5d87e;
+$pb-lima-30: #c3e5a9;
+$pb-lima-20: #d4ecc1;
+$pb-lima-10: #eef7e6;
 
-// Soporte
-$support-error-warm: #b42318;
-$support-success-warm: #5f7a2e;
-$support-warning-warm: #d9820a;
-$support-info-warm: #1f6fb2;
+// Marca Produbanco — grises (GDS "Gris Oscuro" / "Gris Claro")
+$pb-gris-100: #1e1e1e;
+$pb-gris-90: #3f3f3f;
+$pb-gris-80: #5d5d5d;
+$pb-gris-70: #717171;
+$pb-gris-60: #9a9a9a;
+$pb-gris-40: #c4c4c4;
+$pb-gris-30: #d9d9d9;
+$pb-gris-20: #e9e9e9;
+$pb-gris-10: #f5f5f5;
+
+// Marca Produbanco — estados (GDS: inputs y mensajes)
+$pb-rojo: #c40000; // .Button-Error / .input-validation-error
+$pb-rojo-10: #ffe8e8; // .Button-Error:hover — unico tinte de error del GDS
+$pb-exito: #0f804f; // input valido
+
+// Marca Produbanco — familia "Graph": los cinco acentos de dato del GDS.
+// Cada uno trae su rampa oficial de cuatro pasos (80/70/40/20). Son los
+// colores con los que se dibujan series, tags y categorias: no se inventan
+// tonos intermedios, se usa el paso que toque.
+$pb-morado-80: #80379b;
+$pb-morado-70: #a069b4;
+$pb-morado-40: #bf9bcd;
+$pb-morado-20: #dfcde6;
+
+$pb-rosa-80: #ea5084;
+$pb-rosa-70: #ef7ca2;
+$pb-rosa-40: #f4a7c1;
+$pb-rosa-20: #fad3e0;
+
+$pb-turquesa-80: #00a6a0;
+$pb-turquesa-70: #40bcb8;
+$pb-turquesa-40: #80d2cf;
+$pb-turquesa-20: #bfe9e7;
+
+$pb-naranja-80: #e87300;
+$pb-naranja-70: #ee9740;
+$pb-naranja-40: #f4b880;
+$pb-naranja-20: #f9dcbf;
+
+$pb-azul-80: #0f4dbc;
+$pb-azul-70: #4b79cd;
+$pb-azul-40: #87a7dd;
+$pb-azul-20: #c3d2ee;
+
+// El aviso y la informacion del tema son el paso 80 de su acento.
+$pb-naranja: $pb-naranja-80;
+$pb-azul: $pb-azul-80;
+
+// ─────────────────────────────────────────────────────────────────────
+// 2. Neutros cálidos (hueso / arena). La temperatura del tema vive aquí:
+//    sustituyen a los grises fríos de Carbon, no a los grises de marca,
+//    que se siguen usando para texto e iconos.
+// ─────────────────────────────────────────────────────────────────────
+$hueso-05: #fffdf8;
+$hueso-10: #faf7f0;
+$hueso-20: #f3efe5;
+$hueso-30: #ebe6d9;
+$arena-40: #ddd7c8;
+$arena-50: #c4bcab;
+
+// ─────────────────────────────────────────────────────────────────────
+// 3. Tintes derivados: mezclas de un color de marca sobre hueso.
+// ─────────────────────────────────────────────────────────────────────
+$tinte-error: color.mix($pb-rojo, $hueso-05, 8%);
+$tinte-exito: color.mix($pb-exito, $hueso-05, 10%);
+$tinte-aviso: color.mix($pb-naranja, $hueso-05, 10%);
+$tinte-info: color.mix($pb-azul, $hueso-05, 8%);
 
 $overrides: (
   // Fondos y superficies
-  background: $cream-10,
-  background-hover: rgba($cocoa-90, 0.06),
-  background-active: rgba($cocoa-90, 0.12),
-  background-selected: rgba($terracotta-50, 0.1),
-  background-selected-hover: rgba($terracotta-50, 0.16),
-  background-inverse: $cocoa-90,
-  background-brand: $terracotta-50,
+  background: $hueso-10,
+  background-hover: rgba($pb-gris-100, 0.06),
+  background-active: rgba($pb-gris-100, 0.12),
+  background-selected: $pb-verde-10,
+  background-selected-hover: $pb-verde-20,
+  background-inverse: $pb-verde-100,
+  background-brand: $pb-verde-70,
 
-  layer-01: $cream-20,
-  layer-02: $cream-05,
-  layer-03: $cream-30,
-  layer-hover-01: #f2e5d7,
-  layer-hover-02: #fff7eb,
-  layer-active-01: $sand-40,
-  layer-selected-01: $cream-30,
-  layer-accent-01: $cream-30,
+  layer-01: $hueso-20,
+  layer-02: $hueso-05,
+  layer-03: $hueso-30,
+  layer-hover-01: $hueso-30,
+  layer-hover-02: $hueso-10,
+  layer-active-01: $arena-40,
+  layer-selected-01: $pb-verde-10,
+  layer-accent-01: $hueso-30,
 
   // Campos de formulario
-  field-01: #f3e8db,
-  field-02: $cream-05,
-  field-hover-01: #efe1d0,
-  field-hover-02: #fff7eb,
+  field-01: $hueso-20,
+  field-02: $hueso-05,
+  field-hover-01: $hueso-30,
+  field-hover-02: $hueso-10,
 
   // Bordes
-  border-subtle-00: $sand-40,
-  border-subtle-01: $sand-40,
-  border-subtle-02: $sand-40,
-  border-strong-01: $sand-50,
-  border-interactive: $terracotta-50,
-  border-inverse: $cocoa-90,
+  border-subtle-00: $arena-40,
+  border-subtle-01: $arena-40,
+  border-subtle-02: $arena-40,
+  border-strong-01: $arena-50,
+  border-interactive: $pb-verde-70,
+  border-inverse: $pb-gris-100,
 
-  // Texto
-  text-primary: $cocoa-90,
-  text-secondary: $cocoa-70,
-  text-placeholder: $cocoa-60,
-  text-helper: $cocoa-60,
-  text-on-color: $cream-05,
-  text-error: $support-error-warm,
-  text-inverse: $cream-05,
+  // Texto: grises de marca sobre superficie cálida
+  text-primary: $pb-gris-100,
+  text-secondary: $pb-gris-80,
+  text-placeholder: $pb-gris-70,
+  text-helper: $pb-gris-80,
+  text-on-color: $hueso-05,
+  text-error: $pb-rojo,
+  text-inverse: $hueso-05,
 
   // Enlaces e interacción
-  link-primary: $terracotta-60,
-  link-primary-hover: $terracotta-70,
-  link-secondary: $terracotta-70,
-  interactive: $terracotta-50,
-  focus: $terracotta-60,
-  focus-inset: $cream-05,
-  highlight: rgba($terracotta-50, 0.12),
+  link-primary: $pb-verde-70,
+  link-primary-hover: $pb-verde-100,
+  link-secondary: $pb-verde-80,
+  interactive: $pb-verde-70,
+  focus: $pb-verde-70,
+  focus-inset: $hueso-05,
+  highlight: $pb-lima-20,
 
   // Botones
-  button-primary: $terracotta-50,
-  button-primary-hover: $terracotta-60,
-  button-primary-active: $terracotta-70,
-  button-secondary: $cocoa-80,
-  button-secondary-hover: $cocoa-90,
-  button-secondary-active: $cocoa-90,
-  button-tertiary: $terracotta-50,
-  button-tertiary-hover: $terracotta-60,
-  button-tertiary-active: $terracotta-70,
-  button-danger-primary: $support-error-warm,
-  button-danger-secondary: $support-error-warm,
+  button-primary: $pb-verde-70,
+  button-primary-hover: $pb-verde-80,
+  button-primary-active: $pb-verde-100,
+  button-secondary: $pb-gris-90,
+  button-secondary-hover: $pb-gris-100,
+  button-secondary-active: $pb-gris-100,
+  button-tertiary: $pb-verde-70,
+  button-tertiary-hover: $pb-verde-80,
+  button-tertiary-active: $pb-verde-100,
+  button-danger-primary: $pb-rojo,
+  button-danger-secondary: $pb-rojo,
 
   // Iconos
-  icon-primary: $cocoa-90,
-  icon-secondary: $cocoa-70,
-  icon-on-color: $cream-05,
-  icon-inverse: $cream-05,
+  icon-primary: $pb-gris-100,
+  icon-secondary: $pb-gris-80,
+  icon-on-color: $hueso-05,
+  icon-inverse: $hueso-05,
+  icon-interactive: $pb-verde-70,
 
   // Soporte
-  support-error: $support-error-warm,
-  support-success: $support-success-warm,
-  support-warning: $support-warning-warm,
-  support-info: $support-info-warm,
+  support-error: $pb-rojo,
+  support-success: $pb-exito,
+  support-warning: $pb-naranja,
+  support-info: $pb-azul,
 
-  // Deshabilitado: Carbon los deja en gris frio (#c6c6c6, rgba(22,22,22,.25)) y
-  // desentonan sobre la paleta calida. Se rehacen con el mismo cacao del texto.
-  text-disabled: rgba($cocoa-90, 0.3),
-  icon-disabled: rgba($cocoa-90, 0.3),
-  border-disabled: $sand-40,
-  text-on-color-disabled: rgba($cocoa-90, 0.42),
-  icon-on-color-disabled: rgba($cocoa-90, 0.42),
-  layer-selected-disabled: $sand-50,
+  // Deshabilitado: Carbon lo deja en gris frio (#c6c6c6) y desentona sobre
+  // la superficie calida. Se rehace con el gris 100 de marca y con arena.
+  text-disabled: rgba($pb-gris-100, 0.3),
+  icon-disabled: rgba($pb-gris-100, 0.3),
+  border-disabled: $arena-40,
+  text-on-color-disabled: rgba($pb-gris-100, 0.42),
+  icon-on-color-disabled: rgba($pb-gris-100, 0.42),
+  layer-selected-disabled: $arena-50,
 
   // Otros
-  overlay: rgba($cocoa-90, 0.5),
-  toggle-off: $sand-50,
-  skeleton-background: $cream-30,
-  skeleton-element: $sand-40
+  overlay: rgba($pb-verde-100, 0.5),
+  toggle-off: $pb-gris-60,
+  skeleton-background: $hueso-30,
+  skeleton-element: $arena-40
 );
 
 /// Tema final consumido por `@carbon/react/scss/theme`.
@@ -131,25 +210,43 @@ $warm-light: map.merge(themes.$white, $overrides);
 /// `$overrides`: hay que registrarlos con `theme.add-component-tokens()`.
 ///
 $component-token-overrides: (
-  button-primary: $terracotta-50,
-  button-primary-hover: $terracotta-60,
-  button-primary-active: $terracotta-70,
-  button-secondary: $cocoa-80,
-  button-secondary-hover: $cocoa-90,
-  button-secondary-active: $cocoa-90,
-  button-tertiary: $terracotta-50,
-  button-tertiary-hover: $terracotta-60,
-  button-tertiary-active: $terracotta-70,
-  button-danger-primary: $support-error-warm,
-  button-danger-secondary: $support-error-warm,
-  button-danger-hover: #8f1d14,
-  button-danger-active: #6e1610,
-  button-disabled: $sand-40,
-  button-separator: $sand-40,
-  text-disabled: rgba($cocoa-90, 0.3),
-  icon-disabled: rgba($cocoa-90, 0.3),
-  border-disabled: $sand-40,
-  text-on-color-disabled: rgba($cocoa-90, 0.42),
-  icon-on-color-disabled: rgba($cocoa-90, 0.42),
-  layer-selected-disabled: $sand-50
+  button-primary: $pb-verde-70,
+  button-primary-hover: $pb-verde-80,
+  button-primary-active: $pb-verde-100,
+  button-secondary: $pb-gris-90,
+  button-secondary-hover: $pb-gris-100,
+  button-secondary-active: $pb-gris-100,
+  button-tertiary: $pb-verde-70,
+  button-tertiary-hover: $pb-verde-80,
+  button-tertiary-active: $pb-verde-100,
+  button-danger-primary: $pb-rojo,
+  button-danger-secondary: $pb-rojo,
+  button-danger-hover: color.mix(black, $pb-rojo, 18%),
+  button-danger-active: color.mix(black, $pb-rojo, 32%),
+  button-disabled: $arena-40,
+  button-separator: $arena-40,
+  text-disabled: rgba($pb-gris-100, 0.3),
+  icon-disabled: rgba($pb-gris-100, 0.3),
+  border-disabled: $arena-40,
+  text-on-color-disabled: rgba($pb-gris-100, 0.42),
+  icon-on-color-disabled: rgba($pb-gris-100, 0.42),
+  layer-selected-disabled: $arena-50,
+
+  // Notificaciones: tintes de los colores de estado de Produbanco.
+  notification-background-error: $tinte-error,
+  notification-background-success: $tinte-exito,
+  notification-background-warning: $tinte-aviso,
+  notification-background-info: $tinte-info,
+
+  // Tags: familia de marca en lugar de los grises/azules de Carbon.
+  tag-background-green: $pb-verde-20,
+  tag-color-green: $pb-verde-100,
+  tag-hover-green: $pb-verde-30,
+  tag-background-gray: $hueso-30,
+  tag-color-gray: $pb-gris-100,
+  tag-hover-gray: $arena-40,
+  tag-background-red: $tinte-error,
+  tag-color-red: $pb-rojo,
+  tag-background-blue: $tinte-info,
+  tag-color-blue: $pb-azul
 );

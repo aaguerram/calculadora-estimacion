@@ -1,8 +1,8 @@
 # Memory — calculadora
 
-> Generated: 2026-09-15 08:31:26  
-> Total memories: **61**  
-> Breakdown: instruction: 15, fact: 8, decision: 11, goal: 1, preference: 1, learning: 25
+> Generated: 2026-09-15 11:29:50  
+> Total memories: **64**  
+> Breakdown: instruction: 17, fact: 8, decision: 12, goal: 1, preference: 1, learning: 25
 
 ---
 
@@ -18,9 +18,9 @@
 
 ### UI: IBM Carbon Design System con el tema claro cal...
 
-> UI: IBM Carbon Design System con el tema claro calido Warm Light. Ningun color, tamano ni tipografia se escribe a mano: todo sale de tokens. El tema vive solo en app/styles/_warm-light-theme.scss. Prohibido instalar MUI, Bootstrap, Tailwind o Chakra.
+> UI: IBM Carbon Design System con el tema claro calido del proyecto, cuya paleta es la de la marca Produbanco (ver la instruccion dedicada a la paleta). Ningun color, tamano ni tipografia se escribe a mano: todo sale de tokens. El tema vive solo en app/styles/_warm-light-theme.scss. Prohibido instalar MUI, Bootstrap, Tailwind o Chakra.
 
-*Confidence: 1.0 | Status: active | Created: 2026-09-15T10:31:46 | Tags: `carbon`, `ui`, `tema`, `tokens`*
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T10:31:46 | Tags: `carbon`, `ui`, `tema`, `tokens`, `produbanco`*
 
 ### Frontend React projects must follow Feature-Sliced...
 
@@ -39,6 +39,12 @@
 > Cross-imports entre entities solo por la notacion @x de FSD, con un archivo por consumidor (entities/a/@x/b.ts) y solo para tipos y vocabulario. Si hacen falta tres o mas entre las mismas dos entities, eran una sola. Alternativa preferida: bajar el contrato compartido a la entity que de verdad lo posee.
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T10:31:46 | Tags: `fsd`, `cross-import`, `arroba-x`, `entities`*
+
+### La paleta visual del proyecto calculadora es la de...
+
+> La paleta visual del proyecto calculadora es la de la marca Produbanco (GDS): verde primario #00693c (hover #003f24, activo #002a18), verde secundario lima #69be28 solo como acento y nunca como texto, grises de marca #1e1e1e/#5d5d5d/#717171 para texto e iconos, y estados #c40000 error, #0f804f exito, #e87300 aviso, #0f4dbc info. Los unicos colores que no son de marca son los neutros calidos hueso/arena (#fffdf8, #faf7f0, #f3efe5, #ebe6d9, #ddd7c8, #c4bcab) que dan al tema Carbon su caracter claro y calido. Ningun color se inventa: un tono intermedio se obtiene con color.mix() desde un color de marca. Toda la paleta vive solo en src/app/styles/_warm-light-theme.scss y se verifica con 'npm run lint:marca' dentro de 'npm run check'. La tipografia sigue siendo IBM Plex Sans de Carbon: la marca entra por el color, no por la fuente.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T16:25:27 | Tags: `produbanco`, `marca`, `paleta`, `carbon`, `tokens`*
 
 ### La base de la aplicacion queda SIEMPRE sin datos s...
 
@@ -81,6 +87,12 @@
 > Un parser de importacion debe ser puro y total: nunca lanzar, devolver lo cargable y el motivo de cada rechazo por fila y campo. Y el formulario de alta unitaria debe usar el MISMO parser que la importacion masiva, para que no existan dos definiciones de valido que puedan divergir.
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T13:21:43 | Tags: `importacion`, `validacion`, `diseno`*
+
+### Ante un fallo de conexion reportado por el usuario...
+
+> Ante un fallo de conexion reportado por el usuario, ejecutar npm run diagnostico antes de tocar codigo: revisa token y caducidad, PostgREST directo, servidor web, proxy del mismo origen y permisos por tabla, y dice que comando arregla cada fallo.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T14:44:21 | Tags: `diagnostico`, `depuracion`, `conexion`*
 
 ### Probar la API con curl NO sustituye a probar la in...
 
@@ -171,6 +183,12 @@
 > Public software effort datasets (PROMISE, SiP, Desharnais, China) live in datasets/raw and load into the Postgres 'benchmark' schema via npm run benchmark:cargar; they bound ranges and validate method but must never set the model coefficients, because productivity spans 6.3 to 23.7 hours per function point across organizations.
 
 *Confidence: 1.0 | Status: expired | Created: 2026-09-15T05:24:40 | Tags: `benchmark`, `datasets`, `calibracion`, `postgres`*
+
+### El navegador debe llamar a la API por el MISMO ori...
+
+> El navegador debe llamar a la API por el MISMO origen (/api con proxy de Vite en desarrollo y nginx en produccion), nunca a una URL absoluta con localhost: desde otro dispositivo localhost resuelve a ESE dispositivo y fallan todas las pantallas con datos sin explicacion. Node no tiene origen, asi que scripts y tests usan VITE_POSTGREST_URL_ABSOLUTA y fijan la base con fijarUrlBase().
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T14:44:20 | Tags: `api`, `mismo-origen`, `proxy`, `vite`, `cors`*
 
 ### Feature scope is described on three axes: categori...
 

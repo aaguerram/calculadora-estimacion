@@ -9,7 +9,7 @@
     "preview": "vite preview",
     "lint": "oxlint",
     "lint:fsd": "steiger ./src",
-    "check": "npm run lint && npm run lint:fsd && tsc -b && npm run test",
+    "check": "npm run lint && npm run lint:fsd && npm run lint:marca && tsc -b && npm run test",
     "token": "node scripts/dev-token.mjs",
     "stack:up": "npm run token:env && docker compose up -d --build",
     "stack:down": "docker compose down",
@@ -25,7 +25,8 @@
     "ui:revisar": "node scripts/revisar-ui.mjs",
     "benchmark:descargar": "node scripts/descargar-datasets.mjs",
     "benchmark": "npm run benchmark:descargar && npm run benchmark:cargar",
-    "diagnostico": "node scripts/diagnostico.mjs"
+    "diagnostico": "node scripts/diagnostico.mjs",
+    "lint:marca": "node scripts/verificar-marca.mjs"
   },
   "dependencies": {
     "@carbon/react": "^1.116.0",

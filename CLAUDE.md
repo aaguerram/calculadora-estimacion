@@ -6,7 +6,8 @@ Codex, Gemini CLI, etc.) y para cualquier persona que escriba código aquí.
 Hay dos reglas no negociables:
 
 1. **Toda la estructura sigue Feature-Sliced Design (FSD).**
-2. **Toda la UI se construye con IBM Carbon Design System y el tema claro cálido del proyecto.**
+2. **Toda la UI se construye con IBM Carbon Design System y el tema claro cálido
+   del proyecto, cuya paleta es la de la marca Produbanco.**
 
 Antes de crear, mover o renombrar un archivo, lee la skill correspondiente:
 
@@ -69,6 +70,35 @@ Referencia viva: `src/features/greet-visitor/`.
 - Al usar un componente Carbon nuevo, añade su partial en `src/app/styles/index.scss`.
   No importes `@carbon/react` completo (multiplica el CSS por 6).
 
+### 3.0 Regla de marca — Produbanco (vinculante)
+
+**La paleta del producto es la de Produbanco. No se inventa ningún color.**
+
+Todo color de marca, de estado o de gráfico sale del design system público de
+Produbanco (GDS). Los únicos colores que no son de marca son los neutros cálidos
+hueso/arena que dan al tema su carácter claro y cálido, y están enumerados en la
+skill. La tabla completa y su uso están en `.claude/skills/carbon-warm-ui/SKILL.md`.
+
+| Rol | Hex |
+|---|---|
+| Verde primario (marca) | `#00693c` — hover `#003f24`, activo `#002a18` |
+| Verde secundario (lima, solo acento) | `#69be28` |
+| Texto / iconos | `#1e1e1e`, `#5d5d5d`, `#717171` |
+| Error · éxito · aviso · info | `#c40000` · `#0f804f` · `#e87300` · `#0f4dbc` |
+| Neutros cálidos (fondo, tarjeta, borde) | `#faf7f0`, `#f3efe5`, `#fffdf8`, `#ddd7c8` |
+
+Restricciones que se comprueban en cada `npm run check` con `npm run lint:marca`:
+
+1. Fuera de `src/app/styles/_warm-light-theme.scss` no puede haber ningún color
+   literal (hex, `rgb()`, `hsl()`) ni ninguna `font-family`.
+2. Dentro de ese archivo, cada hex debe pertenecer a la paleta aprobada.
+3. ¿Necesitas un tono intermedio? Se mezcla con `color.mix()` desde un color de
+   marca. **Nunca** se escribe un hex nuevo, ni siquiera "temporal".
+4. La tipografía sigue siendo IBM Plex Sans (la de Carbon). La marca entra por el
+   color, no por la fuente.
+
+Si el guard falla, la solución es cambiar el color — nunca relajar la regla.
+
 ## 3.bis Datos
 
 - Sin backend propio: **PostgREST** genera la API desde el esquema `estimacion`.
@@ -92,8 +122,9 @@ npm run dev        # servidor de desarrollo
 npm run build      # typecheck + build
 npm run lint       # oxlint
 npm run lint:fsd   # steiger: valida la arquitectura FSD
+npm run lint:marca # verifica que la paleta Produbanco se respeta
 npm run test       # vitest sobre el código puro de model/
-npm run check      # los cuatro, en orden
+npm run check      # los cinco, en orden
 
 npm run stack:up    # Postgres + PostgREST + Swagger + React en docker
 npm run stack:down  # parar
@@ -144,5 +175,6 @@ regla de negocio sin verificar.
 - [ ] Todo import externo al slice pasa por su `index.ts`.
 - [ ] La lógica nueva vive en un reducer/función pura, no en el JSX.
 - [ ] No hay colores, tamaños ni fuentes hardcodeados: solo tokens de Carbon.
+- [ ] Todo color nuevo del tema sale de la paleta Produbanco (`npm run lint:marca`).
 - [ ] La lógica pura nueva tiene tests junto al archivo.
 - [ ] `npm run check` pasa.
