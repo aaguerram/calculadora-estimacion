@@ -59,7 +59,9 @@ No se levanta Postgres local: PostgREST apunta directo al servidor corporativo.
 | `npm run token:env` | Lo escribe en `.env` como `VITE_POSTGREST_TOKEN` |
 | `npm run seed` | Carga el alcance de referencia en Postgres (idempotente) |
 | `npm run seed:historico` | Siembra 7 proyectos cerrados sintéticos para probar la calibración |
-| `npm run benchmark:cargar` | Carga 1 086 proyectos y 12 925 tareas reales públicas |
+| `npm run benchmark:descargar` | Baja los datasets públicos desde su origen |
+| `npm run benchmark:cargar` | Los carga en el esquema `benchmark` |
+| `npm run benchmark` | Los dos anteriores |
 | `npm run seed:all` | Los tres anteriores |
 | `npm run test:e2e` | Integración contra el stack real (exige `stack:up`) |
 | `npm run ui:revisar` | Humo sobre la interfaz en un navegador real (`-- --sucio` simula un token viejo) |
@@ -96,9 +98,14 @@ PostgREST trae todo el alcance en una petición.
 
 ## Datos de referencia reales
 
-`datasets/raw/` guarda 12 datasets públicos de estimación (PROMISE, SiP, Desharnais,
-China…), cargados en el esquema `benchmark`: **1 086 proyectos y 12 925 tareas**
-con esfuerzo real. Procedencia y licencia en
+12 datasets públicos de estimación (PROMISE, SiP, Desharnais, China…) que suman
+**1 086 proyectos y 12 925 tareas** con esfuerzo real. No se versionan aquí —no
+declaran licencia de redistribución—, se obtienen con un comando:
+
+```bash
+npm run benchmark   # los descarga y los carga en el esquema `benchmark`
+```
+ Procedencia y licencia en
 [`datasets/PROCEDENCIA.md`](./datasets/PROCEDENCIA.md); qué dicen, en
 [`datasets/HALLAZGOS.md`](./datasets/HALLAZGOS.md).
 

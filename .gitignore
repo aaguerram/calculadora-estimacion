@@ -28,3 +28,7 @@ dist-ssr
 
 # salida generada por graphify (regenerable con: graphify update .)
 graphify-out/
+
+# Datasets de terceros SIN licencia de redistribucion declarada.
+# Se obtienen con: npm run benchmark:descargar   (ver datasets/PROCEDENCIA.md)
+datasets/raw/
