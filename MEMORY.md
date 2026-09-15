@@ -1,8 +1,8 @@
 # Memory — calculadora
 
-> Generated: 2026-09-15 11:29:50  
-> Total memories: **64**  
-> Breakdown: instruction: 17, fact: 8, decision: 12, goal: 1, preference: 1, learning: 25
+> Generated: 2026-09-15 12:11:04  
+> Total memories: **66**  
+> Breakdown: instruction: 18, fact: 9, decision: 12, goal: 1, preference: 1, learning: 25
 
 ---
 
@@ -106,6 +106,12 @@
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T13:21:43 | Tags: `historico`, `mh-reales`, `overheads`, `calibracion`*
 
+### El MCP de Playwright registrado en ambito usuario ...
+
+> El MCP de Playwright registrado en ambito usuario espera firefox-1544 y falla con 'Browser firefox is not installed'; el proyecto calculadora trae firefox-1543 en ~/.cache/ms-playwright. Para verificar la interfaz usar 'npm run ui:revisar' (scripts/revisar-ui.mjs, playwright local) en lugar del MCP, o un script propio importando playwright por ruta absoluta desde node_modules del proyecto.
+
+*Confidence: 0.8 | Status: active | Created: 2026-09-15T16:32:01 | Tags: `playwright`, `mcp`, `firefox`, `ui`, `entorno`*
+
 ### Antes de publicar un repositorio hay que escanear ...
 
 > Antes de publicar un repositorio hay que escanear el contenido versionado, no solo confiar en gitignore: buscar JWT, ghp_, github_pat_, claves privadas y AKIA, y comprobar el arbol del REMOTO despues del push. Y cuidado con encadenar grep a sed en la comprobacion: el || nunca dispara porque el estado de salida es el de sed.
@@ -123,6 +129,12 @@
 > El historico se carga desde la pantalla /historico: formulario uno a uno, importacion masiva en JSON con revision previa fila por fila, o archivando un proyecto de la herramienta. La guia con el formato exacto esta en docs/cargar-historico.md.
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T13:21:42 | Tags: `historico`, `carga`, `ui`, `guia`*
+
+### El GDS de Produbanco publica una familia 'Graph' d...
+
+> El GDS de Produbanco publica una familia 'Graph' de cinco acentos de dato y cada uno tiene rampa oficial de cuatro pasos 80/70/40/20: morado #80379b/#a069b4/#bf9bcd/#dfcde6, rosa #ea5084/#ef7ca2/#f4a7c1/#fad3e0, turquesa #00a6a0/#40bcb8/#80d2cf/#bfe9e7, naranja #e87300/#ee9740/#f4b880/#f9dcbf, azul rey #0f4dbc/#4b79cd/#87a7dd/#c3d2ee. Para un tono mas claro de una serie se coge el paso de la rampa, nunca se calcula. El aviso y la info del tema son el paso 80 de naranja y azul rey. La paleta se verifica bajando https://www.produbanco.com.ec/css/RichTextGDSColors.css y /assets/plugins/GDS/css/Main.min.css y agrupando los hex por clase CSS.
+
+*Confidence: 0.8 | Status: active | Created: 2026-09-15T16:51:08 | Tags: `produbanco`, `graph`, `paleta`, `graficos`, `gds`*
 
 ### Hay un MCP de Playwright registrado en ambito usua...
 
