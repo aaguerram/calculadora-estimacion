@@ -9,6 +9,17 @@ export {
 } from './model/calibrar'
 export type { ObservacionCalibracion } from './model/calibrar'
 
+export {
+  EJEMPLO_IMPORTACION,
+  alcanceUtilizable,
+  parsearHistoricos,
+} from './model/importar'
+export type {
+  ErrorImportacion,
+  FilaImportada,
+  ResultadoImportacion,
+} from './model/importar'
+
 export { ejecutarBacktest } from './model/backtest'
 export type { Backtest, Estimador, SalidaEstimador } from './model/backtest'
 

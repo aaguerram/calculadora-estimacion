@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router'
 import { AlcancePage } from '@/pages/alcance'
 import { CalibracionPage } from '@/pages/calibracion'
 import { FuentesPage } from '@/pages/fuentes'
+import { HistoricoPage } from '@/pages/historico'
 import { IngresarPage } from '@/pages/ingresar'
 import { ProyectosPage } from '@/pages/proyectos'
 
@@ -20,6 +21,7 @@ export const rutas = createBrowserRouter([
       { index: true, Component: ProyectosPage },
       { path: 'proyecto/:proyectoId', Component: AlcancePage },
       { path: 'ingresar', Component: IngresarPage },
+      { path: 'historico', Component: HistoricoPage },
       { path: 'calibracion', Component: CalibracionPage },
       { path: 'fuentes', Component: FuentesPage },
       { path: '*', Component: NoEncontrado },

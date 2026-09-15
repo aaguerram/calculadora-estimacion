@@ -1,0 +1,96 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/type';
+
+.bloque {
+  border-top: 1px solid $border-subtle-01;
+  margin-block-start: $spacing-07;
+  padding-block-start: $spacing-06;
+}
+
+.bloque:first-child {
+  border-top: 0;
+  margin-block-start: 0;
+  padding-block-start: 0;
+}
+
+.titulo {
+  @include type.type-style('heading-compact-01');
+  align-items: center;
+  color: $text-primary;
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-03;
+  margin-block-end: $spacing-04;
+}
+
+.nota {
+  @include type.type-style('body-01');
+  color: $text-secondary;
+  margin-block-end: $spacing-05;
+}
+
+.scroll {
+  overflow-x: auto;
+}
+
+.tabla {
+  @include type.type-style('body-compact-01');
+  border-collapse: collapse;
+  min-width: 42rem;
+  width: 100%;
+}
+
+.tabla th,
+.tabla td {
+  border-bottom: 1px solid $border-subtle-01;
+  padding: $spacing-03 $spacing-04;
+  text-align: right;
+}
+
+.tabla th:first-child,
+.tabla td:first-child {
+  text-align: left;
+}
+
+.tabla th {
+  @include type.type-style('label-01');
+  color: $text-secondary;
+}
+
+.formulario {
+  display: grid;
+  gap: $spacing-05;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+}
+
+.anchoTotal {
+  grid-column: 1 / -1;
+}
+
+.acciones {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-04;
+  margin-block-start: $spacing-05;
+}
+
+.errores {
+  @include type.type-style('body-compact-01');
+  background-color: $layer-01;
+  border-left: 3px solid $support-error;
+  margin-block-start: $spacing-05;
+  max-block-size: 14rem;
+  overflow-y: auto;
+  padding: $spacing-04 $spacing-05;
+}
+
+.errores li {
+  color: $text-primary;
+  margin-block-end: $spacing-02;
+}
+
+.clave {
+  @include type.type-style('code-01');
+  color: $text-secondary;
+}

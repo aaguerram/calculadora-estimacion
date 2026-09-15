@@ -156,6 +156,15 @@ que da el método estructural: así el motor conserva los streams y la ruta crí
 Cada feature muestra las dos cifras y su divergencia — si no se parecen, o sobran
 elementos marcados o la complejidad está mal puesta.
 
+## Cargar el histórico
+
+`/historico` permite cargar proyectos cerrados de tres formas: uno a uno con un
+formulario, varios de golpe pegando JSON (con revisión previa fila por fila), o
+archivando un proyecto que ya tengas en la herramienta.
+
+Guía completa, con el formato exacto y de dónde sacar cada cifra:
+[`docs/cargar-historico.md`](./docs/cargar-historico.md).
+
 ## Calibración con el histórico
 
 Los coeficientes de arranque son suposiciones. Lo que los convierte en algo
@@ -239,6 +248,7 @@ db/init/04-seed.sql      coeficientes del modelo de estimación
 | `/` | Proyectos — elegir o crear el que se va a estimar |
 | `/ingresar` | Alta guiada: todo un proyecto desde la web, paso a paso |
 | `/proyecto/:id` | Alcance (los tres ejes), estimación y cierre |
+| `/historico` | Cargar y revisar los proyectos cerrados que calibran |
 | `/calibracion` | Calibración con el histórico |
 | `/fuentes` | Las 11 fuentes de datos de referencia |
 
