@@ -136,6 +136,10 @@ Una feature se puede medir de dos formas, y **nunca se suman**:
 | **Estructural** | `base(tipo) × complejidad × stack` por cada componente que toca | Cuando la feature no tiene elementos marcados |
 | **Puntos función** | Los elementos del eje 3, pesados con IFPUG, × horas por punto | Cuando sí los tiene |
 
+En el editor de alcance cada feature muestra su conversión (`26 PF → 135 h`) y la
+cabecera el total, así que se ve el efecto de marcar un elemento antes de bajar
+a la estimación.
+
 El esfuerzo por puntos función se reparte entre los componentes en la proporción
 que da el método estructural: así el motor conserva los streams y la ruta crítica.
 Cada feature muestra las dos cifras y su divergencia — si no se parecen, o sobran

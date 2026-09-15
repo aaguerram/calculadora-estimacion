@@ -17,6 +17,8 @@ import styles from './ElementosPanel.module.scss'
 interface ElementosPanelProps {
   feature: FeatureAlcance
   catalogo: Catalogo
+  /** Horas de desarrollo por punto función: lo que conecta el eje 3 con el motor. */
+  horasPorPunto: number
   guardando: boolean
   mutar: (accion: () => Promise<void>) => Promise<void>
 }
@@ -30,6 +32,7 @@ interface ElementosPanelProps {
 export function ElementosPanel({
   feature,
   catalogo,
+  horasPorPunto,
   guardando,
   mutar,
 }: ElementosPanelProps) {
@@ -148,8 +151,16 @@ export function ElementosPanel({
       ))}
 
       <p className={styles.total}>
-        {feature.elementos.length} elemento(s) marcado(s) ·{' '}
-        <strong>{puntosTotales} puntos función</strong> sin ajustar
+        {feature.elementos.length} elemento(s) ·{' '}
+        <strong>{puntosTotales} puntos función</strong> × {horasPorPunto} h/PF ={' '}
+        <strong>{Math.round(puntosTotales * horasPorPunto)} h de desarrollo</strong>
+        {puntosTotales > 0 ? (
+          <>
+            {' '}
+            — esta feature pasa a medirse por puntos función en vez de por sus
+            componentes.
+          </>
+        ) : null}
       </p>
     </div>
   )

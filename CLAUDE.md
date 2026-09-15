@@ -133,6 +133,9 @@ regla de negocio sin verificar.
 - Probar la API por curl **no sustituye** a probar la interfaz. `npm run ui:revisar`
   abre las rutas en un navegador real: así se detectó que un token viejo en
   `localStorage` tapaba al del entorno y dejaba toda la app en 401.
+- Hay un **MCP de Playwright** registrado en ámbito usuario (`claude mcp get playwright`).
+  Sirve para conducir la interfaz sin escribir scripts: úsalo antes de dar por
+  buena cualquier pantalla.
 
 ## 5. Checklist antes de entregar código
 

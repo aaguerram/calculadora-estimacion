@@ -96,6 +96,7 @@ export function ScopeWorkbench({ proyectoId }: ScopeWorkbenchProps) {
         <FeaturesEditor
           alcance={alcance}
           catalogo={catalogo}
+          horasPorPunto={coeficientes.coeficientes.puntosFuncion.horasDevPorPunto}
           guardando={state.guardando}
           mutar={mutar}
         />

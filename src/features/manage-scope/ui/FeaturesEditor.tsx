@@ -22,6 +22,8 @@ import styles from './editor.module.scss'
 interface FeaturesEditorProps {
   alcance: AlcanceDeProyecto
   catalogo: Catalogo
+  /** Horas de desarrollo por punto función, del modelo calibrado. */
+  horasPorPunto: number
   guardando: boolean
   mutar: (accion: () => Promise<void>) => Promise<void>
 }
@@ -29,6 +31,7 @@ interface FeaturesEditorProps {
 export function FeaturesEditor({
   alcance,
   catalogo,
+  horasPorPunto,
   guardando,
   mutar,
 }: FeaturesEditorProps) {
@@ -71,7 +74,8 @@ export function FeaturesEditor({
         </Tag>
         {puntosTotales > 0 ? (
           <Tag type="green" size="sm">
-            {puntosTotales} puntos función
+            {puntosTotales} PF × {horasPorPunto} h ={' '}
+            {Math.round(puntosTotales * horasPorPunto)} h de desarrollo
           </Tag>
         ) : null}
         {sinClasificar > 0 ? (
@@ -95,7 +99,7 @@ export function FeaturesEditor({
                 <th>Categoría</th>
                 <th>Complejidad</th>
                 <th>Componentes que toca</th>
-                <th>Elementos</th>
+                <th>Elementos · medida</th>
                 <th />
               </tr>
             </thead>
@@ -214,7 +218,9 @@ export function FeaturesEditor({
                       type="button"
                       onClick={() => setAbierta(abierta === feature.id ? null : feature.id)}
                     >
-                      {feature.elementos.length} · {puntosDe(feature)} PF
+                      {puntosDe(feature) > 0
+                        ? `${puntosDe(feature)} PF → ${Math.round(puntosDe(feature) * horasPorPunto)} h`
+                        : 'sin elementos'}
                     </Button>
                   </td>
                   <td className={styles.acciones}>
@@ -235,6 +241,7 @@ export function FeaturesEditor({
                       <ElementosPanel
                         feature={feature}
                         catalogo={catalogo}
+                        horasPorPunto={horasPorPunto}
                         guardando={guardando}
                         mutar={mutar}
                       />
