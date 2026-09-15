@@ -1,8 +1,8 @@
 # Memory — calculadora
 
-> Generated: 2026-09-15 08:06:08  
-> Total memories: **53**  
-> Breakdown: instruction: 12, fact: 5, decision: 9, goal: 1, preference: 1, learning: 25
+> Generated: 2026-09-15 08:31:26  
+> Total memories: **61**  
+> Breakdown: instruction: 15, fact: 8, decision: 11, goal: 1, preference: 1, learning: 25
 
 ---
 
@@ -76,17 +76,41 @@
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T04:47:19 | Tags: `testing`, `vitest`, `e2e`, `docker`*
 
+### Un parser de importacion debe ser puro y total: nu...
+
+> Un parser de importacion debe ser puro y total: nunca lanzar, devolver lo cargable y el motivo de cada rechazo por fila y campo. Y el formulario de alta unitaria debe usar el MISMO parser que la importacion masiva, para que no existan dos definiciones de valido que puedan divergir.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T13:21:43 | Tags: `importacion`, `validacion`, `diseno`*
+
 ### Probar la API con curl NO sustituye a probar la in...
 
 > Probar la API con curl NO sustituye a probar la interfaz: los fallos que solo ocurren en el navegador (estado en localStorage, CORS, orden de carga) quedan invisibles. 'npm run ui:revisar' abre las rutas con Playwright y Firefox y reporta avisos de error, peticiones fallidas y errores de consola.
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T11:41:29 | Tags: `testing`, `ui`, `playwright`, `navegador`*
 
+### El error mas comun al cargar historico es medir mh...
+
+> El error mas comun al cargar historico es medir mhReales solo del desarrollo: el modelo aplica un x1.65 de overheads por su cuenta, asi que si la cifra real ya viene sin analisis, QA y gestion, la calibracion bajara los coeficientes hasta dejarlos mal.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T13:21:43 | Tags: `historico`, `mh-reales`, `overheads`, `calibracion`*
+
+### Antes de publicar un repositorio hay que escanear ...
+
+> Antes de publicar un repositorio hay que escanear el contenido versionado, no solo confiar en gitignore: buscar JWT, ghp_, github_pat_, claves privadas y AKIA, y comprobar el arbol del REMOTO despues del push. Y cuidado con encadenar grep a sed en la comprobacion: el || nunca dispara porque el estado de salida es el de sed.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T13:31:22 | Tags: `seguridad`, `publicacion`, `git`, `verificacion`*
+
 ---
 
 ## Facts
 
 *Verified information, project status, and established truths.*
+
+### El historico se carga desde la pantalla /historico...
+
+> El historico se carga desde la pantalla /historico: formulario uno a uno, importacion masiva en JSON con revision previa fila por fila, o archivando un proyecto de la herramienta. La guia con el formato exacto esta en docs/cargar-historico.md.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T13:21:42 | Tags: `historico`, `carga`, `ui`, `guia`*
 
 ### Hay un MCP de Playwright registrado en ambito usua...
 
@@ -99,6 +123,18 @@
 > Local docker ports 3000, 8080 and 5432 are already taken on this machine; the calculadora stack runs PostgREST on 3001, Swagger UI on 8081 and Postgres on 5432 via the compose port variables in .env.
 
 *Confidence: 0.9 | Status: expired | Created: 2026-09-15T04:12:18 | Tags: `docker`, `puertos`, `entorno-local`, `calculadora`*
+
+### El repositorio publico del proyecto es https://git...
+
+> El repositorio publico del proyecto es https://github.com/aaguerram/calculadora-estimacion, rama main. Se creo con gh repo create y git usa el helper de credenciales de gh (gh auth setup-git).
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T13:31:21 | Tags: `git`, `github`, `repositorio`*
+
+### Los datos viven en dos sitios distintos: datasets/...
+
+> Los datos viven en dos sitios distintos: datasets/raw mas el esquema benchmark son datasets publicos de REFERENCIA (1086 proyectos, 12925 tareas) y NO calibran; estimacion.proyecto_historico es el historico propio de la organizacion y es lo unico que calibra el modelo. Se llena con el boton Archivar para calibrar de la pantalla de alcance.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T13:11:45 | Tags: `datos`, `benchmark`, `historico`, `calibracion`*
 
 ### En este equipo los puertos 3000, 8080 y 5432 suele...
 
@@ -148,6 +184,12 @@
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T10:31:47 | Tags: `postgrest`, `postgres`, `on-prem`, `rls`, `seguridad`*
 
+### Los datasets de terceros NO se versionan: datasets...
+
+> Los datasets de terceros NO se versionan: datasets/raw esta en gitignore porque ninguno declara licencia de redistribucion y el repositorio es publico. Se obtienen con npm run benchmark:descargar, que los baja de las mismas URLs documentadas en datasets/PROCEDENCIA.md, y se verifico que bajan identicos bit a bit.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T13:31:22 | Tags: `licencias`, `datasets`, `repositorio`, `publico`*
+
 ### El esquema 'benchmark' guarda 1086 proyectos y 129...
 
 > El esquema 'benchmark' guarda 1086 proyectos y 12925 tareas de datasets publicos (PROMISE, SiP, Desharnais, China). Sirve para acotar rangos y validar el metodo, NUNCA para fijar coeficientes del modelo. Se consulta con la cabecera Accept-Profile: benchmark.
@@ -171,6 +213,12 @@
 > El alcance se describe en tres ejes: categoria_feature (que es), tipo de componente (donde vive) y elemento_feature (de que esta hecha, seleccion multiple). Los elementos siguen la descomposicion IFPUG ISO/IEC 20926 (EI/EO/EQ/ILF/EIF) con sus pesos oficiales en puntos funcion; las horas salen del unico coeficiente calibrable pf.horas-por-punto.
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T10:31:48 | Tags: `taxonomia`, `ifpug`, `puntos-funcion`, `ejes`*
+
+### pf.horas-por-punto se calibra con el factor global...
+
+> pf.horas-por-punto se calibra con el factor global, no con los factores por tipo de componente, porque el esfuerzo medido por puntos funcion no pasa por base.<tipo>. Y solo se propone si al menos el 20 por ciento del historico usa puntos funcion: mover un coeficiente que el dato no ejercita seria inventar.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T13:11:45 | Tags: `calibracion`, `puntos-funcion`, `coeficientes`*
 
 ### Los puntos funcion y el metodo estructural miden L...
 
@@ -288,17 +336,17 @@
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T03:05:43 | Tags: `carbon-design`, `scss`, `theming`, `component-tokens`*
 
-### Monte Carlo over independent task estimates collap...
-
-> Monte Carlo over independent task estimates collapses variance via the central limit theorem and yields an unrealistically narrow P50-P90 band; a correlated common-risk factor (lognormal, sigma around 0.18) applied per simulation run is required for a credible confidence band.
-
-*Confidence: 0.95 | Status: active | Created: 2026-09-15T03:50:36 | Tags: `monte-carlo`, `estimacion`, `risk`, `statistics`*
-
 ### Una vista expuesta por PostgREST necesita WITH (se...
 
 > Una vista expuesta por PostgREST necesita WITH (security_invoker = true): por defecto corre como su dueno y se salta el RLS de las tablas base.
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T10:32:13 | Tags: `postgres`, `rls`, `vistas`*
+
+### Monte Carlo over independent task estimates collap...
+
+> Monte Carlo over independent task estimates collapses variance via the central limit theorem and yields an unrealistically narrow P50-P90 band; a correlated common-risk factor (lognormal, sigma around 0.18) applied per simulation run is required for a credible confidence band.
+
+*Confidence: 0.95 | Status: active | Created: 2026-09-15T03:50:36 | Tags: `monte-carlo`, `estimacion`, `risk`, `statistics`*
 
 ### Carbon rechaza contenido interactivo dentro de lab...
 
@@ -336,6 +384,12 @@
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T10:12:13 | Tags: `3gl`, `cobol`, `productividad`, `benchmark`*
 
+### El camino 1 de adopcion (capturar el alcance al ar...
+
+> El camino 1 de adopcion (capturar el alcance al arrancar el proyecto y archivarlo al cerrarlo) esta verificado de punta a punta por la interfaz: el proyecto se estima, Archivar para calibrar toma la estimacion vigente como mh_estimadas, y la fila aparece en Historico marcada como calibra.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T13:31:22 | Tags: `camino1`, `adopcion`, `archivar`, `verificacion`*
+
 ### PostgREST upsert with Prefer: resolution=merge-dup...
 
 > PostgREST upsert with Prefer: resolution=merge-duplicates validates the full INSERT tuple before resolving the conflict, so omitting a NOT NULL column fails with 23502 even when the row already exists; send the complete row or use PATCH instead.
@@ -354,17 +408,17 @@
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T05:03:54 | Tags: `calibracion`, `monte-carlo`, `convergencia`, `estimacion`*
 
+### Un proyecto cerrado sin alcance queda como REGISTR...
+
+> Un proyecto cerrado sin alcance queda como REGISTRO de la desviacion pero no recalibra nada: el backtest lo descarta porque no puede re-estimarlo. La interfaz lo marca por fila como calibra o solo registro.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T13:21:43 | Tags: `historico`, `calibracion`, `alcance`*
+
 ### Cuando la frontera coste-duracion es plana, elegir...
 
 > Cuando la frontera coste-duracion es plana, elegir el minimo coste es ruido: se recomienda el mas rapido dentro del 5 % del coste minimo. En el alcance de referencia eso cambio la respuesta de 9.5 personas y 16.8 meses a 13.5 personas y 11.8 meses al mismo coste.
 
 *Confidence: 0.95 | Status: active | Created: 2026-09-15T10:32:16 | Tags: `estimacion`, `frontera`, `equipo`*
-
-### Vitest configuration must live in its own vitest.c...
-
-> Vitest configuration must live in its own vitest.config.ts, not inside vite.config.ts: importing from 'vitest/config' in vite.config.ts makes the dev server container fail to boot because the runtime image has no vitest installed.
-
-*Confidence: 1.0 | Status: active | Created: 2026-09-15T04:31:44 | Tags: `vitest`, `vite`, `docker`, `configuracion`*
 
 ### En PostgreSQL un REVOKE por columna NO recorta un ...
 
@@ -372,23 +426,17 @@
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T10:32:13 | Tags: `postgres`, `grants`, `seguridad`*
 
+### Vitest configuration must live in its own vitest.c...
+
+> Vitest configuration must live in its own vitest.config.ts, not inside vite.config.ts: importing from 'vitest/config' in vite.config.ts makes the dev server container fail to boot because the runtime image has no vitest installed.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T04:31:44 | Tags: `vitest`, `vite`, `docker`, `configuracion`*
+
 ### The real limit to parallelizing a software project...
 
 > The real limit to parallelizing a software project is the number of components and the max useful devs per component (the critical-path stream), not the communication-channel formula: a pure n(n-1)/2 overhead model has its optimum at sqrt(2/gamma), independent of project size, which is wrong. Brooks's law emerges from a fixed-point loop where headcount raises coordination effort, which raises headcount.
 
 *Confidence: 0.95 | Status: active | Created: 2026-09-15T03:50:36 | Tags: `estimacion`, `brooks-law`, `team-sizing`, `modeling`*
-
-### Calibrating an estimation model must adjust every ...
-
-> Calibrating an estimation model must adjust every coefficient that feeds the measured effort, not just the base hours: bootstrap and integration costs were about half the total, so scaling base.* alone corrected only half the bias.
-
-*Confidence: 1.0 | Status: active | Created: 2026-09-15T05:03:54 | Tags: `calibracion`, `estimacion`, `coeficientes`, `modelado`*
-
-### Calibrar debe ajustar TODO lo que alimenta el esfu...
-
-> Calibrar debe ajustar TODO lo que alimenta el esfuerzo medido: escalar solo base.<tipo> corrigio la mitad del sesgo porque arranques e integraciones eran la otra mitad del total.
-
-*Confidence: 1.0 | Status: active | Created: 2026-09-15T10:32:14 | Tags: `calibracion`, `coeficientes`*
 
 ---
 
