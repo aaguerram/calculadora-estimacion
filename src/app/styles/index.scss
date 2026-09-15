@@ -1,0 +1,51 @@
+///
+/// Unico punto donde se configura y emite el sistema de diseno global.
+/// Ningun otro archivo debe emitir tokens de tema, @font-face ni estilos
+/// de componentes de Carbon.
+///
+@use 'warm-light-theme' as warm;
+
+// 1. Tema: paleta clara calida sobre la base `white` de Carbon.
+@use '@carbon/react/scss/theme' as theme with ($theme: warm.$warm-light);
+
+// 2. Tipografia: solo IBM Plex Sans (mono y serif no se usan).
+@use '@carbon/react/scss/fonts' with (
+  $fonts: (
+    IBM-Plex-Mono: false,
+    IBM-Plex-Serif: false,
+  )
+);
+
+// 3. Base del sistema de diseno.
+@use '@carbon/react/scss/reset';
+@use '@carbon/react/scss/type';
+@use '@carbon/react/scss/grid';
+
+// 4. Estilos por componente usado. Al incorporar un componente nuevo de
+//    Carbon, agrega aqui su partial: NO importes `@carbon/react` completo.
+@use '@carbon/react/scss/components/button';
+@use '@carbon/react/scss/components/form';
+@use '@carbon/react/scss/components/text-input';
+@use '@carbon/react/scss/components/radio-button';
+@use '@carbon/react/scss/components/checkbox';
+@use '@carbon/react/scss/components/number-input';
+@use '@carbon/react/scss/components/select';
+@use '@carbon/react/scss/components/tag';
+@use '@carbon/react/scss/components/notification';
+@use '@carbon/react/scss/components/loading';
+@use '@carbon/react/scss/components/structured-list';
+
+// 5. Component tokens (botones): deben registrarse DESPUES de importar los
+//    componentes, porque Carbon los emite al final del mixin `theme()`.
+@include theme.add-component-tokens(warm.$component-token-overrides);
+
+:root {
+  @include theme.theme();
+}
+
+html,
+body {
+  background-color: theme.$background;
+  color: theme.$text-primary;
+  min-height: 100vh;
+}

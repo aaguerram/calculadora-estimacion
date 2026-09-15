@@ -1,0 +1,94 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/type';
+
+.respuesta {
+  display: grid;
+  gap: $spacing-05;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+  margin-block-end: $spacing-06;
+}
+
+.dato {
+  background-color: $layer-02;
+  border: 1px solid $border-subtle-01;
+  border-radius: $spacing-02;
+  padding: $spacing-05;
+}
+
+.etiqueta {
+  @include type.type-style('label-01');
+  color: $text-secondary;
+  display: block;
+}
+
+.cifra {
+  @include type.type-style('heading-04');
+  color: $text-primary;
+  display: block;
+  margin-block-start: $spacing-02;
+}
+
+.unidad {
+  @include type.type-style('label-01');
+  color: $text-helper;
+}
+
+.seccion {
+  margin-block-start: $spacing-07;
+}
+
+.titulo {
+  @include type.type-style('heading-compact-01');
+  color: $text-primary;
+  margin-block-end: $spacing-04;
+}
+
+.tablaScroll {
+  overflow-x: auto;
+}
+
+.tabla {
+  @include type.type-style('body-compact-01');
+  border-collapse: collapse;
+  min-width: 34rem;
+  width: 100%;
+}
+
+.tabla th,
+.tabla td {
+  border-bottom: 1px solid $border-subtle-01;
+  padding: $spacing-03 $spacing-04;
+  text-align: right;
+}
+
+.tabla th:first-child,
+.tabla td:first-child {
+  text-align: left;
+}
+
+.tabla th {
+  @include type.type-style('label-01');
+  color: $text-secondary;
+}
+
+.destacada td {
+  background-color: $background-selected;
+  font-weight: 600;
+}
+
+.negativa td {
+  color: $text-helper;
+}
+
+.alertas {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-03;
+}
+
+.nota {
+  @include type.type-style('label-01');
+  color: $text-helper;
+  margin-block-start: $spacing-04;
+}

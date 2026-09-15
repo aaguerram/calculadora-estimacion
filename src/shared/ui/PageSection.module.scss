@@ -1,0 +1,22 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/type';
+
+.section {
+  background-color: $layer-01;
+  border: 1px solid $border-subtle-01;
+  border-radius: $spacing-02;
+  padding: $spacing-07;
+}
+
+.title {
+  @include type.type-style('heading-03');
+  color: $text-primary;
+  margin-block-end: $spacing-02;
+}
+
+.description {
+  @include type.type-style('body-01');
+  color: $text-secondary;
+  margin-block-end: $spacing-06;
+}

@@ -1,0 +1,58 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/type';
+
+.header {
+  background-color: $layer-02;
+  border-bottom: 1px solid $border-subtle-01;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.interior {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-05 $spacing-07;
+  margin: 0 auto;
+  max-width: 76rem;
+  padding: $spacing-05;
+}
+
+.marca {
+  @include type.type-style('heading-compact-02');
+  color: $text-primary;
+  text-decoration: none;
+}
+
+.marcaSufijo {
+  @include type.type-style('label-01');
+  color: $text-helper;
+  display: block;
+}
+
+.nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-02;
+}
+
+.enlace {
+  @include type.type-style('body-compact-01');
+  border-bottom: 2px solid transparent;
+  color: $text-secondary;
+  padding: $spacing-03 $spacing-04;
+  text-decoration: none;
+}
+
+.enlace:hover {
+  background-color: $background-hover;
+  color: $text-primary;
+}
+
+.activo {
+  border-bottom-color: $border-interactive;
+  color: $text-primary;
+  font-weight: 600;
+}

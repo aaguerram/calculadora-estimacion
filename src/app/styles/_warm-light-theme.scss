@@ -1,0 +1,140 @@
+@use 'sass:map';
+@use '@carbon/react/scss/themes';
+
+///
+/// Paleta "Warm Light": el tema claro cálido oficial del proyecto.
+/// Parte del tema `white` de Carbon y solo reemplaza tokens semánticos.
+/// NUNCA se escriben estos hex en un componente: se consumen vía tokens.
+///
+
+// Neutros cálidos (crema / arena / cacao)
+$cream-05: #fffdfa;
+$cream-10: #fcf7f1;
+$cream-20: #f6ede3;
+$cream-30: #f1e4d6;
+$sand-40: #e6d5c2;
+$sand-50: #c9b49d;
+$cocoa-60: #8b7462;
+$cocoa-70: #6e5a4b;
+$cocoa-80: #4a3a30;
+$cocoa-90: #2c211b;
+
+// Acento cálido (terracota) — cumple contraste AA sobre texto blanco
+$terracotta-50: #a8480f;
+$terracotta-60: #8c3b0c;
+$terracotta-70: #70300a;
+
+// Soporte
+$support-error-warm: #b42318;
+$support-success-warm: #5f7a2e;
+$support-warning-warm: #d9820a;
+$support-info-warm: #1f6fb2;
+
+$overrides: (
+  // Fondos y superficies
+  background: $cream-10,
+  background-hover: rgba($cocoa-90, 0.06),
+  background-active: rgba($cocoa-90, 0.12),
+  background-selected: rgba($terracotta-50, 0.1),
+  background-selected-hover: rgba($terracotta-50, 0.16),
+  background-inverse: $cocoa-90,
+  background-brand: $terracotta-50,
+
+  layer-01: $cream-20,
+  layer-02: $cream-05,
+  layer-03: $cream-30,
+  layer-hover-01: #f2e5d7,
+  layer-hover-02: #fff7eb,
+  layer-active-01: $sand-40,
+  layer-selected-01: $cream-30,
+  layer-accent-01: $cream-30,
+
+  // Campos de formulario
+  field-01: #f3e8db,
+  field-02: $cream-05,
+  field-hover-01: #efe1d0,
+  field-hover-02: #fff7eb,
+
+  // Bordes
+  border-subtle-00: $sand-40,
+  border-subtle-01: $sand-40,
+  border-subtle-02: $sand-40,
+  border-strong-01: $sand-50,
+  border-interactive: $terracotta-50,
+  border-inverse: $cocoa-90,
+
+  // Texto
+  text-primary: $cocoa-90,
+  text-secondary: $cocoa-70,
+  text-placeholder: $cocoa-60,
+  text-helper: $cocoa-60,
+  text-on-color: $cream-05,
+  text-error: $support-error-warm,
+  text-inverse: $cream-05,
+
+  // Enlaces e interacción
+  link-primary: $terracotta-60,
+  link-primary-hover: $terracotta-70,
+  link-secondary: $terracotta-70,
+  interactive: $terracotta-50,
+  focus: $terracotta-60,
+  focus-inset: $cream-05,
+  highlight: rgba($terracotta-50, 0.12),
+
+  // Botones
+  button-primary: $terracotta-50,
+  button-primary-hover: $terracotta-60,
+  button-primary-active: $terracotta-70,
+  button-secondary: $cocoa-80,
+  button-secondary-hover: $cocoa-90,
+  button-secondary-active: $cocoa-90,
+  button-tertiary: $terracotta-50,
+  button-tertiary-hover: $terracotta-60,
+  button-tertiary-active: $terracotta-70,
+  button-danger-primary: $support-error-warm,
+  button-danger-secondary: $support-error-warm,
+
+  // Iconos
+  icon-primary: $cocoa-90,
+  icon-secondary: $cocoa-70,
+  icon-on-color: $cream-05,
+  icon-inverse: $cream-05,
+
+  // Soporte
+  support-error: $support-error-warm,
+  support-success: $support-success-warm,
+  support-warning: $support-warning-warm,
+  support-info: $support-info-warm,
+
+  // Otros
+  overlay: rgba($cocoa-90, 0.5),
+  toggle-off: $sand-50,
+  skeleton-background: $cream-30,
+  skeleton-element: $sand-40
+);
+
+/// Tema final consumido por `@carbon/react/scss/theme`.
+$warm-light: map.merge(themes.$white, $overrides);
+
+///
+/// Component tokens de Carbon (botones, tags, notificaciones...).
+/// Carbon los emite DESPUES del tema, asi que no basta con ponerlos en
+/// `$overrides`: hay que registrarlos con `theme.add-component-tokens()`.
+///
+$component-token-overrides: (
+  button-primary: $terracotta-50,
+  button-primary-hover: $terracotta-60,
+  button-primary-active: $terracotta-70,
+  button-secondary: $cocoa-80,
+  button-secondary-hover: $cocoa-90,
+  button-secondary-active: $cocoa-90,
+  button-tertiary: $terracotta-50,
+  button-tertiary-hover: $terracotta-60,
+  button-tertiary-active: $terracotta-70,
+  button-danger-primary: $support-error-warm,
+  button-danger-secondary: $support-error-warm,
+  button-danger-hover: #8f1d14,
+  button-danger-active: #6e1610,
+  button-disabled: $sand-40,
+  button-separator: $sand-40
+);

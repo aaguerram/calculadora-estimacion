@@ -1,0 +1,20 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/type';
+
+.lista {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-04;
+}
+
+.vacio {
+  @include type.type-style('body-01');
+  color: $text-helper;
+}
+
+.cargando {
+  display: flex;
+  justify-content: center;
+  padding: $spacing-06;
+}

@@ -1,0 +1,20 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/type';
+
+.contenido {
+  margin: 0 auto;
+  max-width: 76rem;
+  padding: $spacing-08 $spacing-05 $spacing-10;
+}
+
+.noEncontrado {
+  @include type.type-style('body-01');
+  color: $text-secondary;
+}
+
+.titulo {
+  @include type.type-style('heading-05');
+  color: $text-primary;
+  margin-block-end: $spacing-04;
+}

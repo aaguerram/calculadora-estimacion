@@ -1,0 +1,85 @@
+##
+## Entorno local completo: Postgres + PostgREST + React.
+##
+##   docker compose up -d
+##   http://localhost:5173   React
+##   http://localhost:3000   API generada desde el esquema
+##   http://localhost:8080   Swagger UI sobre esa API
+##
+## Contra el Postgres corporativo on-prem:
+##   docker compose -f docker-compose.yml -f docker-compose.onprem.yml up -d
+##
+
+name: calculadora
+
+services:
+  db:
+    image: postgres:16-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-calculadora}
+      POSTGRES_USER: ${POSTGRES_USER:-postgres}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-postgres_dev}
+      AUTHENTICATOR_PASSWORD: ${AUTHENTICATOR_PASSWORD:-authenticator_dev}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      # Se ejecutan una sola vez, en orden alfabetico, con la base vacia.
+      - ./db/init:/docker-entrypoint-initdb.d:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-postgres} -d ${POSTGRES_DB:-calculadora}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  postgrest:
+    image: postgrest/postgrest:v12.2.3
+    restart: unless-stopped
+    environment:
+      PGRST_DB_URI: ${PGRST_DB_URI:-postgres://authenticator:authenticator_dev@db:5432/calculadora}
+      PGRST_DB_SCHEMAS: ${PGRST_DB_SCHEMAS:-estimacion}
+      PGRST_DB_ANON_ROLE: ${PGRST_DB_ANON_ROLE:-web_anon}
+      PGRST_JWT_SECRET: ${PGRST_JWT_SECRET:?define PGRST_JWT_SECRET en .env (minimo 32 caracteres)}
+      PGRST_OPENAPI_SERVER_PROXY_URI: http://localhost:${PGRST_PORT:-3000}
+      PGRST_DB_MAX_ROWS: 1000
+      PGRST_LOG_LEVEL: info
+    ports:
+      - "${PGRST_PORT:-3000}:3000"
+    depends_on:
+      db:
+        condition: service_healthy
+
+  swagger:
+    image: swaggerapi/swagger-ui:v5.17.14
+    restart: unless-stopped
+    environment:
+      API_URL: http://localhost:${PGRST_PORT:-3000}/
+    ports:
+      - "${SWAGGER_PORT:-8080}:8080"
+    depends_on:
+      - postgrest
+
+  web:
+    build:
+      context: .
+      target: dev
+    restart: unless-stopped
+    environment:
+      VITE_POSTGREST_URL: ${VITE_POSTGREST_URL:-http://localhost:3000}
+      # Solo desarrollo: `npm run token:env` lo regenera en .env antes de levantar.
+      VITE_POSTGREST_TOKEN: ${VITE_POSTGREST_TOKEN:-}
+    ports:
+      - "${WEB_PORT:-5173}:5173"
+    volumes:
+      - ./src:/app/src:ro
+      - ./index.html:/app/index.html:ro
+      - ./vite.config.ts:/app/vite.config.ts:ro
+      # Sin volumen para node_modules: se usa el de la imagen, que se reconstruye
+      # con el lockfile. Un volumen anonimo aqui sobrevive a los rebuilds y sirve
+      # dependencias viejas.
+    depends_on:
+      - postgrest
+
+volumes:
+  pgdata:

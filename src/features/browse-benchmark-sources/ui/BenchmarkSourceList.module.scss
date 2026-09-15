@@ -1,0 +1,48 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/type';
+
+.resumen {
+  display: grid;
+  gap: $spacing-05;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  margin-block-end: $spacing-07;
+}
+
+.dato {
+  background-color: $layer-01;
+  border: 1px solid $border-subtle-01;
+  border-radius: $spacing-02;
+  padding: $spacing-05;
+}
+
+.etiqueta {
+  @include type.type-style('label-01');
+  color: $text-secondary;
+  display: block;
+}
+
+.valor {
+  @include type.type-style('heading-04');
+  color: $text-primary;
+  display: block;
+  margin-block-start: $spacing-02;
+}
+
+.grupo {
+  @include type.type-style('heading-compact-01');
+  color: $text-primary;
+  margin-block: $spacing-06 $spacing-04;
+}
+
+.lista {
+  display: grid;
+  gap: $spacing-05;
+  grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+}
+
+.cargando {
+  display: flex;
+  justify-content: center;
+  padding: $spacing-07;
+}

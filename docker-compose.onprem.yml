@@ -1,0 +1,26 @@
+##
+## Override para apuntar al Postgres corporativo on-prem.
+##
+##   1. Ejecuta db/init/*.sql una sola vez contra esa base (ver README).
+##   2. Pon PGRST_DB_URI en .env con el usuario `authenticator` y su clave de boveda.
+##   3. docker compose -f docker-compose.yml -f docker-compose.onprem.yml up -d
+##
+## El servicio `db` se reduce a un contenedor inerte para no arrancar un Postgres local.
+##
+
+services:
+  db:
+    image: alpine:3.20
+    command: ["sh", "-c", "echo 'Postgres on-prem: contenedor local desactivado'; sleep infinity"]
+    environment: {}
+    ports: []
+    volumes: []
+    healthcheck:
+      test: ["CMD-SHELL", "true"]
+      interval: 5s
+      retries: 1
+
+  postgrest:
+    environment:
+      # Debe apuntar al host corporativo. Sin valor por defecto: falla si falta.
+      PGRST_DB_URI: ${PGRST_DB_URI:?define PGRST_DB_URI apuntando al Postgres on-prem}

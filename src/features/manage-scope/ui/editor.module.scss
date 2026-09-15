@@ -1,0 +1,144 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/type';
+
+.bloque {
+  margin-block-start: $spacing-06;
+}
+
+.titulo {
+  @include type.type-style('heading-compact-01');
+  align-items: center;
+  color: $text-primary;
+  display: flex;
+  gap: $spacing-03;
+  margin-block-end: $spacing-04;
+}
+
+.vacio {
+  @include type.type-style('body-01');
+  color: $text-helper;
+  margin-block-end: $spacing-05;
+}
+
+.scroll {
+  overflow-x: auto;
+}
+
+.tabla {
+  @include type.type-style('body-compact-01');
+  border-collapse: collapse;
+  min-width: 40rem;
+  width: 100%;
+}
+
+.tabla th,
+.tabla td {
+  border-bottom: 1px solid $border-subtle-01;
+  padding: $spacing-03 $spacing-04;
+  text-align: left;
+  vertical-align: middle;
+}
+
+.tabla th {
+  @include type.type-style('label-01');
+  color: $text-secondary;
+  white-space: nowrap;
+}
+
+.numero {
+  text-align: right;
+}
+
+.acciones {
+  text-align: right;
+  white-space: nowrap;
+}
+
+.altaForm {
+  align-items: flex-end;
+  background-color: $layer-01;
+  border: 1px solid $border-subtle-01;
+  border-radius: $spacing-02;
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-04;
+  margin-block-start: $spacing-05;
+  padding: $spacing-05;
+}
+
+.campo {
+  flex: 1 1 10rem;
+  min-width: 8rem;
+}
+
+.campoAncho {
+  flex: 2 1 16rem;
+}
+
+.casillas {
+  display: flex;
+  flex: 1 1 14rem;
+  flex-direction: column;
+  gap: $spacing-02;
+}
+
+.pares {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-03;
+}
+
+.par {
+  align-items: center;
+  border: 1px solid $border-subtle-01;
+  border-radius: $spacing-05;
+  display: flex;
+  gap: $spacing-02;
+  padding: $spacing-02 $spacing-03;
+}
+
+.parActivo {
+  background-color: $background-selected;
+  border-color: $border-interactive;
+}
+
+.parNombre {
+  @include type.type-style('label-01');
+  color: $text-primary;
+}
+
+.driver {
+  border-bottom: 1px solid $border-subtle-01;
+  padding-block: $spacing-04;
+}
+
+.driverCabecera {
+  align-items: baseline;
+  display: flex;
+  gap: $spacing-03;
+  justify-content: space-between;
+}
+
+.driverEtiqueta {
+  @include type.type-style('heading-compact-01');
+  color: $text-primary;
+}
+
+.driverAyuda {
+  @include type.type-style('label-01');
+  color: $text-helper;
+  display: block;
+  margin-block-end: $spacing-03;
+}
+
+.driverDelta {
+  @include type.type-style('code-01');
+  color: $text-secondary;
+}
+
+.factor {
+  @include type.type-style('body-compact-01');
+  color: $text-primary;
+  margin-block-start: $spacing-05;
+}

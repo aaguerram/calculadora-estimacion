@@ -1,0 +1,76 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/type';
+
+.panel {
+  background-color: $layer-01;
+  border: 1px solid $border-subtle-01;
+  border-radius: $spacing-02;
+  padding: $spacing-05;
+}
+
+.aviso {
+  @include type.type-style('body-01');
+  color: $text-helper;
+}
+
+.grupo {
+  @include type.type-style('label-01');
+  color: $text-secondary;
+  margin-block: $spacing-05 $spacing-03;
+}
+
+.grupo:first-of-type {
+  margin-block-start: 0;
+}
+
+.rejilla {
+  display: grid;
+  gap: $spacing-03;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+}
+
+.elemento {
+  border: 1px solid $border-subtle-01;
+  border-radius: $spacing-02;
+  padding: $spacing-04;
+}
+
+.elementoActivo {
+  background-color: $background-selected;
+  border-color: $border-interactive;
+}
+
+.ayuda {
+  @include type.type-style('label-01');
+  color: $text-helper;
+  display: block;
+  margin-block: $spacing-02 $spacing-03;
+}
+
+.controles {
+  align-items: flex-end;
+  display: flex;
+  gap: $spacing-03;
+}
+
+.control {
+  flex: 1 1 5rem;
+}
+
+.puntos {
+  @include type.type-style('label-01');
+  background-color: $layer-accent-01;
+  border-radius: $spacing-05;
+  color: $text-primary;
+  padding: $spacing-02 $spacing-03;
+  white-space: nowrap;
+}
+
+.total {
+  @include type.type-style('body-compact-01');
+  border-top: 1px solid $border-subtle-01;
+  color: $text-primary;
+  margin-block-start: $spacing-05;
+  padding-block-start: $spacing-04;
+}

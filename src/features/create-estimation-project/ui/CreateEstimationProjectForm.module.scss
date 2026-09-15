@@ -1,0 +1,25 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/type';
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-05;
+}
+
+.rejilla {
+  display: grid;
+  gap: $spacing-05;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+}
+
+.jornada {
+  @include type.type-style('label-01');
+  color: $text-secondary;
+}
+
+.acciones {
+  display: flex;
+  gap: $spacing-03;
+}

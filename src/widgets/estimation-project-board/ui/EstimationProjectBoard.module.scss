@@ -1,0 +1,20 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/type';
+
+.bloque + .bloque {
+  border-top: 1px solid $border-subtle-01;
+  margin-block-start: $spacing-06;
+  padding-block-start: $spacing-06;
+}
+
+.subtitulo {
+  @include type.type-style('heading-compact-01');
+  color: $text-primary;
+  margin-block-end: $spacing-04;
+}
+
+.desconectado {
+  @include type.type-style('body-01');
+  color: $text-helper;
+}

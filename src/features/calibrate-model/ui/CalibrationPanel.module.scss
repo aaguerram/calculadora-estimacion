@@ -1,0 +1,117 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/type';
+
+.metricas {
+  display: grid;
+  gap: $spacing-05;
+  grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr));
+}
+
+.metrica {
+  background-color: $layer-02;
+  border: 1px solid $border-subtle-01;
+  border-radius: $spacing-02;
+  padding: $spacing-05;
+}
+
+.etiqueta {
+  @include type.type-style('label-01');
+  color: $text-secondary;
+  display: block;
+}
+
+.valor {
+  @include type.type-style('heading-04');
+  display: block;
+  margin-block-start: $spacing-02;
+}
+
+.ok {
+  color: $support-success;
+}
+
+.mal {
+  color: $support-error;
+}
+
+.objetivo {
+  @include type.type-style('label-01');
+  color: $text-helper;
+}
+
+.seccion {
+  margin-block-start: $spacing-07;
+}
+
+.titulo {
+  @include type.type-style('heading-compact-01');
+  color: $text-primary;
+  margin-block-end: $spacing-04;
+}
+
+.scroll {
+  overflow-x: auto;
+}
+
+.tabla {
+  @include type.type-style('body-compact-01');
+  border-collapse: collapse;
+  min-width: 34rem;
+  width: 100%;
+}
+
+.tabla th,
+.tabla td {
+  border-bottom: 1px solid $border-subtle-01;
+  padding: $spacing-03 $spacing-04;
+  text-align: right;
+}
+
+.tabla th:first-child,
+.tabla td:first-child {
+  text-align: left;
+}
+
+.tabla th {
+  @include type.type-style('label-01');
+  color: $text-secondary;
+}
+
+.fuera td {
+  color: $support-error;
+}
+
+.comparativa {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-05;
+  margin-block-end: $spacing-05;
+}
+
+.flecha {
+  @include type.type-style('heading-03');
+  color: $text-helper;
+}
+
+.acciones {
+  align-items: center;
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-04;
+  margin-block-start: $spacing-06;
+}
+
+.nota {
+  @include type.type-style('label-01');
+  color: $text-helper;
+  margin-block-start: $spacing-04;
+}
+
+.avisos {
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-03;
+  margin-block-start: $spacing-05;
+}

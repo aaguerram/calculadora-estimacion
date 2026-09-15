@@ -1,0 +1,52 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/type';
+
+.card {
+  background-color: $layer-02;
+  border: 1px solid $border-subtle-01;
+  border-radius: $spacing-02;
+  padding: $spacing-06;
+}
+
+.cabecera {
+  align-items: baseline;
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-03;
+  justify-content: space-between;
+}
+
+.nombre {
+  @include type.type-style('heading-compact-02');
+  color: $text-primary;
+}
+
+.cifra {
+  @include type.type-style('heading-04');
+  color: $text-primary;
+}
+
+.unidad {
+  @include type.type-style('label-01');
+  color: $text-secondary;
+}
+
+.etiquetas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-02;
+  margin-block: $spacing-04;
+}
+
+.descripcion {
+  @include type.type-style('body-01');
+  color: $text-secondary;
+  margin-block-end: $spacing-04;
+}
+
+.enlace {
+  @include type.type-style('body-compact-01');
+  color: $link-primary;
+  overflow-wrap: anywhere;
+}

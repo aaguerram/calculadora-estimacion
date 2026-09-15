@@ -1,0 +1,26 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/type';
+
+.cargando {
+  display: flex;
+  justify-content: center;
+  padding: $spacing-07;
+}
+
+.aviso {
+  @include type.type-style('body-01');
+  color: $text-helper;
+}
+
+.separador {
+  border-top: 1px solid $border-subtle-01;
+  margin-block-start: $spacing-07;
+  padding-block-start: $spacing-06;
+}
+
+.subtitulo {
+  @include type.type-style('heading-03');
+  color: $text-primary;
+  margin-block-end: $spacing-05;
+}

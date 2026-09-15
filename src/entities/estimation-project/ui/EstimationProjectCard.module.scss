@@ -1,0 +1,41 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/type';
+
+.card {
+  background-color: $layer-02;
+  border: 1px solid $border-subtle-01;
+  border-radius: $spacing-02;
+  display: flex;
+  gap: $spacing-05;
+  justify-content: space-between;
+  padding: $spacing-05;
+}
+
+.nombre {
+  @include type.type-style('heading-compact-01');
+  color: $text-primary;
+}
+
+.cliente {
+  @include type.type-style('body-compact-01');
+  color: $text-secondary;
+}
+
+.meta {
+  @include type.type-style('label-01');
+  color: $text-helper;
+  margin-block-start: $spacing-02;
+}
+
+.lado {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  gap: $spacing-03;
+}
+
+.seleccionada {
+  border-color: $border-interactive;
+  box-shadow: inset 3px 0 0 0 $border-interactive;
+}

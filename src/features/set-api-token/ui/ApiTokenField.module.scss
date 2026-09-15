@@ -1,0 +1,47 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/type';
+
+.conectado {
+  align-items: center;
+  background-color: $layer-01;
+  border: 1px solid $border-subtle-01;
+  border-radius: $spacing-02;
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-03;
+  padding: $spacing-04 $spacing-05;
+}
+
+.punto {
+  background-color: $support-success;
+  border-radius: 50%;
+  block-size: $spacing-03;
+  flex: none;
+  inline-size: $spacing-03;
+}
+
+.estado {
+  @include type.type-style('body-compact-01');
+  color: $text-primary;
+}
+
+.detalle {
+  @include type.type-style('label-01');
+  color: $text-helper;
+}
+
+.espaciador {
+  flex: 1;
+}
+
+.fila {
+  align-items: flex-end;
+  display: flex;
+  flex-wrap: wrap;
+  gap: $spacing-03;
+}
+
+.campo {
+  flex: 1 1 18rem;
+}
