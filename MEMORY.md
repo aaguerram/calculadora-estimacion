@@ -1,8 +1,8 @@
 # Memory — calculadora
 
-> Generated: 2026-09-15 05:33:48  
-> Total memories: **48**  
-> Breakdown: instruction: 9, fact: 4, decision: 8, goal: 1, preference: 1, learning: 25
+> Generated: 2026-09-15 08:06:08  
+> Total memories: **53**  
+> Breakdown: instruction: 12, fact: 5, decision: 9, goal: 1, preference: 1, learning: 25
 
 ---
 
@@ -40,17 +40,17 @@
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T10:31:46 | Tags: `fsd`, `cross-import`, `arroba-x`, `entities`*
 
+### La base de la aplicacion queda SIEMPRE sin datos s...
+
+> La base de la aplicacion queda SIEMPRE sin datos sinteticos: proyecto, componente, feature, feature_componente, feature_elemento, integracion, driver, estimacion_corrida y proyecto_historico a cero. Lo unico que persiste es configuracion (modelo_coeficiente, categoria_feature, elemento_feature) y el esquema benchmark con datasets publicos reales.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T13:05:50 | Tags: `datos`, `limpieza`, `sinteticos`*
+
 ### Business logic belongs in pure MVI reducers inside...
 
 > Business logic belongs in pure MVI reducers inside a slice's model/ segment (State + Intent union + reducer function), with a single use-<slice>.ts hook bridging to React; UI components only render state and dispatch intents.
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T03:05:43 | Tags: `mvi`, `reducer`, `react-state`, `fsd`*
-
-### Pure model/ code in this project must have colocat...
-
-> Pure model/ code in this project must have colocated vitest tests (calcular-esfuerzo.ts -> calcular-esfuerzo.test.ts); randomness enters through a seeded RNG so the estimation engine is deterministic and auditable.
-
-*Confidence: 1.0 | Status: expired | Created: 2026-09-15T04:31:43 | Tags: `testing`, `vitest`, `fsd`, `determinismo`*
 
 ### Todo codigo puro de un segmento model/ lleva tests...
 
@@ -58,17 +58,41 @@
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T10:31:49 | Tags: `testing`, `vitest`, `determinismo`, `e2e`*
 
+### Pure model/ code in this project must have colocat...
+
+> Pure model/ code in this project must have colocated vitest tests (calcular-esfuerzo.ts -> calcular-esfuerzo.test.ts); randomness enters through a seeded RNG so the estimation engine is deterministic and auditable.
+
+*Confidence: 1.0 | Status: expired | Created: 2026-09-15T04:31:43 | Tags: `testing`, `vitest`, `fsd`, `determinismo`*
+
+### La base del proyecto NO debe contener datos sintet...
+
+> La base del proyecto NO debe contener datos sinteticos: los proyectos de ejemplo y el historico inventado se borraron porque el historico falso corrompe la calibracion. Los tests de integracion crean y borran sus propios datos, y benchmark queda porque son datasets publicos reales.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T11:24:35 | Tags: `datos`, `sinteticos`, `calibracion`, `limpieza`*
+
 ### Integration tests that need Docker and seeded data...
 
 > Integration tests that need Docker and seeded data are named *.e2e.test.ts with their own vitest.e2e.config.ts and run via npm run test:e2e; the default npm run check excludes them so it never depends on a running stack.
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T04:47:19 | Tags: `testing`, `vitest`, `e2e`, `docker`*
 
+### Probar la API con curl NO sustituye a probar la in...
+
+> Probar la API con curl NO sustituye a probar la interfaz: los fallos que solo ocurren en el navegador (estado en localStorage, CORS, orden de carga) quedan invisibles. 'npm run ui:revisar' abre las rutas con Playwright y Firefox y reporta avisos de error, peticiones fallidas y errores de consola.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T11:41:29 | Tags: `testing`, `ui`, `playwright`, `navegador`*
+
 ---
 
 ## Facts
 
 *Verified information, project status, and established truths.*
+
+### Hay un MCP de Playwright registrado en ambito usua...
+
+> Hay un MCP de Playwright registrado en ambito usuario (~/.claude.json, 'playwright' con --browser firefox --isolated). Sirve para conducir la interfaz por snapshot de accesibilidad sin escribir scripts ad-hoc, que es como se encontro el fallo del token que curl no detectaba.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T11:52:22 | Tags: `mcp`, `playwright`, `herramientas`, `ui`*
 
 ### Local docker ports 3000, 8080 and 5432 are already...
 
@@ -147,6 +171,12 @@
 > El alcance se describe en tres ejes: categoria_feature (que es), tipo de componente (donde vive) y elemento_feature (de que esta hecha, seleccion multiple). Los elementos siguen la descomposicion IFPUG ISO/IEC 20926 (EI/EO/EQ/ILF/EIF) con sus pesos oficiales en puntos funcion; las horas salen del unico coeficiente calibrable pf.horas-por-punto.
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T10:31:48 | Tags: `taxonomia`, `ifpug`, `puntos-funcion`, `ejes`*
+
+### Los puntos funcion y el metodo estructural miden L...
+
+> Los puntos funcion y el metodo estructural miden LO MISMO y nunca se suman. Si la feature tiene elementos marcados manda el metodo de puntos funcion (PF x horas-dev-por-punto) y su esfuerzo se reparte entre los componentes en la proporcion que da el metodo estructural, para conservar los streams y la ruta critica. Sumar ambos contaria el trabajo dos veces.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T11:24:35 | Tags: `puntos-funcion`, `motor`, `ifpug`, `medida`*
 
 ---
 
@@ -270,11 +300,35 @@
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T10:32:13 | Tags: `postgres`, `rls`, `vistas`*
 
+### Carbon rechaza contenido interactivo dentro de lab...
+
+> Carbon rechaza contenido interactivo dentro de labelText/label de sus campos (error explicito 'must have no interactive content'), porque un boton dentro de un <label> es HTML invalido y rompe el foco. Un toggle de ayuda va superpuesto junto al campo con un contenedor position relative, nunca dentro de la etiqueta.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T12:04:06 | Tags: `carbon`, `accesibilidad`, `labels`, `ui`*
+
 ### A PostgreSQL view exposed through PostgREST must b...
 
 > A PostgreSQL view exposed through PostgREST must be created WITH (security_invoker = true); by default a view runs as its owner and bypasses row level security on its base tables.
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T04:12:18 | Tags: `postgres`, `rls`, `views`, `security`, `postgrest`*
+
+### Un token JWT guardado en localStorage no debe tapa...
+
+> Un token JWT guardado en localStorage no debe tapar nunca al del entorno: si esta caducado o es ilegible se descarta, y ante un 401 el cliente lo tira y reintenta una vez con el del entorno. Sin eso, reiniciar el stack dejaba toda la interfaz en 401 sin explicacion.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T11:41:29 | Tags: `token`, `localstorage`, `401`, `recuperacion`*
+
+### La estimacion esta validada de punta a punta contr...
+
+> La estimacion esta validada de punta a punta contra un calculo independiente: un proyecto piloto de 4 componentes, 3 features, 1 integracion y 2 drivers adversos dio 26.8 MH, y el calculo a mano desde los coeficientes documentados (dev bruto 953.92 h, factor x1.48, nominal 1411.8 h) cuadra con un desvio del 0.5 % en la relacion P80/moda.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T13:05:50 | Tags: `validacion`, `estimacion`, `motor`, `e2e`*
+
+### Carbon NumberInput con un valor vacio necesita : s...
+
+> Carbon NumberInput con un valor vacio necesita la prop allowEmpty: sin ella valida el vacio contra min y marca el campo en rojo con el mensaje de rango. Paso en la columna Max. devs del editor de componentes, donde vacio significa "usa el tope del tipo".
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T13:05:51 | Tags: `carbon`, `numberinput`, `validacion`, `ui`*
 
 ### Measured within the Desharnais dataset (one compan...
 
@@ -287,6 +341,12 @@
 > PostgREST upsert with Prefer: resolution=merge-duplicates validates the full INSERT tuple before resolving the conflict, so omitting a NOT NULL column fails with 23502 even when the row already exists; send the complete row or use PATCH instead.
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T05:03:54 | Tags: `postgrest`, `upsert`, `not-null`, `postgres`*
+
+### El cliente postgrest debe leer el cuerpo como text...
+
+> El cliente postgrest debe leer el cuerpo como texto y parsear solo si no esta vacio: un POST con Prefer: return=minimal responde 201 con cuerpo VACIO y llamar a .json() a ciegas lanza SyntaxError, lo que rompia todas las altas del ABM en la interfaz. Probarlo por curl no detecta este fallo; hace falta test unitario del cliente.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T11:24:36 | Tags: `postgrest`, `cliente`, `bug`, `return-minimal`*
 
 ### Estimation-model calibration adjustments interact ...
 
@@ -329,36 +389,6 @@
 > Calibrar debe ajustar TODO lo que alimenta el esfuerzo medido: escalar solo base.<tipo> corrigio la mitad del sesgo porque arranques e integraciones eran la otra mitad del total.
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T10:32:14 | Tags: `calibracion`, `coeficientes`*
-
-### Monte Carlo sobre items independientes colapsa la ...
-
-> Monte Carlo sobre items independientes colapsa la varianza por el teorema central del limite y da una banda P50-P90 increiblemente estrecha. Hace falta un factor de riesgo comun lognormal (sigma ~0.18) aplicado por corrida.
-
-*Confidence: 1.0 | Status: active | Created: 2026-09-15T10:32:14 | Tags: `monte-carlo`, `riesgo`, `estadistica`*
-
-### La configuracion de vitest vive en vitest.config.t...
-
-> La configuracion de vitest vive en vitest.config.ts aparte: importar de 'vitest/config' dentro de vite.config.ts hace que el contenedor de desarrollo no arranque porque la imagen no lleva vitest. Y un volumen anonimo sobre /app/node_modules sobrevive a los rebuilds sirviendo dependencias viejas.
-
-*Confidence: 1.0 | Status: active | Created: 2026-09-15T10:32:16 | Tags: `vitest`, `docker`, `configuracion`*
-
-### In PostgreSQL a column-level REVOKE does not narro...
-
-> In PostgreSQL a column-level REVOKE does not narrow an existing table-level GRANT: to restrict writable columns you must REVOKE the table privilege first and then GRANT column by column. Otherwise PostgREST accepts the forbidden field with 201 and a trigger silently overwrites it.
-
-*Confidence: 1.0 | Status: active | Created: 2026-09-15T04:12:17 | Tags: `postgres`, `grants`, `security`, `postgrest`*
-
-### An anonymous docker volume mounted over /app/node_...
-
-> An anonymous docker volume mounted over /app/node_modules survives image rebuilds and keeps serving stale dependencies; when only source files are bind-mounted, drop that volume so the image's node_modules is used.
-
-*Confidence: 1.0 | Status: active | Created: 2026-09-15T04:31:44 | Tags: `docker`, `node-modules`, `volumenes`, `vite`*
-
-### Los ajustes de calibracion interactuan: subir hora...
-
-> Los ajustes de calibracion interactuan: subir horas base sube el esfuerzo pero estrechar el sigma del riesgo comun baja el percentil comprometido. Una sola pasada dejo -8 % de sesgo residual; refinando en dos rondas el MMRE bajo de 16.5 % a 3.1 % y el sesgo a +0.1 %.
-
-*Confidence: 1.0 | Status: active | Created: 2026-09-15T10:32:14 | Tags: `calibracion`, `convergencia`, `mmre`*
 
 ---
 

@@ -23,8 +23,12 @@ const historico = (
 
 /** Estimador de mentira: el motor real no hace falta para probar esta lógica. */
 const estimadorFijo =
-  (mesesHombre: number, buckets: Record<string, number> = { core: 100 }): Estimador =>
-  () => ({ mesesHombre, horasPorBucket: buckets })
+  (
+    mesesHombre: number,
+    buckets: Record<string, number> = { core: 100 },
+    fraccionPorPuntos?: number,
+  ): Estimador =>
+  () => ({ mesesHombre, horasPorBucket: buckets, fraccionPorPuntos })
 
 describe('ejecutarBacktest', () => {
   it('compara lo re-estimado con lo que costó de verdad', () => {
@@ -67,6 +71,19 @@ describe('ejecutarBacktest', () => {
     // |120 − 100| / 120: el MRE se divide por el REAL, no por el estimado.
     expect(antes.metricas.mmre).toBeCloseTo(20 / 120, 10)
     expect(despues.metricas.mmre).toBe(0)
+  })
+
+  it('promedia cuánto del histórico se midió por puntos función', () => {
+    const r = ejecutarBacktest(
+      [historico('a', 120), historico('b', 120)],
+      estimadorFijo(100, { core: 100 }, 0.5),
+    )
+    expect(r.fraccionPorPuntos).toBeCloseTo(0.5, 10)
+  })
+
+  it('sin esa información la fracción es 0: no se calibra lo que no se ejercita', () => {
+    const r = ejecutarBacktest([historico('a', 120)], estimadorFijo(100))
+    expect(r.fraccionPorPuntos).toBe(0)
   })
 
   it('sin histórico devuelve métricas vacías, no un error', () => {

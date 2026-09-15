@@ -175,6 +175,12 @@ defendible es medirlos contra proyectos cerrados:
 5. **Aplicar**: solo si el MMRE baja sobre el propio histórico y hay ≥ 3
    proyectos. Escribir coeficientes exige el rol `calibrador`.
 
+El backtest re-estima con el **catálogo de elementos**, así que las features que
+se archivaron con sus elementos marcados se vuelven a medir por puntos función,
+igual que en su día. Y `pf.horas-por-punto` entra en la propuesta — pero solo si
+al menos el 20 % del histórico usa puntos función: mover un coeficiente que el
+dato no ejercita sería inventar. La pantalla muestra esa cobertura.
+
 El test de integración lo verifica de punta a punta con un histórico de prueba
 que crea y borra él mismo (sesgo sembrado ×1.22):
 

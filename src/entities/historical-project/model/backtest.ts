@@ -6,12 +6,20 @@ import type { ProyectoHistorico, ResultadoBacktest } from './types'
 export interface SalidaEstimador {
   mesesHombre: number
   horasPorBucket: Record<string, number>
+  /**
+   * Fraccion de las features de ese proyecto medidas por puntos funcion (0..1).
+   * Sin esto no se sabe si el historico ejercita el coeficiente de PF, y
+   * calibrarlo seria mover un numero que el dato no respalda.
+   */
+  fraccionPorPuntos?: number
 }
 
 export type Estimador = (historico: ProyectoHistorico) => SalidaEstimador
 
 export interface Backtest extends ResultadoBacktest {
   observaciones: ObservacionCalibracion[]
+  /** Media de la fraccion medida por puntos funcion en los proyectos usables. */
+  fraccionPorPuntos: number
 }
 
 /**
@@ -30,6 +38,7 @@ export function ejecutarBacktest(
   const descartados: string[] = []
   const pares: Array<{ id: string; nombre: string; estimado: number; real: number }> = []
   const observaciones: ObservacionCalibracion[] = []
+  const fracciones: number[] = []
 
   for (const historico of historicos) {
     if (!historico.alcance) {
@@ -58,8 +67,20 @@ export function ejecutarBacktest(
       horasPorBucket: salida.horasPorBucket,
       ratio: historico.mhReales / salida.mesesHombre,
     })
+    fracciones.push(salida.fraccionPorPuntos ?? 0)
   }
 
   const errores = calcularErrores(pares)
-  return { metricas: calcularMetricas(errores), errores, descartados, observaciones }
+  const fraccionPorPuntos =
+    fracciones.length > 0
+      ? fracciones.reduce((a, b) => a + b, 0) / fracciones.length
+      : 0
+
+  return {
+    metricas: calcularMetricas(errores),
+    errores,
+    descartados,
+    observaciones,
+    fraccionPorPuntos,
+  }
 }

@@ -8,6 +8,7 @@
 //
 import { COEFICIENTES_POR_DEFECTO } from '@/entities/estimation-model'
 import type { CoeficientesModelo } from '@/entities/estimation-model'
+import { cargarCatalogo } from '@/entities/feature-catalog'
 import type { Catalogo } from '@/entities/feature-catalog'
 import {
   archivarProyecto,
@@ -24,7 +25,7 @@ import { fijarToken } from '@/shared/api'
 import { leerEnv } from '@/shared/config'
 import { afterAll, beforeAll, expect, it } from 'vitest'
 
-const CATALOGO_VACIO: Catalogo = { categorias: [], elementos: [] }
+let catalogo: Catalogo = { categorias: [], elementos: [] }
 const MARCA = 'e2e-calibracion'
 /** El modelo subestima un 22 %: es lo que la calibración tiene que recuperar. */
 const SESGO = 1.22
@@ -32,14 +33,12 @@ const SESGO = 1.22
 const estimadorCon =
   (coeficientes: CoeficientesModelo): Estimador =>
   (historico) => {
-    const e = ejecutarEstimacion(historico.alcance!, {
-      coeficientes,
-      catalogo: CATALOGO_VACIO,
-      iteraciones: 3000,
-    })
+    const e = ejecutarEstimacion(historico.alcance!, { coeficientes, catalogo, iteraciones: 3000 })
+    const medidas = e.esfuerzo.medidas
     return {
       mesesHombre: e.riesgo.totalMesesHombre,
       horasPorBucket: e.esfuerzo.horasPorTipo as Record<string, number>,
+      fraccionPorPuntos: medidas.length ? e.esfuerzo.featuresPorPuntos / medidas.length : 0,
     }
   }
 
@@ -52,9 +51,18 @@ function variantes(): Alcance[] {
       ...ALCANCE_DEMO,
       nombre: `${MARCA} ${nombre}`,
       componentes,
-      features: ALCANCE_DEMO.features.slice(0, nFeatures).map((f) => ({
+      // Se marcan elementos en la mitad de las features para que el historico
+      // ejercite de verdad la ruta de puntos funcion.
+      features: ALCANCE_DEMO.features.slice(0, nFeatures).map((f, i) => ({
         ...f,
         toca: f.toca.filter((t) => validos.has(t.componenteId)),
+        elementos:
+          i % 2 === 0
+            ? [
+                { elemento: 'pant.listado', cantidad: 2, complejidad: 'm' as const },
+                { elemento: 'dat.entidad', cantidad: 1, complejidad: 'm' as const },
+              ]
+            : [],
       })),
       integraciones: ALCANCE_DEMO.integraciones.filter((i) =>
         validos.has(i.componenteDuenioId),
@@ -75,12 +83,13 @@ const creados: string[] = []
 
 beforeAll(async () => {
   fijarToken(leerEnv('VITE_POSTGREST_TOKEN'))
+  catalogo = await cargarCatalogo()
 
   let i = 0
   for (const alcance of variantes()) {
     const estimado = ejecutarEstimacion(alcance, {
       coeficientes: COEFICIENTES_POR_DEFECTO,
-      catalogo: CATALOGO_VACIO,
+      catalogo,
       iteraciones: 4000,
     }).riesgo.totalMesesHombre
 
@@ -119,6 +128,7 @@ it('la calibración recupera el sesgo y baja el MMRE', async () => {
     COEFICIENTES_POR_DEFECTO,
     propuesta,
     (candidatos) => ejecutarBacktest(historicos, estimadorCon(candidatos)).errores,
+    antes.fraccionPorPuntos,
   )
   const despues = ejecutarBacktest(
     historicos,
@@ -127,6 +137,11 @@ it('la calibración recupera el sesgo y baja el MMRE', async () => {
 
   const pct = (v: number) => `${(v * 100).toFixed(1)} %`
   console.log(`proyectos: ${antes.metricas.n}  ·  refinamiento: ${rondas} ronda(s)`)
+  console.log(`cobertura de puntos función: ${(antes.fraccionPorPuntos * 100).toFixed(0)} %`)
+  const pfCambio = cambios.find((c) => c.clave === 'pf.horas-por-punto')
+  console.log(
+    `pf.horas-por-punto: ${pfCambio ? `${pfCambio.valorActual} -> ${pfCambio.valorPropuesto} (${pfCambio.confianza})` : 'NO PROPUESTO'}`,
+  )
   console.log(`MMRE   ${pct(antes.metricas.mmre)}  ->  ${pct(despues.metricas.mmre)}`)
   console.log(`sesgo  ${pct(antes.metricas.sesgo)}  ->  ${pct(despues.metricas.sesgo)}`)
   console.log(`factor global propuesto: x${propuesta.factorGlobal.toFixed(3)} (sembrado x${SESGO})`)
@@ -136,4 +151,8 @@ it('la calibración recupera el sesgo y baja el MMRE', async () => {
   expect(despues.metricas.mmre).toBeLessThan(antes.metricas.mmre)
   expect(convergio).toBe(true)
   expect(Math.abs(despues.metricas.sesgo)).toBeLessThan(0.03)
+
+  // Lo nuevo: el historico usa puntos funcion y la calibracion los corrige.
+  expect(antes.fraccionPorPuntos).toBeGreaterThan(0.2)
+  expect(cambios.some((c) => c.clave === 'pf.horas-por-punto')).toBe(true)
 }, 120000)

@@ -25,9 +25,11 @@ export function refinarCambios(
   coeficientes: CoeficientesModelo,
   propuestaInicial: PropuestaCalibracion,
   rehacerBacktest: (coeficientes: CoeficientesModelo) => readonly ErrorPorProyecto[],
+  /** Cuanto del historico se midio por puntos funcion (0..1). */
+  fraccionPorPuntos = 0,
 ): { cambios: CambioCoeficiente[]; rondas: number; convergio: boolean } {
   let propuesta = propuestaInicial
-  let cambios = construirCambios(coeficientes, propuesta)
+  let cambios = construirCambios(coeficientes, propuesta, fraccionPorPuntos)
 
   for (let ronda = 1; ronda <= RONDAS_MAXIMAS; ronda++) {
     if (cambios.length === 0) return { cambios, rondas: ronda - 1, convergio: true }
@@ -49,7 +51,7 @@ export function refinarCambios(
       // El sigma se vuelve a medir sobre los residuos ya corregidos de escala.
       sigmaComun: sigmaLogaritmica(ratios),
     }
-    cambios = construirCambios(coeficientes, propuesta)
+    cambios = construirCambios(coeficientes, propuesta, fraccionPorPuntos)
   }
 
   return { cambios, rondas: RONDAS_MAXIMAS, convergio: false }

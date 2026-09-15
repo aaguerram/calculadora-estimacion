@@ -3,6 +3,7 @@ import { useCallback } from 'react'
 import type { CoeficientesModelo } from '@/entities/estimation-model'
 import type { Estimador } from '@/entities/historical-project'
 import { CalibrationPanel, useCalibration } from '@/features/calibrate-model'
+import { useCatalogo } from '@/features/manage-scope'
 import { ejecutarEstimacion, useEstimation } from '@/features/run-estimation'
 import { ALCANCE_DEMO } from '@/features/run-estimation'
 import { PageSection } from '@/shared/ui'
@@ -17,22 +18,29 @@ import { PageSection } from '@/shared/ui'
 export function CalibrationBoard() {
   // Se cargan los coeficientes vigentes de Postgres; el alcance da igual aqui.
   const { coeficientes } = useEstimation(ALCANCE_DEMO)
+  // Sin el catalogo el backtest mediria TODO por el metodo estructural e
+  // ignoraria los puntos funcion capturados en la foto del alcance.
+  const { catalogo } = useCatalogo()
 
   const construirEstimador = useCallback(
     (coefs: CoeficientesModelo): Estimador =>
       (historico) => {
         const estimacion = ejecutarEstimacion(historico.alcance!, {
           coeficientes: coefs,
+          catalogo,
           // Menos iteraciones: el backtest reejecuta el motor por cada proyecto
           // y dos veces (antes y despues), y aqui interesa la media, no la cola.
           iteraciones: 3000,
         })
+        const medidas = estimacion.esfuerzo.medidas
         return {
           mesesHombre: estimacion.riesgo.totalMesesHombre,
           horasPorBucket: estimacion.esfuerzo.horasPorTipo as Record<string, number>,
+          fraccionPorPuntos:
+            medidas.length > 0 ? estimacion.esfuerzo.featuresPorPuntos / medidas.length : 0,
         }
       },
-    [],
+    [catalogo],
   )
 
   const calibracion = useCalibration(coeficientes.coeficientes, construirEstimador)

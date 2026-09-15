@@ -133,10 +133,14 @@ export function useCalibration(
   // Se refina iterando: los ajustes interactuan y una sola pasada deja sesgo.
   const { cambios, convergio } = useMemo(
     () =>
-      refinarCambios(coeficientes, propuesta, (candidatos) =>
-        ejecutarBacktest(state.historicos, construirEstimador(candidatos)).errores,
+      refinarCambios(
+        coeficientes,
+        propuesta,
+        (candidatos) =>
+          ejecutarBacktest(state.historicos, construirEstimador(candidatos)).errores,
+        antes.fraccionPorPuntos,
       ),
-    [coeficientes, propuesta, state.historicos, construirEstimador],
+    [coeficientes, propuesta, state.historicos, construirEstimador, antes.fraccionPorPuntos],
   )
 
   const despues = useMemo(

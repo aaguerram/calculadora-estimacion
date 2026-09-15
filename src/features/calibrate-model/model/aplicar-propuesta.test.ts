@@ -3,6 +3,7 @@ import type { PropuestaCalibracion } from '@/entities/historical-project'
 import { describe, expect, it } from 'vitest'
 
 import {
+  MINIMO_PARA_CALIBRAR_PF,
   aFilaCoeficiente,
   construirCambios,
   simularCambios,
@@ -140,5 +141,52 @@ describe('aFilaCoeficiente', () => {
     expect(fila.unidad).toBe('horas')
     expect(fila.descripcion).toContain('2026-09-15')
     expect(fila.descripcion).toContain('7 proyecto')
+  })
+})
+
+describe('calibración de las horas por punto función', () => {
+  it('NO la propone si el histórico no usa puntos función', () => {
+    // Escalar base.<tipo> no corrige nada medido por PF, pero moverlo sin dato
+    // que lo respalde sería inventar.
+    const cambios = construirCambios(COEFICIENTES_POR_DEFECTO, propuesta({ factorGlobal: 1.3 }), 0)
+    expect(cambios.some((c) => c.clave === 'pf.horas-por-punto')).toBe(false)
+  })
+
+  it('NO la propone por debajo del mínimo de cobertura', () => {
+    const cambios = construirCambios(
+      COEFICIENTES_POR_DEFECTO,
+      propuesta({ factorGlobal: 1.3 }),
+      MINIMO_PARA_CALIBRAR_PF - 0.01,
+    )
+    expect(cambios.some((c) => c.clave === 'pf.horas-por-punto')).toBe(false)
+  })
+
+  it('la escala con el factor global cuando el histórico sí la ejercita', () => {
+    const cambios = construirCambios(COEFICIENTES_POR_DEFECTO, propuesta({ factorGlobal: 1.3 }), 0.5)
+    const pf = cambios.find((c) => c.clave === 'pf.horas-por-punto')!
+    expect(pf.valorActual).toBe(5.2)
+    expect(pf.valorPropuesto).toBe(6.76) // 5.2 × 1.3
+    expect(pf.confianza).toBe('media')
+  })
+
+  it('con cobertura amplia la confianza sube a alta', () => {
+    const cambios = construirCambios(COEFICIENTES_POR_DEFECTO, propuesta({ factorGlobal: 1.3 }), 0.8)
+    expect(cambios.find((c) => c.clave === 'pf.horas-por-punto')?.confianza).toBe('alta')
+  })
+
+  it('no la toca si el factor global es despreciable', () => {
+    const cambios = construirCambios(COEFICIENTES_POR_DEFECTO, propuesta({ factorGlobal: 1.01 }), 1)
+    expect(cambios.some((c) => c.clave === 'pf.horas-por-punto')).toBe(false)
+  })
+
+  it('simularCambios la aplica sin tocar los coeficientes vigentes', () => {
+    const cambios = construirCambios(COEFICIENTES_POR_DEFECTO, propuesta({ factorGlobal: 1.3 }), 0.5)
+    const nuevos = simularCambios(COEFICIENTES_POR_DEFECTO, cambios)
+    expect(nuevos.puntosFuncion.horasDevPorPunto).toBe(6.76)
+    expect(COEFICIENTES_POR_DEFECTO.puntosFuncion.horasDevPorPunto).toBe(5.2)
+  })
+
+  it('su unidad es horas', () => {
+    expect(unidadDeCoeficiente('pf.horas-por-punto')).toBe('horas')
   })
 })

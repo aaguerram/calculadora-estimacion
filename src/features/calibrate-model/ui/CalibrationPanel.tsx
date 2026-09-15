@@ -1,6 +1,7 @@
 import { Button, InlineNotification, Loading, Tag } from '@carbon/react'
 
 import { UMBRALES, motivosDeNoApto } from '@/entities/historical-project'
+import { MINIMO_PARA_CALIBRAR_PF } from '../model/aplicar-propuesta'
 import type { MetricasCalidad } from '@/entities/historical-project'
 import { cx } from '@/shared/lib'
 
@@ -136,6 +137,23 @@ export function CalibrationPanel({ calibracion }: { calibracion: Calibracion }) 
             ))}
           </div>
         )}
+      </section>
+
+      <section className={styles.seccion}>
+        <h4 className={styles.titulo}>
+          Cobertura de puntos función{' '}
+          <Tag
+            type={antes.fraccionPorPuntos >= MINIMO_PARA_CALIBRAR_PF ? 'green' : 'warm-gray'}
+            size="sm"
+          >
+            {pct(antes.fraccionPorPuntos)} del histórico
+          </Tag>
+        </h4>
+        <p className={styles.nota}>
+          {antes.fraccionPorPuntos >= MINIMO_PARA_CALIBRAR_PF
+            ? 'Hay alcance suficiente medido por elementos, así que las horas por punto función entran en la calibración.'
+            : `Por debajo del ${pct(MINIMO_PARA_CALIBRAR_PF)} el histórico no ejercita los puntos función, así que ese coeficiente NO se toca: moverlo sería inventar. Marca los elementos de las features antes de archivar los proyectos.`}
+        </p>
       </section>
 
       <section className={styles.seccion}>
