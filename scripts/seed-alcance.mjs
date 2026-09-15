@@ -13,7 +13,7 @@ const leer = (clave) => {
   return linea ? linea.slice(clave.length + 1).trim() : undefined
 }
 
-const BASE = leer('VITE_POSTGREST_URL') ?? 'http://localhost:3000'
+const BASE = leer('VITE_POSTGREST_URL_ABSOLUTA') ?? 'http://localhost:3000'
 const TOKEN = leer('VITE_POSTGREST_TOKEN')
 if (!TOKEN) {
   console.error('Falta VITE_POSTGREST_TOKEN en .env. Ejecuta `npm run token:env`.')

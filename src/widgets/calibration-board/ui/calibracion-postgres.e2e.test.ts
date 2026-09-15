@@ -21,7 +21,7 @@ import type { Estimador } from '@/entities/historical-project'
 import type { Alcance } from '@/entities/project-scope'
 import { refinarCambios, simularCambios } from '@/features/calibrate-model'
 import { ALCANCE_DEMO, ejecutarEstimacion } from '@/features/run-estimation'
-import { fijarToken } from '@/shared/api'
+import { fijarToken, fijarUrlBase } from '@/shared/api'
 import { leerEnv } from '@/shared/config'
 import { afterAll, beforeAll, expect, it } from 'vitest'
 
@@ -82,6 +82,8 @@ function variantes(): Alcance[] {
 const creados: string[] = []
 
 beforeAll(async () => {
+  // En Node no hay origen: la base relativa `/api` no resuelve.
+  fijarUrlBase(leerEnv('VITE_POSTGREST_URL_ABSOLUTA'))
   fijarToken(leerEnv('VITE_POSTGREST_TOKEN'))
   catalogo = await cargarCatalogo()
 

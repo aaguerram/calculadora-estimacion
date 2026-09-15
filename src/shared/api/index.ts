@@ -1,4 +1,4 @@
-export { postgrest, ErrorPostgrest } from './postgrest'
+export { postgrest, ErrorPostgrest, fijarUrlBase, obtenerUrlBase } from './postgrest'
 export {
   descartarTokenDeSesion,
   esTokenUtilizable,

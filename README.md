@@ -27,6 +27,20 @@ autenticado: no hay que pegar nada a mano.
 | Swagger UI | http://localhost:8080 |
 | Postgres | localhost:5432 |
 
+### Si algo no conecta
+
+```bash
+npm run diagnostico
+```
+
+Revisa el token, PostgREST, el servidor web, el proxy y los permisos por tabla,
+y dice qué comando arregla cada fallo.
+
+La API se sirve **por el mismo origen** que la aplicación (`/api`), vía proxy de
+Vite en desarrollo y de nginx en producción. Así funciona se abra desde donde se
+abra —`localhost`, `127.0.0.1`, la IP de la máquina u otro equipo de la red— y no
+hay CORS de por medio.
+
 ### Solo el front
 
 ```bash
@@ -65,6 +79,7 @@ No se levanta Postgres local: PostgREST apunta directo al servidor corporativo.
 | `npm run seed:all` | Los tres anteriores |
 | `npm run test:e2e` | Integración contra el stack real (exige `stack:up`) |
 | `npm run ui:revisar` | Humo sobre la interfaz en un navegador real (`-- --sucio` simula un token viejo) |
+| `npm run diagnostico` | Comprueba la conexión de fuera hacia dentro y dice qué arreglar |
 
 ## Flujo de uso
 

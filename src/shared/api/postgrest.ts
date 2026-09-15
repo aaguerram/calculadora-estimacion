@@ -2,7 +2,22 @@ import { leerEnv } from '@/shared/config'
 
 import { descartarTokenDeSesion, obtenerToken } from './token-store'
 
-const BASE_URL: string = leerEnv('VITE_POSTGREST_URL') || 'http://localhost:3000'
+/**
+ * Base de la API. Relativa por defecto: la sirve el mismo origen que la
+ * aplicacion, via proxy de Vite en desarrollo y de nginx en produccion.
+ *
+ * Los scripts y los tests de integracion corren en Node, donde una ruta
+ * relativa no significa nada, asi que la fijan con `fijarUrlBase()`.
+ */
+let baseUrl: string = leerEnv('VITE_POSTGREST_URL') || '/api'
+
+export function fijarUrlBase(url: string): void {
+  baseUrl = url.replace(/\/$/, '')
+}
+
+export function obtenerUrlBase(): string {
+  return baseUrl
+}
 
 export class ErrorPostgrest extends Error {
   // Campos explicitos: `erasableSyntaxOnly` prohibe las propiedades de constructor.
@@ -55,7 +70,7 @@ async function peticion<T>(
     cabeceras[metodo === 'GET' ? 'Accept-Profile' : 'Content-Profile'] = perfil
   }
 
-  const respuesta = await fetch(`${BASE_URL}${ruta}`, {
+  const respuesta = await fetch(`${baseUrl}${ruta}`, {
     method: metodo,
     headers: cabeceras,
     body: cuerpo === undefined ? undefined : JSON.stringify(cuerpo),

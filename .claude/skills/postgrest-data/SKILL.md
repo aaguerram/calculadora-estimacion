@@ -98,6 +98,23 @@ Así, renombrar una columna toca un archivo y no toda la app.
 El estado de red va en el `model/` de un **feature** (reducer puro + hook que hace
 la llamada), nunca dentro del componente. Ver `features/browse-estimation-projects/`.
 
+## 5.ante La API va por el MISMO origen
+
+El navegador nunca llama a `http://localhost:3001` directamente. Llama a `/api`,
+que redirige Vite en desarrollo y nginx en producción.
+
+```
+VITE_POSTGREST_URL=/api                              ← navegador
+VITE_POSTGREST_URL_ABSOLUTA=http://localhost:3001    ← scripts y tests en Node
+```
+
+Una URL absoluta con `localhost` en el cliente falla en cuanto alguien abre la
+aplicación desde otro dispositivo: `localhost` resuelve a SU máquina, donde no hay
+nada escuchando. Y de paso desaparece el CORS.
+
+En Node no hay origen, así que los scripts y los `*.e2e.test.ts` fijan la base
+con `fijarUrlBase()` antes de la primera llamada.
+
 ## 5.bis Dos esquemas expuestos
 
 `PGRST_DB_SCHEMAS=estimacion,benchmark`. El **primero es el que manda**: sin

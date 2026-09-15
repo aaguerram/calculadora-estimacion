@@ -18,7 +18,7 @@ const leerEnv = (k) => {
   return l ? l.slice(k.length + 1).trim() : undefined
 }
 
-const BASE = leerEnv('VITE_POSTGREST_URL') ?? 'http://localhost:3000'
+const BASE = leerEnv('VITE_POSTGREST_URL_ABSOLUTA') ?? 'http://localhost:3000'
 const secreto = leerEnv('PGRST_JWT_SECRET')
 if (!secreto) {
   console.error('Falta PGRST_JWT_SECRET en .env')

@@ -20,7 +20,7 @@ import {
   vincularFeatureComponente,
 } from '@/entities/project-scope'
 import type { AlcanceDeProyecto } from '@/entities/project-scope'
-import { fijarToken } from '@/shared/api'
+import { fijarToken, fijarUrlBase } from '@/shared/api'
 import { leerEnv } from '@/shared/config'
 import { afterAll, beforeAll, expect, it } from 'vitest'
 
@@ -32,6 +32,8 @@ let catalogo: Catalogo
 let alcance: AlcanceDeProyecto | null = null
 
 beforeAll(async () => {
+  // En Node no hay origen: la base relativa `/api` no resuelve.
+  fijarUrlBase(leerEnv('VITE_POSTGREST_URL_ABSOLUTA'))
   fijarToken(leerEnv('VITE_POSTGREST_TOKEN'))
   catalogo = await cargarCatalogo()
 

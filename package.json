@@ -24,7 +24,8 @@
     "benchmark:cargar": "node scripts/cargar-benchmark.mjs",
     "ui:revisar": "node scripts/revisar-ui.mjs",
     "benchmark:descargar": "node scripts/descargar-datasets.mjs",
-    "benchmark": "npm run benchmark:descargar && npm run benchmark:cargar"
+    "benchmark": "npm run benchmark:descargar && npm run benchmark:cargar",
+    "diagnostico": "node scripts/diagnostico.mjs"
   },
   "dependencies": {
     "@carbon/react": "^1.116.0",
