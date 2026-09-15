@@ -61,7 +61,8 @@ No se levanta Postgres local: PostgREST apunta directo al servidor corporativo.
 | `npm run seed:historico` | Siembra 7 proyectos cerrados sintéticos para probar la calibración |
 | `npm run benchmark:cargar` | Carga 1 086 proyectos y 12 925 tareas reales públicas |
 | `npm run seed:all` | Los tres anteriores |
-| `npm run test:e2e` | Integración contra el stack real (exige `stack:up` + `seed`) |
+| `npm run test:e2e` | Integración contra el stack real (exige `stack:up`) |
+| `npm run ui:revisar` | Humo sobre la interfaz en un navegador real (`-- --sucio` simula un token viejo) |
 
 ## Flujo de uso
 
@@ -218,7 +219,6 @@ db/init/04-seed.sql      coeficientes del modelo de estimación
 | `/proyecto/:id` | Alcance (los tres ejes), estimación y cierre |
 | `/calibracion` | Calibración con el histórico |
 | `/fuentes` | Las 11 fuentes de datos de referencia |
-| `/demo` | El demo mínimo de FSD |
 
 ## Estructura
 

@@ -130,6 +130,9 @@ regla de negocio sin verificar.
 - Referencia: `src/features/run-estimation/model/`.
 - Los `*.e2e.test.ts` tocan la red y exigen Docker: van en `npm run test:e2e`,
   **nunca** en `npm run check`.
+- Probar la API por curl **no sustituye** a probar la interfaz. `npm run ui:revisar`
+  abre las rutas en un navegador real: así se detectó que un token viejo en
+  `localStorage` tapaba al del entorno y dejaba toda la app en 401.
 
 ## 5. Checklist antes de entregar código
 

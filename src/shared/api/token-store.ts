@@ -14,6 +14,26 @@ function tokenDeEntorno(): string {
   return leerEnv('VITE_POSTGREST_TOKEN').trim()
 }
 
+/**
+ * Un JWT sirve si se puede leer y no ha caducado.
+ *
+ * Sin esta comprobacion, un token viejo en localStorage TAPA al del entorno y la
+ * aplicacion entera responde 401 sin explicacion. Pasa en cuanto se reinicia el
+ * stack: la base se recrea, el token se regenera, y el navegador sigue mandando
+ * el anterior.
+ */
+export function esTokenUtilizable(token: string): boolean {
+  const partes = token.split('.')
+  if (partes.length !== 3) return false
+  try {
+    const carga = JSON.parse(atob(partes[1])) as { exp?: number }
+    if (typeof carga.exp !== 'number') return true
+    return carga.exp * 1000 > Date.now()
+  } catch {
+    return false
+  }
+}
+
 type Oyente = (token: string) => void
 const oyentes = new Set<Oyente>()
 
@@ -25,8 +45,23 @@ function leerAlmacenado(): string | null {
   }
 }
 
-// Lo que el usuario haya puesto a mano gana sobre el token del entorno.
-let token = leerAlmacenado() ?? tokenDeEntorno()
+function borrarAlmacenado(): void {
+  try {
+    localStorage.removeItem(CLAVE)
+  } catch {
+    /* modo privado */
+  }
+}
+
+function tokenInicial(): string {
+  const guardado = leerAlmacenado()
+  if (guardado && esTokenUtilizable(guardado)) return guardado
+  // Un token guardado inservible se tira: nunca debe tapar al del entorno.
+  if (guardado) borrarAlmacenado()
+  return tokenDeEntorno()
+}
+
+let token = tokenInicial()
 
 export function obtenerToken(): string {
   return token
@@ -40,15 +75,31 @@ export function tokenVieneDelEntorno(): boolean {
 
 export function fijarToken(valor: string): void {
   const limpio = valor.trim()
-  try {
-    if (limpio) localStorage.setItem(CLAVE, limpio)
-    else localStorage.removeItem(CLAVE)
-  } catch {
-    /* modo privado: el token vive solo en memoria */
+  if (limpio) {
+    try {
+      localStorage.setItem(CLAVE, limpio)
+    } catch {
+      /* modo privado: el token vive solo en memoria */
+    }
+  } else {
+    borrarAlmacenado()
   }
   // Al borrar la sesion se vuelve al token del entorno, si lo hay.
   token = limpio || tokenDeEntorno()
   oyentes.forEach((o) => o(token))
+}
+
+/**
+ * Descarta el token de sesion y vuelve al del entorno.
+ * Devuelve `true` si de verdad habia otro al que volver.
+ */
+export function descartarTokenDeSesion(): boolean {
+  const deEntorno = tokenDeEntorno()
+  if (leerAlmacenado() === null || deEntorno === '' || deEntorno === token) return false
+  borrarAlmacenado()
+  token = deEntorno
+  oyentes.forEach((o) => o(token))
+  return true
 }
 
 export function suscribirToken(oyente: Oyente): () => void {

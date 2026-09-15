@@ -21,7 +21,8 @@
     "seed": "node scripts/seed-alcance.mjs",
     "test:e2e": "vitest run --config vitest.e2e.config.ts",
     "seed:all": "npm run seed && npm run benchmark:cargar",
-    "benchmark:cargar": "node scripts/cargar-benchmark.mjs"
+    "benchmark:cargar": "node scripts/cargar-benchmark.mjs",
+    "ui:revisar": "node scripts/revisar-ui.mjs"
   },
   "dependencies": {
     "@carbon/react": "^1.116.0",
@@ -37,6 +38,7 @@
     "@vitejs/plugin-react": "^6.1.1",
     "@vitest/coverage-v8": "^5.0.0",
     "oxlint": "^1.81.0",
+    "playwright": "^1.63.0",
     "sass-embedded": "^1.104.1",
     "steiger": "^0.6.0",
     "tsx": "^4.23.13",

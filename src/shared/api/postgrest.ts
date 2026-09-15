@@ -1,6 +1,6 @@
 import { leerEnv } from '@/shared/config'
 
-import { obtenerToken } from './token-store'
+import { descartarTokenDeSesion, obtenerToken } from './token-store'
 
 const BASE_URL: string = leerEnv('VITE_POSTGREST_URL') || 'http://localhost:3000'
 
@@ -35,6 +35,14 @@ interface OpcionesPeticion {
  * `shared` no conoce el dominio: recibe una ruta y devuelve JSON.
  */
 export async function postgrest<T>(ruta: string, opciones: OpcionesPeticion = {}): Promise<T> {
+  return peticion<T>(ruta, opciones, true)
+}
+
+async function peticion<T>(
+  ruta: string,
+  opciones: OpcionesPeticion,
+  permitirReintento: boolean,
+): Promise<T> {
   const { metodo = 'GET', cuerpo, prefer, perfil, signal } = opciones
 
   const cabeceras: Record<string, string> = { Accept: 'application/json' }
@@ -53,6 +61,13 @@ export async function postgrest<T>(ruta: string, opciones: OpcionesPeticion = {}
     body: cuerpo === undefined ? undefined : JSON.stringify(cuerpo),
     signal,
   })
+
+  if (respuesta.status === 401 && permitirReintento && descartarTokenDeSesion()) {
+    // El token de sesion no vale (caducado, o firmado con un secreto ya muerto).
+    // Se tira y se reintenta UNA vez con el del entorno, en vez de dejar toda la
+    // aplicacion en 401 sin que se entienda por que.
+    return peticion<T>(ruta, opciones, false)
+  }
 
   if (!respuesta.ok) {
     let codigo: string | undefined

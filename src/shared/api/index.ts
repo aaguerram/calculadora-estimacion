@@ -1,7 +1,9 @@
 export { postgrest, ErrorPostgrest } from './postgrest'
 export {
-  obtenerToken,
+  descartarTokenDeSesion,
+  esTokenUtilizable,
   fijarToken,
+  obtenerToken,
   suscribirToken,
   tokenVieneDelEntorno,
 } from './token-store'

@@ -2,7 +2,6 @@ import { createBrowserRouter } from 'react-router'
 
 import { AlcancePage } from '@/pages/alcance'
 import { CalibracionPage } from '@/pages/calibracion'
-import { DemoPage } from '@/pages/demo'
 import { FuentesPage } from '@/pages/fuentes'
 import { ProyectosPage } from '@/pages/proyectos'
 
@@ -21,7 +20,6 @@ export const rutas = createBrowserRouter([
       { path: 'proyecto/:proyectoId', Component: AlcancePage },
       { path: 'calibracion', Component: CalibracionPage },
       { path: 'fuentes', Component: FuentesPage },
-      { path: 'demo', Component: DemoPage },
       { path: '*', Component: NoEncontrado },
     ],
   },

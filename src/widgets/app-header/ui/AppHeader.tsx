@@ -9,7 +9,6 @@ const SECCIONES = [
   { a: '/', texto: 'Proyectos', exacto: true },
   { a: '/calibracion', texto: 'Calibración', exacto: false },
   { a: '/fuentes', texto: 'Fuentes', exacto: false },
-  { a: '/demo', texto: 'Demo FSD', exacto: false },
 ]
 
 /** Cabecera de navegación. Único sitio donde se declara el menú. */
