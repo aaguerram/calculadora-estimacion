@@ -106,6 +106,15 @@ $overrides: (
   support-warning: $support-warning-warm,
   support-info: $support-info-warm,
 
+  // Deshabilitado: Carbon los deja en gris frio (#c6c6c6, rgba(22,22,22,.25)) y
+  // desentonan sobre la paleta calida. Se rehacen con el mismo cacao del texto.
+  text-disabled: rgba($cocoa-90, 0.3),
+  icon-disabled: rgba($cocoa-90, 0.3),
+  border-disabled: $sand-40,
+  text-on-color-disabled: rgba($cocoa-90, 0.42),
+  icon-on-color-disabled: rgba($cocoa-90, 0.42),
+  layer-selected-disabled: $sand-50,
+
   // Otros
   overlay: rgba($cocoa-90, 0.5),
   toggle-off: $sand-50,
@@ -136,5 +145,11 @@ $component-token-overrides: (
   button-danger-hover: #8f1d14,
   button-danger-active: #6e1610,
   button-disabled: $sand-40,
-  button-separator: $sand-40
+  button-separator: $sand-40,
+  text-disabled: rgba($cocoa-90, 0.3),
+  icon-disabled: rgba($cocoa-90, 0.3),
+  border-disabled: $sand-40,
+  text-on-color-disabled: rgba($cocoa-90, 0.42),
+  icon-on-color-disabled: rgba($cocoa-90, 0.42),
+  layer-selected-disabled: $sand-50
 );
