@@ -12,7 +12,7 @@
 //
 import { firefox } from 'playwright'
 
-const RUTAS = ['/', '/calibracion', '/fuentes']
+const RUTAS = ['/', '/ingresar', '/calibracion', '/fuentes']
 const BASE = process.env.UI_BASE ?? 'http://localhost:5173'
 const SUCIO = process.argv.includes('--sucio')
 

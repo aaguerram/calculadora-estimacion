@@ -112,6 +112,17 @@ No fijan los coeficientes del modelo — acotan rangos y validan el método:
 
 Se consultan por PostgREST con la cabecera `Accept-Profile: benchmark`.
 
+## Ingresar un proyecto desde la web
+
+`/ingresar` guía la carga completa en seis pasos — proyecto, componentes,
+features, integraciones, drivers y revisión — y en cada paso explica qué aporta
+al cálculo. Cada campo lleva un desplegable con **qué es** y **qué efecto tiene
+sobre la estimación**, para que alguien que no conoce el modelo pueda cargar un
+proyecto entero y entender por qué sale lo que sale.
+
+Reutiliza los mismos editores que la pantalla de alcance: lo que añade es el
+orden y la explicación.
+
 ## Taxonomía de features
 
 Tres ejes para describir el alcance:
@@ -220,6 +231,7 @@ db/init/04-seed.sql      coeficientes del modelo de estimación
 | Ruta | Sección |
 |---|---|
 | `/` | Proyectos — elegir o crear el que se va a estimar |
+| `/ingresar` | Alta guiada: todo un proyecto desde la web, paso a paso |
 | `/proyecto/:id` | Alcance (los tres ejes), estimación y cierre |
 | `/calibracion` | Calibración con el histórico |
 | `/fuentes` | Las 11 fuentes de datos de referencia |

@@ -20,7 +20,10 @@ function mensajeDeError(error: unknown): string {
   return error instanceof Error ? error.message : 'Error desconocido'
 }
 
-export function useCreateEstimationProject(alCrear?: () => void) {
+export function useCreateEstimationProject(
+  alCrear?: () => void,
+  alCrearConId?: (proyectoId: string) => void,
+) {
   const [state, dispatch] = useReducer(createProjectReducer, initialCreateProjectState)
 
   const enviar = useCallback(async () => {
@@ -36,10 +39,11 @@ export function useCreateEstimationProject(alCrear?: () => void) {
       })
       dispatch({ type: 'envioResuelto', nombre: creado.nombre })
       alCrear?.()
+      alCrearConId?.(creado.id)
     } catch (error) {
       dispatch({ type: 'envioFallido', error: mensajeDeError(error) })
     }
-  }, [state, alCrear])
+  }, [state, alCrear, alCrearConId])
 
   return { state, dispatch, enviar }
 }

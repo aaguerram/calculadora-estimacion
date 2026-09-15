@@ -1,26 +1,33 @@
-import { Checkbox, NumberInput, Select, SelectItem, Tag } from '@carbon/react'
+import { Checkbox, NumberInput, Select, SelectItem, Tag } from "@carbon/react";
 
-import { ETIQUETA_COMPLEJIDAD, NIVELES_COMPLEJIDAD } from '@/entities/estimation-model'
-import type { NivelComplejidad } from '@/entities/estimation-model'
-import { ETIQUETA_FP, elementosDisponibles, puntosDeElemento } from '@/entities/feature-catalog'
-import type { Catalogo } from '@/entities/feature-catalog'
+import {
+  ETIQUETA_COMPLEJIDAD,
+  NIVELES_COMPLEJIDAD,
+} from "@/entities/estimation-model";
+import type { NivelComplejidad } from "@/entities/estimation-model";
+import {
+  ETIQUETA_FP,
+  elementosDisponibles,
+  puntosDeElemento,
+} from "@/entities/feature-catalog";
+import type { Catalogo } from "@/entities/feature-catalog";
 import {
   ajustarElemento,
   desmarcarElemento,
   marcarElemento,
-} from '@/entities/project-scope'
-import type { FeatureAlcance } from '@/entities/project-scope'
-import { cx } from '@/shared/lib'
+} from "@/entities/project-scope";
+import type { FeatureAlcance } from "@/entities/project-scope";
+import { cx } from "@/shared/lib";
 
-import styles from './ElementosPanel.module.scss'
+import styles from "./ElementosPanel.module.scss";
 
 interface ElementosPanelProps {
-  feature: FeatureAlcance
-  catalogo: Catalogo
+  feature: FeatureAlcance;
+  catalogo: Catalogo;
   /** Horas de desarrollo por punto función: lo que conecta el eje 3 con el motor. */
-  horasPorPunto: number
-  guardando: boolean
-  mutar: (accion: () => Promise<void>) => Promise<void>
+  horasPorPunto: number;
+  guardando: boolean;
+  mutar: (accion: () => Promise<void>) => Promise<void>;
 }
 
 /**
@@ -40,44 +47,50 @@ export function ElementosPanel({
     return (
       <div className={styles.panel}>
         <p className={styles.aviso}>
-          Clasifica primero la feature: la categoría determina qué elementos se ofrecen.
+          Clasifica primero la feature: la categoría determina qué elementos se
+          ofrecen.
         </p>
       </div>
-    )
+    );
   }
 
-  const disponibles = elementosDisponibles(catalogo, feature.categoria)
-  const porClave = new Map(feature.elementos.map((e) => [e.elemento, e]))
+  const disponibles = elementosDisponibles(catalogo, feature.categoria);
+  const porClave = new Map(feature.elementos.map((e) => [e.elemento, e]));
 
   const puntosTotales = feature.elementos.reduce((total, sel) => {
-    const def = catalogo.elementos.find((e) => e.clave === sel.elemento)
-    return def ? total + sel.cantidad * puntosDeElemento(def, sel.complejidad) : total
-  }, 0)
+    const def = catalogo.elementos.find((e) => e.clave === sel.elemento);
+    return def
+      ? total + sel.cantidad * puntosDeElemento(def, sel.complejidad)
+      : total;
+  }, 0);
 
-  const grupos = [...new Set(disponibles.map((e) => e.categoria))]
+  const grupos = [...new Set(disponibles.map((e) => e.categoria))];
 
   return (
     <div className={styles.panel}>
       {grupos.map((grupo) => (
         <div key={grupo}>
           <p className={styles.grupo}>
-            {grupo === 'transversal'
-              ? 'Transversales — aplican a cualquier feature'
+            {grupo === "transversal"
+              ? "Transversales — aplican a cualquier feature"
               : catalogo.categorias.find((c) => c.clave === grupo)?.nombre}
           </p>
           <div className={styles.rejilla}>
             {disponibles
               .filter((e) => e.categoria === grupo)
               .map((elemento) => {
-                const sel = porClave.get(elemento.clave)
+                const sel = porClave.get(elemento.clave);
                 const puntos = sel
                   ? sel.cantidad * puntosDeElemento(elemento, sel.complejidad)
-                  : elemento.pfMedia
+                  : elemento.pfMedia;
 
                 return (
                   <div
                     key={elemento.clave}
-                    className={cx(styles.elemento, sel && styles.elementoActivo)}
+                    className={cx(
+                      styles.elemento,
+                      sel && styles.elementoActivo,
+                    )}
                   >
                     <Checkbox
                       id={`el-${feature.id}-${elemento.clave}`}
@@ -107,11 +120,20 @@ export function ElementosPanel({
                             disabled={guardando}
                             invalidText="Mínimo 1."
                             onBlur={(e) => {
-                              const v = Number((e.target as HTMLInputElement).value)
-                              if (!Number.isFinite(v) || v < 1 || v === sel.cantidad) return
-                              void mutar(() =>
-                                ajustarElemento(feature.id, elemento.clave, { cantidad: v }),
+                              const v = Number(
+                                (e.target as HTMLInputElement).value,
+                              );
+                              if (
+                                !Number.isFinite(v) ||
+                                v < 1 ||
+                                v === sel.cantidad
                               )
+                                return;
+                              void mutar(() =>
+                                ajustarElemento(feature.id, elemento.clave, {
+                                  cantidad: v,
+                                }),
+                              );
                             }}
                           />
                         </div>
@@ -125,13 +147,18 @@ export function ElementosPanel({
                             onChange={(e) =>
                               void mutar(() =>
                                 ajustarElemento(feature.id, elemento.clave, {
-                                  complejidad: e.target.value as NivelComplejidad,
+                                  complejidad: e.target
+                                    .value as NivelComplejidad,
                                 }),
                               )
                             }
                           >
                             {NIVELES_COMPLEJIDAD.map((n) => (
-                              <SelectItem key={n} value={n} text={ETIQUETA_COMPLEJIDAD[n]} />
+                              <SelectItem
+                                key={n}
+                                value={n}
+                                text={ETIQUETA_COMPLEJIDAD[n]}
+                              />
                             ))}
                           </Select>
                         </div>
@@ -144,24 +171,26 @@ export function ElementosPanel({
                       </Tag>
                     )}
                   </div>
-                )
+                );
               })}
           </div>
         </div>
       ))}
 
       <p className={styles.total}>
-        {feature.elementos.length} elemento(s) ·{' '}
-        <strong>{puntosTotales} puntos función</strong> × {horasPorPunto} h/PF ={' '}
-        <strong>{Math.round(puntosTotales * horasPorPunto)} h de desarrollo</strong>
+        {feature.elementos.length} elemento(s) ·{" "}
+        <strong>{puntosTotales} puntos función</strong> × {horasPorPunto} h/PF ={" "}
+        <strong>
+          {Math.round(puntosTotales * horasPorPunto)} h de desarrollo
+        </strong>
         {puntosTotales > 0 ? (
           <>
-            {' '}
+            {" "}
             — esta feature pasa a medirse por puntos función en vez de por sus
             componentes.
           </>
         ) : null}
       </p>
     </div>
-  )
+  );
 }

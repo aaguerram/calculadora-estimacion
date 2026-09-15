@@ -3,6 +3,7 @@ import { createBrowserRouter } from 'react-router'
 import { AlcancePage } from '@/pages/alcance'
 import { CalibracionPage } from '@/pages/calibracion'
 import { FuentesPage } from '@/pages/fuentes'
+import { IngresarPage } from '@/pages/ingresar'
 import { ProyectosPage } from '@/pages/proyectos'
 
 import { Layout, NoEncontrado } from './Layout'
@@ -18,6 +19,7 @@ export const rutas = createBrowserRouter([
     children: [
       { index: true, Component: ProyectosPage },
       { path: 'proyecto/:proyectoId', Component: AlcancePage },
+      { path: 'ingresar', Component: IngresarPage },
       { path: 'calibracion', Component: CalibracionPage },
       { path: 'fuentes', Component: FuentesPage },
       { path: '*', Component: NoEncontrado },

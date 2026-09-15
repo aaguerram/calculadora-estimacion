@@ -7,6 +7,7 @@ import styles from './AppHeader.module.scss'
 
 const SECCIONES = [
   { a: '/', texto: 'Proyectos', exacto: true },
+  { a: '/ingresar', texto: 'Ingresar proyecto', exacto: false },
   { a: '/calibracion', texto: 'Calibración', exacto: false },
   { a: '/fuentes', texto: 'Fuentes', exacto: false },
 ]

@@ -34,6 +34,10 @@
 @use '@carbon/react/scss/components/notification';
 @use '@carbon/react/scss/components/loading';
 @use '@carbon/react/scss/components/structured-list';
+@use '@carbon/react/scss/components/toggletip';
+@use '@carbon/react/scss/components/progress-indicator';
+@use '@carbon/react/scss/components/popover';
+@use '@carbon/react/scss/components/accordion';
 
 // 5. Component tokens (botones): deben registrarse DESPUES de importar los
 //    componentes, porque Carbon los emite al final del mixin `theme()`.

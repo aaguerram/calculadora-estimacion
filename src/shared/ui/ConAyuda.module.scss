@@ -1,0 +1,33 @@
+@use '@carbon/react/scss/spacing' as *;
+@use '@carbon/react/scss/theme' as *;
+@use '@carbon/react/scss/type';
+
+.campo {
+  position: relative;
+}
+
+/**
+ * El disparador va ARRIBA A LA DERECHA del campo, nunca dentro de la etiqueta:
+ * Carbon rechaza contenido interactivo en `labelText` y tiene razón — un botón
+ * dentro de un <label> es HTML inválido y rompe el foco.
+ */
+.disparador {
+  inset-block-start: -2px;
+  inset-inline-end: 0;
+  position: absolute;
+  z-index: 1;
+}
+
+.contenido {
+  @include type.type-style('body-01');
+  max-inline-size: 22rem;
+}
+
+.efecto {
+  @include type.type-style('label-01');
+  border-top: 1px solid $border-subtle-01;
+  color: $text-secondary;
+  display: block;
+  margin-block-start: $spacing-03;
+  padding-block-start: $spacing-03;
+}
