@@ -1,8 +1,8 @@
 # Memory — calculadora
 
-> Generated: 2026-09-15 12:11:04  
-> Total memories: **66**  
-> Breakdown: instruction: 18, fact: 9, decision: 12, goal: 1, preference: 1, learning: 25
+> Generated: 2026-09-15 19:26:03  
+> Total memories: **67**  
+> Breakdown: instruction: 19, fact: 9, decision: 12, goal: 1, preference: 1, learning: 25
 
 ---
 
@@ -58,23 +58,29 @@
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T03:05:43 | Tags: `mvi`, `reducer`, `react-state`, `fsd`*
 
-### Todo codigo puro de un segmento model/ lleva tests...
-
-> Todo codigo puro de un segmento model/ lleva tests vitest junto al archivo. El azar entra por una semilla (crearRng) para que el motor sea determinista y auditable. Los *.e2e.test.ts exigen Docker y datos sembrados: van en 'npm run test:e2e', nunca en 'npm run check'.
-
-*Confidence: 1.0 | Status: active | Created: 2026-09-15T10:31:49 | Tags: `testing`, `vitest`, `determinismo`, `e2e`*
-
 ### Pure model/ code in this project must have colocat...
 
 > Pure model/ code in this project must have colocated vitest tests (calcular-esfuerzo.ts -> calcular-esfuerzo.test.ts); randomness enters through a seeded RNG so the estimation engine is deterministic and auditable.
 
 *Confidence: 1.0 | Status: expired | Created: 2026-09-15T04:31:43 | Tags: `testing`, `vitest`, `fsd`, `determinismo`*
 
+### Todo codigo puro de un segmento model/ lleva tests...
+
+> Todo codigo puro de un segmento model/ lleva tests vitest junto al archivo. El azar entra por una semilla (crearRng) para que el motor sea determinista y auditable. Los *.e2e.test.ts exigen Docker y datos sembrados: van en 'npm run test:e2e', nunca en 'npm run check'.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T10:31:49 | Tags: `testing`, `vitest`, `determinismo`, `e2e`*
+
 ### La base del proyecto NO debe contener datos sintet...
 
 > La base del proyecto NO debe contener datos sinteticos: los proyectos de ejemplo y el historico inventado se borraron porque el historico falso corrompe la calibracion. Los tests de integracion crean y borran sus propios datos, y benchmark queda porque son datasets publicos reales.
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T11:24:35 | Tags: `datos`, `sinteticos`, `calibracion`, `limpieza`*
+
+### El repositorio calculadora-estimacion es publico e...
+
+> El repositorio calculadora-estimacion es publico en GitHub (aaguerram/calculadora-estimacion): ningun dato interno de Produbanco -adjuntos de correo, volcados de Azure DevOps, titulos de work items- puede entrar al control de versiones; solo agregados anonimos. La carpeta gmail/ esta ignorada entera.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T21:26:21 | Tags: `git`, `seguridad`, `produbanco`, `repositorio-publico`, `datos-confidenciales`*
 
 ### Integration tests that need Docker and seeded data...
 
@@ -366,17 +372,17 @@
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T03:05:43 | Tags: `carbon-design`, `scss`, `theming`, `component-tokens`*
 
-### Una vista expuesta por PostgREST necesita WITH (se...
-
-> Una vista expuesta por PostgREST necesita WITH (security_invoker = true): por defecto corre como su dueno y se salta el RLS de las tablas base.
-
-*Confidence: 1.0 | Status: active | Created: 2026-09-15T10:32:13 | Tags: `postgres`, `rls`, `vistas`*
-
 ### Monte Carlo over independent task estimates collap...
 
 > Monte Carlo over independent task estimates collapses variance via the central limit theorem and yields an unrealistically narrow P50-P90 band; a correlated common-risk factor (lognormal, sigma around 0.18) applied per simulation run is required for a credible confidence band.
 
 *Confidence: 0.95 | Status: active | Created: 2026-09-15T03:50:36 | Tags: `monte-carlo`, `estimacion`, `risk`, `statistics`*
+
+### Una vista expuesta por PostgREST necesita WITH (se...
+
+> Una vista expuesta por PostgREST necesita WITH (security_invoker = true): por defecto corre como su dueno y se salta el RLS de las tablas base.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T10:32:13 | Tags: `postgres`, `rls`, `vistas`*
 
 ### Carbon rechaza contenido interactivo dentro de lab...
 
@@ -432,6 +438,12 @@
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T11:24:36 | Tags: `postgrest`, `cliente`, `bug`, `return-minimal`*
 
+### El volcado de Azure DevOps Analytics del tipo Work...
+
+> El volcado de Azure DevOps Analytics del tipo WorkItemRevisions solo expone WorkItemId, Title, WorkItemType, State, Revision, ChangedDate y CreatedDate: no trae esfuerzo (Effort, StoryPoints, CompletedWork, OriginalEstimate), ni enlaces padre-hijo, ni AreaPath, ni AssignedTo. Sin esfuerzo real ni jerarquia no se puede calibrar el modelo de estimacion; solo se derivan tiempos de ciclo y proporciones de descomposicion. Para calibrar hay que consultar la entidad WorkItems, no WorkItemRevisions.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T21:09:43 | Tags: `azure-devops`, `odata`, `calibracion`, `work-item-revisions`, `esfuerzo`*
+
 ### Estimation-model calibration adjustments interact ...
 
 > Estimation-model calibration adjustments interact and must be iterated: raising base hours increases effort while shrinking the common-risk sigma narrows the distribution and lowers the committed percentile, so a single pass left a -8% residual bias; two refinement rounds took MMRE from 16.5% to 3.1% and bias to +0.1%.
@@ -444,6 +456,12 @@
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T13:21:43 | Tags: `historico`, `calibracion`, `alcance`*
 
+### Un force-push que reescribe la historia NO borra e...
+
+> Un force-push que reescribe la historia NO borra el contenido de GitHub: el commit y sus blobs siguen recuperables por SHA via la API (repos/:owner/:repo/commits/:sha y /contents/...?ref=:sha) hasta que GitHub recolecta basura, cosa que no hace bajo demanda. Para purgar de verdad hay que abrir un ticket en support.github.com pidiendo 'remove cached views and unreachable objects', o borrar y recrear el repositorio. Corolario: para datos sensibles hay que asumir divulgacion desde el instante del push, no desde que se descubre.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T22:54:16 | Tags: `git`, `github`, `force-push`, `seguridad`, `datos-confidenciales`*
+
 ### Cuando la frontera coste-duracion es plana, elegir...
 
 > Cuando la frontera coste-duracion es plana, elegir el minimo coste es ruido: se recomienda el mas rapido dentro del 5 % del coste minimo. En el alcance de referencia eso cambio la respuesta de 9.5 personas y 16.8 meses a 13.5 personas y 11.8 meses al mismo coste.
@@ -455,18 +473,6 @@
 > En PostgreSQL un REVOKE por columna NO recorta un GRANT a nivel de tabla: hay que retirar el permiso de tabla y volver a darlo columna por columna. Sin eso PostgREST acepta el campo prohibido con 201 y el trigger lo sobreescribe en silencio.
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T10:32:13 | Tags: `postgres`, `grants`, `seguridad`*
-
-### Vitest configuration must live in its own vitest.c...
-
-> Vitest configuration must live in its own vitest.config.ts, not inside vite.config.ts: importing from 'vitest/config' in vite.config.ts makes the dev server container fail to boot because the runtime image has no vitest installed.
-
-*Confidence: 1.0 | Status: active | Created: 2026-09-15T04:31:44 | Tags: `vitest`, `vite`, `docker`, `configuracion`*
-
-### The real limit to parallelizing a software project...
-
-> The real limit to parallelizing a software project is the number of components and the max useful devs per component (the critical-path stream), not the communication-channel formula: a pure n(n-1)/2 overhead model has its optimum at sqrt(2/gamma), independent of project size, which is wrong. Brooks's law emerges from a fixed-point loop where headcount raises coordination effort, which raises headcount.
-
-*Confidence: 0.95 | Status: active | Created: 2026-09-15T03:50:36 | Tags: `estimacion`, `brooks-law`, `team-sizing`, `modeling`*
 
 ---
 
