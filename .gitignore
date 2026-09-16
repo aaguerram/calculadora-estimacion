@@ -29,6 +29,9 @@ dist-ssr
 # salida generada por graphify (regenerable con: graphify update .)
 graphify-out/
 
-# Datasets de terceros SIN licencia de redistribucion declarada.
-# Se obtienen con: npm run benchmark:descargar   (ver datasets/PROCEDENCIA.md)
-datasets/raw/
+# Datos de referencia: no se versionan.
+# Los datasets de terceros no declaran licencia de redistribucion y el
+# analisis local puede contener datos internos (p. ej. azure-estructura.json),
+# asi que la carpeta entera queda fuera del repositorio publico.
+# Se regeneran con: npm run benchmark:descargar
+datasets/
