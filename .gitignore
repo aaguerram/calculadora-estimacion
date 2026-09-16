@@ -29,6 +29,10 @@ dist-ssr
 # salida generada por graphify (regenerable con: graphify update .)
 graphify-out/
 
+# Adjuntos de correo con datos internos de Produbanco (volcados de Azure
+# DevOps). No entran nunca al control de versiones: el repositorio es publico.
+gmail/
+
 # Datos de referencia: no se versionan.
 # Los datasets de terceros no declaran licencia de redistribucion y el
 # analisis local puede contener datos internos (p. ej. azure-estructura.json),
