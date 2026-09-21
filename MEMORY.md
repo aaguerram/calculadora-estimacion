@@ -1,8 +1,8 @@
 # Memory — calculadora
 
-> Generated: 2026-09-15 19:26:03  
-> Total memories: **67**  
-> Breakdown: instruction: 19, fact: 9, decision: 12, goal: 1, preference: 1, learning: 25
+> Generated: 2026-09-21 09:52:26  
+> Total memories: **87**  
+> Breakdown: instruction: 19, fact: 9, decision: 12, goal: 1, commitment: 1, preference: 1, context: 1, learning: 43
 
 ---
 
@@ -76,12 +76,6 @@
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T11:24:35 | Tags: `datos`, `sinteticos`, `calibracion`, `limpieza`*
 
-### El repositorio calculadora-estimacion es publico e...
-
-> El repositorio calculadora-estimacion es publico en GitHub (aaguerram/calculadora-estimacion): ningun dato interno de Produbanco -adjuntos de correo, volcados de Azure DevOps, titulos de work items- puede entrar al control de versiones; solo agregados anonimos. La carpeta gmail/ esta ignorada entera.
-
-*Confidence: 1.0 | Status: active | Created: 2026-09-15T21:26:21 | Tags: `git`, `seguridad`, `produbanco`, `repositorio-publico`, `datos-confidenciales`*
-
 ### Integration tests that need Docker and seeded data...
 
 > Integration tests that need Docker and seeded data are named *.e2e.test.ts with their own vitest.e2e.config.ts and run via npm run test:e2e; the default npm run check excludes them so it never depends on a running stack.
@@ -99,6 +93,12 @@
 > Ante un fallo de conexion reportado por el usuario, ejecutar npm run diagnostico antes de tocar codigo: revisa token y caducidad, PostgREST directo, servidor web, proxy del mismo origen y permisos por tabla, y dice que comando arregla cada fallo.
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T14:44:21 | Tags: `diagnostico`, `depuracion`, `conexion`*
+
+### El repositorio calculadora-estimacion es publico e...
+
+> El repositorio calculadora-estimacion es publico en GitHub (aaguerram/calculadora-estimacion): ningun dato interno de Produbanco -adjuntos de correo, volcados de Azure DevOps, titulos de work items- puede entrar al control de versiones; solo agregados anonimos. Desde 2026-09-15 las dos carpetas sensibles estan en el .gitignore VERSIONADO, no en .git/info/exclude: gmail/ (adjuntos de correo, volcados de Azure) y datasets/ entera. La leccion: .git/info/exclude es local y no viaja, asi que un clon nuevo no heredaba la regla y gmail/ quedaba desprotegida. Las unicas menciones a Produbanco admisibles en lo versionado son las de la paleta de marca (GDS publico) y notas metodologicas sin datos.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T21:26:21 | Tags: `git`, `seguridad`, `produbanco`, `repositorio-publico`, `datos-confidenciales`, `gitignore`*
 
 ### Probar la API con curl NO sustituye a probar la in...
 
@@ -220,17 +220,17 @@
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T10:31:47 | Tags: `postgrest`, `postgres`, `on-prem`, `rls`, `seguridad`*
 
-### Los datasets de terceros NO se versionan: datasets...
-
-> Los datasets de terceros NO se versionan: datasets/raw esta en gitignore porque ninguno declara licencia de redistribucion y el repositorio es publico. Se obtienen con npm run benchmark:descargar, que los baja de las mismas URLs documentadas en datasets/PROCEDENCIA.md, y se verifico que bajan identicos bit a bit.
-
-*Confidence: 1.0 | Status: active | Created: 2026-09-15T13:31:22 | Tags: `licencias`, `datasets`, `repositorio`, `publico`*
-
 ### El esquema 'benchmark' guarda 1086 proyectos y 129...
 
 > El esquema 'benchmark' guarda 1086 proyectos y 12925 tareas de datasets publicos (PROMISE, SiP, Desharnais, China). Sirve para acotar rangos y validar el metodo, NUNCA para fijar coeficientes del modelo. Se consulta con la cabecera Accept-Profile: benchmark.
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T10:31:48 | Tags: `benchmark`, `datasets`, `referencia`*
+
+### Los datasets de terceros NO se versionan: datasets...
+
+> La carpeta datasets/ COMPLETA esta en .gitignore y no se versiona en calculadora-estimacion: mezcla datasets de terceros sin licencia de redistribucion, documentacion de procedencia y salidas de analisis local que pueden contener datos internos (azure-estructura.json), y el repositorio es publico. Los datos de referencia se regeneran con npm run benchmark:descargar desde las URLs de Derek-Jones/Software-estimation-datasets. Consecuencia conocida: los enlaces a datasets/PROCEDENCIA.md y datasets/HALLAZGOS.md en README.md y CLAUDE.md apuntan a archivos que solo existen en local.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T13:31:22 | Tags: `licencias`, `datasets`, `repositorio`, `publico`, `gitignore`*
 
 ### Enrutado con React Router v8: las rutas se declara...
 
@@ -280,7 +280,11 @@
 
 *Promises, obligations, and TODOs that need follow-through.*
 
-*No memories of this type.*
+### Enlaces rotos a datasets/ en README, CLAUDE.md y defaults.ts
+
+> Pendiente en calculadora-estimacion desde el 2026-09-15: al sacar datasets/ del repositorio quedaron tres referencias apuntando a archivos que ya solo existen en local -README.md lineas 124-125 y CLAUDE.md linea 116 enlazan a datasets/PROCEDENCIA.md y datasets/HALLAZGOS.md, y src/entities/estimation-model/config/defaults.ts linea 45 cita HALLAZGOS.md para justificar el coeficiente 2.6 de lenguaje. Son documentos propios que no redistribuyen datos de terceros, asi que la salida limpia es moverlos a docs/ y arreglar los enlaces. El usuario todavia no ha elegido entre eso y reescribir los textos para decir que se generan en local.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-16T02:19:02 | Tags: `pendiente`, `documentacion`, `datasets`, `enlaces-rotos`*
 
 ---
 
@@ -308,7 +312,11 @@
 
 *Session summaries, status updates, and conversation state.*
 
-*No memories of this type.*
+### Modelo de medicion del equipo de arquitectura en Azure DevOps
+
+> El equipo de arquitectura (contexto Produbanco, mismo usuario que calculadora-estimacion) esta disenando su seguimiento en Azure DevOps: tres servicios con SLA (asesoria, evaluacion de herramientas, arquitectura de solucion) y un flujo de estados nuevo/planificado/en progreso/bloqueado/revision/finalizado. El problema central es que un arquitecto atiende hasta 3 iniciativas a la vez, asi que el tiempo en estado NO mide dedicacion: sumar dias activos da mas del 100%. La solucion adoptada es prorratear cada dia entre las iniciativas activas de ese arquitecto (1/n(a,d)), que sale gratis del historial y es retroactiva. Regla de diseno derivada: los dias perdidos se explican, no se restan -una sola resta, calendario menos dias efectivos-, porque sumar causas (bloqueo + desfase de sesiones) cuenta dos veces la misma espera. El diseno completo esta en el doc 'Medir la asignacion del arquitecto en Azure DevOps' (artifact 7cfa4674-6247-4146-83c8-b6eb31855b4d).
+
+*Confidence: 0.9 | Status: active | Created: 2026-09-17T20:50:48 | Tags: `azure-devops`, `arquitectura`, `sla`, `asignacion`, `prorrateo`*
 
 ---
 
@@ -420,6 +428,12 @@
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T10:12:13 | Tags: `3gl`, `cobol`, `productividad`, `benchmark`*
 
+### WorkItemSnapshot es la entidad para tiempo en estado, no WorkItemRevisions
+
+> Para medir tiempo en estado y concurrencia en Azure DevOps Analytics la entidad correcta es WorkItemSnapshot (una fila por work item y por dia, con State y AssignedTo de ese dia), no WorkItemRevisions. En el volcado real de los dos equipos, 3166 de 4523 revisiones consecutivas (70%) no cambian el State, asi que WorkItemRevisions obliga a reconstruir tramos y esta lleno de ruido; con WorkItemSnapshot los dias en un estado son un simple conteo de filas con groupby. WorkItemSnapshot exige filtrar siempre por rango de fechas y tipo de work item.
+
+*Confidence: 0.85 | Status: active | Created: 2026-09-17T20:27:38 | Tags: `azure-devops`, `odata`, `analytics`, `tiempo-en-estado`*
+
 ### El camino 1 de adopcion (capturar el alcance al ar...
 
 > El camino 1 de adopcion (capturar el alcance al arrancar el proyecto y archivarlo al cerrarlo) esta verificado de punta a punta por la interfaz: el proyecto se estima, Archivar para calibrar toma la estimacion vigente como mh_estimadas, y la fila aparece en Historico marcada como calibra.
@@ -456,11 +470,11 @@
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T13:21:43 | Tags: `historico`, `calibracion`, `alcance`*
 
-### Un force-push que reescribe la historia NO borra e...
+### Reason no es personalizable en procesos heredados de Azure DevOps
 
-> Un force-push que reescribe la historia NO borra el contenido de GitHub: el commit y sus blobs siguen recuperables por SHA via la API (repos/:owner/:repo/commits/:sha y /contents/...?ref=:sha) hasta que GitHub recolecta basura, cosa que no hace bajo demanda. Para purgar de verdad hay que abrir un ticket en support.github.com pidiendo 'remove cached views and unreachable objects', o borrar y recrear el repositorio. Corolario: para datos sensibles hay que asumir divulgacion desde el instante del push, no desde que se descubre.
+> En Azure DevOps Cloud con proceso heredado el campo Reason NO es personalizable por transicion de estado: se autogenera como 'Moved to state X'. Los Reason configurables por transicion solo existian en procesos XML on-premise. Por tanto, para capturar la causa de un bloqueo o de una replanificacion hay que crear un campo de lista propio y marcarlo obligatorio mediante una regla de proceso heredado condicionada al estado o al cambio del campo disparador.
 
-*Confidence: 1.0 | Status: active | Created: 2026-09-15T22:54:16 | Tags: `git`, `github`, `force-push`, `seguridad`, `datos-confidenciales`*
+*Confidence: 0.9 | Status: active | Created: 2026-09-17T20:27:38 | Tags: `azure-devops`, `proceso-heredado`, `reason`, `reglas`*
 
 ### Cuando la frontera coste-duracion es plana, elegir...
 
@@ -468,11 +482,113 @@
 
 *Confidence: 0.95 | Status: active | Created: 2026-09-15T10:32:16 | Tags: `estimacion`, `frontera`, `equipo`*
 
+### Un force-push que reescribe la historia NO borra e...
+
+> Un force-push que reescribe la historia NO borra el contenido de GitHub: el commit y sus blobs siguen recuperables por SHA via la API (repos/:owner/:repo/commits/:sha y /contents/...?ref=:sha) hasta que GitHub recolecta basura, cosa que no hace bajo demanda. Para purgar de verdad hay que abrir un ticket en support.github.com pidiendo 'remove cached views and unreachable objects', o borrar y recrear el repositorio. Corolario: para datos sensibles hay que asumir divulgacion desde el instante del push, no desde que se descubre.
+
+*Confidence: 1.0 | Status: expired | Created: 2026-09-15T22:54:16 | Tags: `git`, `github`, `force-push`, `seguridad`, `datos-confidenciales`*
+
 ### En PostgreSQL un REVOKE por columna NO recorta un ...
 
 > En PostgreSQL un REVOKE por columna NO recorta un GRANT a nivel de tabla: hay que retirar el permiso de tabla y volver a darlo columna por columna. Sin eso PostgREST acepta el campo prohibido con 201 y el trigger lo sobreescribe en silencio.
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T10:32:13 | Tags: `postgres`, `grants`, `seguridad`*
+
+### Vitest configuration must live in its own vitest.c...
+
+> Vitest configuration must live in its own vitest.config.ts, not inside vite.config.ts: importing from 'vitest/config' in vite.config.ts makes the dev server container fail to boot because the runtime image has no vitest installed.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T04:31:44 | Tags: `vitest`, `vite`, `docker`, `configuracion`*
+
+### The real limit to parallelizing a software project...
+
+> The real limit to parallelizing a software project is the number of components and the max useful devs per component (the critical-path stream), not the communication-channel formula: a pure n(n-1)/2 overhead model has its optimum at sqrt(2/gamma), independent of project size, which is wrong. Brooks's law emerges from a fixed-point loop where headcount raises coordination effort, which raises headcount.
+
+*Confidence: 0.95 | Status: active | Created: 2026-09-15T03:50:36 | Tags: `estimacion`, `brooks-law`, `team-sizing`, `modeling`*
+
+### El backtest de calibracion debe llamar al motor CO...
+
+> El backtest de calibracion debe llamar al motor CON el catalogo de elementos: sin el, las features archivadas con elementos marcados se remiden por el metodo estructural y la ruta de puntos funcion queda fuera del ciclo de calibracion.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T13:11:44 | Tags: `calibracion`, `puntos-funcion`, `backtest`*
+
+### Calibrating an estimation model must adjust every ...
+
+> Calibrating an estimation model must adjust every coefficient that feeds the measured effort, not just the base hours: bootstrap and integration costs were about half the total, so scaling base.* alone corrected only half the bias.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T05:03:54 | Tags: `calibracion`, `estimacion`, `coeficientes`, `modelado`*
+
+### Calibrar debe ajustar TODO lo que alimenta el esfu...
+
+> Calibrar debe ajustar TODO lo que alimenta el esfuerzo medido: escalar solo base.<tipo> corrigio la mitad del sesgo porque arranques e integraciones eran la otra mitad del total.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T10:32:14 | Tags: `calibracion`, `coeficientes`*
+
+### Monte Carlo sobre items independientes colapsa la ...
+
+> Monte Carlo sobre items independientes colapsa la varianza por el teorema central del limite y da una banda P50-P90 increiblemente estrecha. Hace falta un factor de riesgo comun lognormal (sigma ~0.18) aplicado por corrida.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T10:32:14 | Tags: `monte-carlo`, `riesgo`, `estadistica`*
+
+### La configuracion de vitest vive en vitest.config.t...
+
+> La configuracion de vitest vive en vitest.config.ts aparte: importar de 'vitest/config' dentro de vite.config.ts hace que el contenedor de desarrollo no arranque porque la imagen no lleva vitest. Y un volumen anonimo sobre /app/node_modules sobrevive a los rebuilds sirviendo dependencias viejas.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T10:32:16 | Tags: `vitest`, `docker`, `configuracion`*
+
+### In PostgreSQL a column-level REVOKE does not narro...
+
+> In PostgreSQL a column-level REVOKE does not narrow an existing table-level GRANT: to restrict writable columns you must REVOKE the table privilege first and then GRANT column by column. Otherwise PostgREST accepts the forbidden field with 201 and a trigger silently overwrites it.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T04:12:17 | Tags: `postgres`, `grants`, `security`, `postgrest`*
+
+### An anonymous docker volume mounted over /app/node_...
+
+> An anonymous docker volume mounted over /app/node_modules survives image rebuilds and keeps serving stale dependencies; when only source files are bind-mounted, drop that volume so the image's node_modules is used.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T04:31:44 | Tags: `docker`, `node-modules`, `volumenes`, `vite`*
+
+### Los ajustes de calibracion interactuan: subir hora...
+
+> Los ajustes de calibracion interactuan: subir horas base sube el esfuerzo pero estrechar el sigma del riesgo comun baja el percentil comprometido. Una sola pasada dejo -8 % de sesgo residual; refinando en dos rondas el MMRE bajo de 16.5 % a 3.1 % y el sesgo a +0.1 %.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T10:32:14 | Tags: `calibracion`, `convergencia`, `mmre`*
+
+### pf.horas-por-punto se expresa en horas de DESARROL...
+
+> pf.horas-por-punto se expresa en horas de DESARROLLO, no de proyecto completo. Los 6.3-23.7 h/PF de los datasets publicos incluyen analisis, QA y gestion; como el motor aplica ademas un x1.65 de overheads, hay que dividir: mediana 8.7 / 1.65 = 5.2 h de desarrollo por punto (p25 2.9, p75 9.9).
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T11:24:35 | Tags: `puntos-funcion`, `unidades`, `coeficientes`*
+
+### Reescribir el historial no borra nada de GitHub: hace falta purgar aparte
+
+> Purgar un dato del repositorio publico calculadora-estimacion exige DOS pasos y el segundo es el que cuenta. (1) Reescribir el historial local: git filter-branch --index-filter 'git rm -r --cached --ignore-unmatch <ruta>' -- main (git-filter-repo no esta instalado y pip lo bloquea por PEP 668) y force-push con --force-with-lease. (2) GitHub NO recolecta basura sola: VERIFICADO el 2026-09-15 que tras el force-push los commits viejos seguian respondiendo 200 en gh api repos/OWNER/REPO/commits/<sha-viejo> y sus blobs se leian enteros por ?ref=<sha-viejo>. El unico remedio que funciono fue BORRAR Y RECREAR el repositorio (gh repo create + push): despues los SHAs viejos dan 422 'No commit found for the ref'. El token gh necesita el scope delete_repo, que no trae por defecto: se anade con 'gh auth refresh -h github.com -s delete_repo' y es interactivo, lo ejecuta el usuario. Comprobar SIEMPRE los SHAs viejos por API antes de dar por purgado un dato; el force-push por si solo no purga nada. Antes de cualquier purga: git bundle --all al scratchpad, una rama local respaldo/pre-purga-<tema>, y excluir esas ramas de la reescritura pasando '-- main'.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-16T00:33:52 | Tags: `git`, `github`, `purga`, `historial`, `repositorio-publico`, `seguridad`, `delete-repo`*
+
+### Medido dentro de Desharnais (misma empresa): 3GL n...
+
+> Medido dentro de Desharnais (misma empresa): 3GL necesita 18.7 h/PF frente a 4.2 de un lenguaje de generacion superior, 4.4x. Entre datasets, Albrecht COBOL/PL1 23.7 frente a China 8.1, 2.9x. De ahi sale stack.cobol = 2.6.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T10:32:15 | Tags: `3gl`, `cobol`, `productividad`*
+
+### Un aviso util del contraste COCOMO: en el proyecto...
+
+> Un aviso util del contraste COCOMO: en el proyecto piloto la ruta critica de streams daba 5.4 meses frente a los 10.5 nominales de COCOMO, y el sistema lo marco como zona imposible. El modelo de streams permite mas paralelismo del que COCOMO considera realista cuando hay pocos componentes con esfuerzo concentrado.
+
+*Confidence: 0.9 | Status: active | Created: 2026-09-15T13:05:51 | Tags: `cocomo`, `triangulacion`, `alertas`, `duracion`*
+
+### Los datos sensibles se ignoran en .gitignore versionado, no en .git/info/exclude
+
+> Una regla de ignore que protege datos sensibles va SIEMPRE en el .gitignore versionado, nunca en .git/info/exclude. .git/info/exclude es local al clon y NO viaja con el repositorio: la carpeta parece protegida en la maquina donde se escribio la regla, pero cualquier clon nuevo -o cualquier otra persona o agente- no la hereda y queda a un 'git add .' de publicar el dato. Detectado el 2026-09-15 en calculadora-estimacion: gmail/ (volcados de Azure DevOps con datos internos de Produbanco) llevaba tiempo protegida solo por .git/info/exclude. Al auditar un repositorio publico, comprobar con 'git check-ignore -v <ruta>' de que ARCHIVO sale la regla: si la respuesta empieza por .git/info/exclude, la proteccion es falsa.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-16T02:18:57 | Tags: `git`, `gitignore`, `seguridad`, `datos-confidenciales`, `repositorio-publico`*
+
+### Medido sobre datos reales: la productividad va de ...
+
+> Medido sobre datos reales: la productividad va de 6.3 a 23.7 horas por punto funcion entre organizaciones; acotar a una empresa y un lenguaje baja el MMRE de 77 % a 28 %; y una empresa real acerto dentro del 25 % en solo el 42 % de sus 12299 tareas. El objetivo PRED(25) > 75 % es de nivel proyecto, no de tarea.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T10:32:15 | Tags: `benchmark`, `productividad`, `expectativas`*
 
 ---
 
