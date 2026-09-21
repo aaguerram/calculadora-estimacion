@@ -30,24 +30,24 @@
   },
   "dependencies": {
     "@carbon/react": "^1.116.0",
-    "react": "^19.2.8",
-    "react-dom": "^19.2.8",
-    "react-router": "^8.3.1"
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "react-router": "^8.4.0"
   },
   "devDependencies": {
     "@feature-sliced/steiger-plugin": "^0.7.0",
-    "@types/node": "^24.13.3",
-    "@types/react": "^19.2.18",
-    "@types/react-dom": "^19.2.7",
+    "@types/node": "^26.6.2",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.1",
-    "@vitest/coverage-v8": "^5.0.0",
-    "oxlint": "^1.81.0",
+    "@vitest/coverage-v8": "^5.0.1",
+    "oxlint": "^1.84.0",
     "playwright": "^1.63.0",
     "sass-embedded": "^1.104.1",
     "steiger": "^0.6.0",
-    "tsx": "^4.23.13",
-    "typescript": "~6.0.2",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
     "vite": "^8.3.0",
-    "vitest": "^5.0.0"
+    "vitest": "^5.0.1"
   }
 }

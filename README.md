@@ -1,24 +1,127 @@
 # Calculadora
 
-Esqueleto React + TypeScript con **Feature-Sliced Design** e **IBM Carbon Design System**
-(tema claro cálido "Warm Light").
+Herramienta de estimación de esfuerzo de software: se carga el alcance de un
+proyecto (componentes, features, integraciones y drivers) y devuelve una banda
+P50/P80/P90, un plan de equipo y las alertas del modelo. Los coeficientes se
+calibran contra proyectos cerrados, no se inventan.
 
-## Arranque
+React + TypeScript con **Feature-Sliced Design**, **IBM Carbon Design System**
+sobre la paleta de marca de **Produbanco**, y **PostgREST** como API generada
+directamente desde el esquema de Postgres — sin backend propio que mantener.
 
-### Todo en docker (recomendado)
+---
+
+## Requisitos
+
+### Software base
+
+Todo el proyecto corre con la última versión estable de cada herramienta.
+Estas son las versiones mínimas verificadas:
+
+| Herramienta | Mínimo | Verificado con | Para qué |
+|---|---|---|---|
+| **Node.js** | 22 LTS | 24.21.0 | Ejecutar Vite, los tests y los scripts |
+| **npm** | 10 | 11.19.0 | Gestión de dependencias |
+| **Docker Engine** | 24 | 29.2.1 | Postgres + PostgREST + Swagger |
+| **Docker Compose** | v2 | v5.0.2 | Orquestar el stack (`docker compose`, sin guion) |
+| **Git** | 2.30 | — | Clonar el repositorio |
+
+Docker es obligatorio **solo** para levantar la base de datos y la API. Si vas a
+tocar únicamente la interfaz, basta con Node y npm.
 
 ```bash
-cp .env.example .env          # ajusta puertos si alguno está ocupado
-npm run stack:up              # genera el token, lo pone en .env y levanta todo
+node -v && npm -v && docker --version && docker compose version
 ```
 
-`stack:up` ejecuta `token:env` antes de arrancar, así que React ya sale
-autenticado: no hay que pegar nada a mano.
+### Stack del proyecto
 
-> `VITE_POSTGREST_TOKEN` queda **horneado en el bundle** y es público para quien
-> abra el inspector. Por eso `token-store.ts` lo ignora cuando
-> `import.meta.env.DEV` es falso: en un build de producción el token no existe y
-> lo aporta el OIDC corporativo en tiempo de ejecución.
+Las versiones que instala `npm install` (todas la última estable a la fecha):
+
+| Paquete | Versión | Rol |
+|---|---|---|
+| `react` · `react-dom` | 19.3.0 | Interfaz |
+| `react-router` | 8.4.0 | Rutas (declaradas solo en `app/routing/`) |
+| `@carbon/react` | 1.116.0 | Design system, tema claro cálido Produbanco |
+| `typescript` | 7.0.2 | Tipado (compilador nativo, `tsc -b`) |
+| `vite` · `@vitejs/plugin-react` | 8.3.0 · 6.1.1 | Dev server y build |
+| `vitest` · `@vitest/coverage-v8` | 5.0.1 | Tests del código puro de `model/` |
+| `oxlint` | 1.84.0 | Linter |
+| `steiger` · `@feature-sliced/steiger-plugin` | 0.6.0 · 0.7.0 | Guarda la arquitectura FSD |
+| `sass-embedded` | 1.104.1 | Compila los `*.module.scss` y el tema |
+| `playwright` | 1.63.0 | Humo sobre la UI en un navegador real |
+| `tsx` · `@types/node` | 4.23.15 · 26.6.2 | Scripts de mantenimiento |
+
+Y las imágenes del stack en `docker-compose.yml`:
+
+| Imagen | Versión |
+|---|---|
+| `postgres` | 16-alpine |
+| `postgrest/postgrest` | v12.2.3 |
+| `swaggerapi/swagger-ui` | v5.17.14 |
+
+> **TypeScript 7** retiró la API JS heredada. Por eso la configuración de steiger
+> vive en `steiger.config.js` y no en `.ts`: su cargador (cosmiconfig) llamaba a
+> `typescript.findConfigFile`, que ya no existe.
+
+### Puertos
+
+El stack ocupa `5173` (React), `3000` (PostgREST), `8080` (Swagger) y `5432`
+(Postgres). Si alguno está tomado, cámbialo en `.env` — todos son variables.
+
+---
+
+## Instalación
+
+### 1. Clonar el repositorio
+
+```bash
+git clone https://github.com/aaguerram/calculadora-estimacion.git
+cd calculadora-estimacion
+```
+
+### 2. Crear el archivo de entorno
+
+```bash
+cp .env.example .env
+```
+
+`.env.example` está comentado línea por línea. Lo único que conviene revisar de
+entrada son los puertos y, si vas a exponer el entorno, `PGRST_JWT_SECRET`
+(mínimo 32 caracteres).
+
+> `VITE_POSTGREST_TOKEN` lo genera un comando; no lo escribas a mano.
+
+### 3. Instalar dependencias
+
+```bash
+npm install
+```
+
+### 4. Comprobar que la instalación quedó sana
+
+```bash
+npm run check
+```
+
+Encadena lint, validación FSD, guard de marca, typecheck y los 242 tests
+unitarios. Debe terminar en verde antes de dar por buena la instalación — y
+antes de entregar cualquier cambio.
+
+---
+
+## Ejecución
+
+### Opción A — Todo en Docker (recomendada)
+
+Levanta base de datos, API, Swagger y la interfaz de una sola vez:
+
+```bash
+npm run stack:up
+```
+
+`stack:up` ejecuta `token:env` antes de arrancar: genera un JWT de desarrollo, lo
+escribe en `.env` como `VITE_POSTGREST_TOKEN` y arranca los contenedores. React
+sale ya autenticado, no hay que pegar nada a mano.
 
 | Servicio | URL |
 |---|---|
@@ -27,34 +130,72 @@ autenticado: no hay que pegar nada a mano.
 | Swagger UI | http://localhost:8080 |
 | Postgres | localhost:5432 |
 
-### Si algo no conecta
+La base arranca **sin datos sintéticos**. Para explorar la interfaz con algo
+dentro:
 
 ```bash
-npm run diagnostico
+npm run seed         # alcance de muestra, idempotente
+npm run benchmark    # datasets públicos reales (opcional, baja de internet)
 ```
 
-Revisa el token, PostgREST, el servidor web, el proxy y los permisos por tabla,
-y dice qué comando arregla cada fallo.
+Después, abre http://localhost:5173 y pulsa **Estimar** en un proyecto.
 
-La API se sirve **por el mismo origen** que la aplicación (`/api`), vía proxy de
-Vite en desarrollo y de nginx en producción. Así funciona se abra desde donde se
-abra —`localhost`, `127.0.0.1`, la IP de la máquina u otro equipo de la red— y no
-hay CORS de por medio.
+Para parar o reconstruir:
 
-### Solo el front
+```bash
+npm run stack:logs    # seguir los logs de todos los servicios
+npm run stack:down    # parar
+npm run stack:reset   # borrar el volumen y reconstruir (aplica cambios de db/init/)
+```
+
+### Opción B — Solo la interfaz
+
+Sin Docker, contra una API que ya esté levantada en otro lado:
 
 ```bash
 npm install
 npm run dev
 ```
 
-### Contra el Postgres corporativo on-prem
+### Opción C — Contra el Postgres corporativo on-prem
 
-1. Ejecuta `db/init/*.sql` una sola vez contra esa base (lo aplica el DBA).
+1. El DBA ejecuta `db/init/*.sql` una sola vez contra esa base.
 2. Pon `PGRST_DB_URI` en `.env` con el usuario `authenticator` y su clave de bóveda.
-3. `docker compose -f docker-compose.yml -f docker-compose.onprem.yml up -d`
+3. Levanta sin Postgres local:
 
-No se levanta Postgres local: PostgREST apunta directo al servidor corporativo.
+```bash
+docker compose -f docker-compose.yml -f docker-compose.onprem.yml up -d
+```
+
+PostgREST apunta directo al servidor corporativo; no se arranca ninguna base local.
+
+### Build de producción
+
+```bash
+npm run build     # typecheck + bundle en dist/
+npm run preview   # sirve dist/ para revisarlo
+```
+
+> `VITE_POSTGREST_TOKEN` queda **horneado en el bundle** y es público para quien
+> abra el inspector. Por eso `token-store.ts` lo ignora cuando
+> `import.meta.env.DEV` es falso: en un build de producción el token no existe y
+> lo aporta el OIDC corporativo en tiempo de ejecución.
+
+### Si algo no conecta
+
+```bash
+npm run diagnostico
+```
+
+Revisa el token, PostgREST, el servidor web, el proxy y los permisos por tabla, y
+dice qué comando arregla cada fallo.
+
+La API se sirve **por el mismo origen** que la aplicación (`/api`), vía proxy de
+Vite en desarrollo y de nginx en producción. Así funciona se abra desde donde se
+abra —`localhost`, `127.0.0.1`, la IP de la máquina u otro equipo de la red— y no
+hay CORS de por medio.
+
+---
 
 ## Comandos
 
@@ -62,39 +203,38 @@ No se levanta Postgres local: PostgREST apunta directo al servidor corporativo.
 |---|---|
 | `npm run dev` | Servidor de desarrollo |
 | `npm run build` | Typecheck + build de producción |
+| `npm run preview` | Sirve el build de `dist/` |
 | `npm run lint` | oxlint |
 | `npm run lint:fsd` | steiger — valida que la arquitectura FSD se respete |
-| `npm run check` | Los tres anteriores |
+| `npm run lint:marca` | Verifica que la paleta Produbanco se respeta |
+| `npm run check` | Los cinco anteriores + typecheck y tests, en orden |
 | `npm run stack:up` | Levanta Postgres + PostgREST + Swagger + React |
+| `npm run stack:down` | Para el stack |
 | `npm run stack:reset` | Borra el volumen y reconstruye (aplica cambios de `db/init/`) |
 | `npm run stack:logs` | Logs de todos los servicios |
-| `npm run test` | vitest (88 tests sobre el motor y la estadística) |
+| `npm run test` | vitest (242 tests sobre el motor y la estadística) |
+| `npm run test:watch` | vitest en modo watch |
 | `npm run token` | Imprime un JWT de desarrollo |
-| `npm run token:env` | Lo escribe en `.env` como `VITE_POSTGREST_TOKEN` |
+| `npm run token:env` | Lo escribe en `.env` como `VITE_POSTGREST_TOKEN` (30 días) |
 | `npm run seed` | Carga el alcance de referencia en Postgres (idempotente) |
-| `npm run seed:historico` | Siembra 7 proyectos cerrados sintéticos para probar la calibración |
 | `npm run benchmark:descargar` | Baja los datasets públicos desde su origen |
 | `npm run benchmark:cargar` | Los carga en el esquema `benchmark` |
 | `npm run benchmark` | Los dos anteriores |
-| `npm run seed:all` | Los tres anteriores |
+| `npm run seed:all` | Alcance de referencia + datasets de benchmark |
 | `npm run test:e2e` | Integración contra el stack real (exige `stack:up`) |
 | `npm run ui:revisar` | Humo sobre la interfaz en un navegador real (`-- --sucio` simula un token viejo) |
 | `npm run diagnostico` | Comprueba la conexión de fuera hacia dentro y dice qué arreglar |
 
 ## Flujo de uso
 
-```bash
-npm run stack:up     # levanta todo y precarga el token
-npm run benchmark:cargar   # datos públicos reales (opcional)
-```
-
-La base arranca **sin datos sintéticos**: no hay proyectos de ejemplo ni histórico
-inventado. `npm run seed` carga un alcance de muestra si quieres explorar la UI,
-y se borra desde la propia pantalla de Proyectos.
-
-Abre http://localhost:5173, pulsa **Estimar** en un proyecto y aparece el ABM de
-su alcance: componentes, features con sus pares, integraciones y drivers. Cada
+Con el stack levantado (ver [Ejecución](#ejecución)) abre
+http://localhost:5173 y pulsa **Estimar** en un proyecto: aparece el ABM de su
+alcance —componentes, features con sus pares, integraciones y drivers—. Cada
 cambio se escribe en Postgres y la estimación se recalcula al instante.
+
+La base arranca **sin datos sintéticos**: no hay proyectos de ejemplo ni
+histórico inventado. `npm run seed` carga un alcance de muestra si quieres
+explorar la UI, y se borra desde la propia pantalla de Proyectos.
 
 ## El ABM de alcance
 
@@ -319,11 +459,24 @@ Es el patrón a copiar al añadir funcionalidad real.
 - [`.claude/skills/carbon-warm-ui/SKILL.md`](./.claude/skills/carbon-warm-ui/SKILL.md)
   — componentes, tokens, paleta cálida, tipografía y accesibilidad.
 
-## Tema Warm Light
+## Tema Warm Light — paleta Produbanco
 
-Parte del tema `white` de Carbon y sobrescribe tokens semánticos:
-crema `#fcf7f1` de fondo, superficies arena `#f6ede3`, texto cacao `#2c211b`
-y acento terracota `#a8480f`. Los botones se ajustan vía *component tokens*.
+Parte del tema `white` de Carbon y sobrescribe tokens semánticos con la paleta de
+marca de Produbanco sobre neutros cálidos hueso/arena:
 
-Los componentes **nunca** escriben colores: consumen `$text-primary`, `$layer-01`,
-`$button-primary`, `$spacing-06`, `type-style('body-01')`, etc.
+| Rol | Hex |
+|---|---|
+| Verde primario (marca) | `#00693c` — hover `#003f24`, activo `#002a18` |
+| Verde secundario (lima, solo acento) | `#69be28` |
+| Texto / iconos | `#1e1e1e`, `#5d5d5d`, `#717171` |
+| Error · éxito · aviso · info | `#c40000` · `#0f804f` · `#e87300` · `#0f4dbc` |
+| Neutros cálidos (fondo, tarjeta, borde) | `#faf7f0`, `#f3efe5`, `#fffdf8`, `#ddd7c8` |
+
+Todos los literales viven en un solo archivo,
+`src/app/styles/_warm-light-theme.scss`. Los componentes **nunca** escriben
+colores: consumen `$text-primary`, `$layer-01`, `$button-primary`,
+`$spacing-06`, `type-style('body-01')`, etc. La tipografía sigue siendo IBM Plex
+Sans: la marca entra por el color, no por la fuente.
+
+`npm run lint:marca` lo verifica en cada `npm run check`. Si falla, la solución es
+cambiar el color — nunca relajar la regla.

@@ -1,3 +1,6 @@
+// Config en JS (no .ts): TypeScript 7 retiró la API JS que usa el cargador de
+// configuración de steiger (cosmiconfig -> typescript.findConfigFile).
+
 import fsd from '@feature-sliced/steiger-plugin'
 import { defineConfig } from 'steiger'
 
