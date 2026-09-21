@@ -39,3 +39,6 @@ gmail/
 # asi que la carpeta entera queda fuera del repositorio publico.
 # Se regeneran con: npm run benchmark:descargar
 datasets/
+
+# Salida del MCP de Playwright (snapshots y capturas de sesion)
+.playwright-mcp/

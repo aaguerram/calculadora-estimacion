@@ -22,7 +22,7 @@ try {
 const leer = (k) => env.split('\n').find((l) => l.startsWith(`${k}=`))?.slice(k.length + 1).trim()
 
 const WEB = `http://localhost:${leer('WEB_PORT') ?? 5173}`
-const API = leer('VITE_POSTGREST_URL_ABSOLUTA') ?? 'http://localhost:3001'
+const API = leer('VITE_POSTGREST_URL_ABSOLUTA') ?? 'http://localhost:3000'
 const TOKEN = leer('VITE_POSTGREST_TOKEN') ?? ''
 
 let problemas = 0
