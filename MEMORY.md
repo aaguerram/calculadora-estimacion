@@ -1,8 +1,8 @@
 # Memory — calculadora
 
-> Generated: 2026-09-21 09:52:26  
-> Total memories: **87**  
-> Breakdown: instruction: 19, fact: 9, decision: 12, goal: 1, commitment: 1, preference: 1, context: 1, learning: 43
+> Generated: 2026-09-23 20:50:30  
+> Total memories: **88**  
+> Breakdown: instruction: 19, fact: 9, decision: 12, goal: 1, commitment: 1, preference: 1, context: 1, learning: 44
 
 ---
 
@@ -220,17 +220,17 @@
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T10:31:47 | Tags: `postgrest`, `postgres`, `on-prem`, `rls`, `seguridad`*
 
-### El esquema 'benchmark' guarda 1086 proyectos y 129...
-
-> El esquema 'benchmark' guarda 1086 proyectos y 12925 tareas de datasets publicos (PROMISE, SiP, Desharnais, China). Sirve para acotar rangos y validar el metodo, NUNCA para fijar coeficientes del modelo. Se consulta con la cabecera Accept-Profile: benchmark.
-
-*Confidence: 1.0 | Status: active | Created: 2026-09-15T10:31:48 | Tags: `benchmark`, `datasets`, `referencia`*
-
 ### Los datasets de terceros NO se versionan: datasets...
 
 > La carpeta datasets/ COMPLETA esta en .gitignore y no se versiona en calculadora-estimacion: mezcla datasets de terceros sin licencia de redistribucion, documentacion de procedencia y salidas de analisis local que pueden contener datos internos (azure-estructura.json), y el repositorio es publico. Los datos de referencia se regeneran con npm run benchmark:descargar desde las URLs de Derek-Jones/Software-estimation-datasets. Consecuencia conocida: los enlaces a datasets/PROCEDENCIA.md y datasets/HALLAZGOS.md en README.md y CLAUDE.md apuntan a archivos que solo existen en local.
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T13:31:22 | Tags: `licencias`, `datasets`, `repositorio`, `publico`, `gitignore`*
+
+### El esquema 'benchmark' guarda 1086 proyectos y 129...
+
+> El esquema 'benchmark' guarda 1086 proyectos y 12925 tareas de datasets publicos (PROMISE, SiP, Desharnais, China). Sirve para acotar rangos y validar el metodo, NUNCA para fijar coeficientes del modelo. Se consulta con la cabecera Accept-Profile: benchmark.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T10:31:48 | Tags: `benchmark`, `datasets`, `referencia`*
 
 ### Enrutado con React Router v8: las rutas se declara...
 
@@ -368,6 +368,12 @@
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T03:05:44 | Tags: `carbon-design`, `bundle-size`, `scss`, `performance`*
 
+### Con TypeScript 7 la configuracion de steiger debe ...
+
+> Con TypeScript 7 la configuracion de steiger debe estar en steiger.config.js, no en .ts: su cargador (cosmiconfig) llama a typescript.findConfigFile, una API JS que TypeScript 7 retiro, y lint:fsd revienta con 'findConfigFile is not a function'. La configuracion no lleva anotaciones de tipo, asi que el renombrado es directo.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-21T14:59:02 | Tags: `steiger`, `typescript-7`, `fsd`, `configuracion`, `cosmiconfig`*
+
 ### When a cost-vs-duration frontier is flat, picking ...
 
 > When a cost-vs-duration frontier is flat, picking the minimum-cost point alone is noise: the recommendation should be the fastest option within a tolerance (5%) of the minimum cost. On the reference scope this changed the answer from 9.5 people/16.8 months to 13.5 people/11.8 months at the same cost.
@@ -380,17 +386,17 @@
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T03:05:43 | Tags: `carbon-design`, `scss`, `theming`, `component-tokens`*
 
-### Monte Carlo over independent task estimates collap...
-
-> Monte Carlo over independent task estimates collapses variance via the central limit theorem and yields an unrealistically narrow P50-P90 band; a correlated common-risk factor (lognormal, sigma around 0.18) applied per simulation run is required for a credible confidence band.
-
-*Confidence: 0.95 | Status: active | Created: 2026-09-15T03:50:36 | Tags: `monte-carlo`, `estimacion`, `risk`, `statistics`*
-
 ### Una vista expuesta por PostgREST necesita WITH (se...
 
 > Una vista expuesta por PostgREST necesita WITH (security_invoker = true): por defecto corre como su dueno y se salta el RLS de las tablas base.
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T10:32:13 | Tags: `postgres`, `rls`, `vistas`*
+
+### Monte Carlo over independent task estimates collap...
+
+> Monte Carlo over independent task estimates collapses variance via the central limit theorem and yields an unrealistically narrow P50-P90 band; a correlated common-risk factor (lognormal, sigma around 0.18) applied per simulation run is required for a credible confidence band.
+
+*Confidence: 0.95 | Status: active | Created: 2026-09-15T03:50:36 | Tags: `monte-carlo`, `estimacion`, `risk`, `statistics`*
 
 ### Carbon rechaza contenido interactivo dentro de lab...
 
@@ -410,17 +416,17 @@
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T11:41:29 | Tags: `token`, `localstorage`, `401`, `recuperacion`*
 
-### La estimacion esta validada de punta a punta contr...
-
-> La estimacion esta validada de punta a punta contra un calculo independiente: un proyecto piloto de 4 componentes, 3 features, 1 integracion y 2 drivers adversos dio 26.8 MH, y el calculo a mano desde los coeficientes documentados (dev bruto 953.92 h, factor x1.48, nominal 1411.8 h) cuadra con un desvio del 0.5 % en la relacion P80/moda.
-
-*Confidence: 1.0 | Status: active | Created: 2026-09-15T13:05:50 | Tags: `validacion`, `estimacion`, `motor`, `e2e`*
-
 ### Carbon NumberInput con un valor vacio necesita : s...
 
 > Carbon NumberInput con un valor vacio necesita la prop allowEmpty: sin ella valida el vacio contra min y marca el campo en rojo con el mensaje de rango. Paso en la columna Max. devs del editor de componentes, donde vacio significa "usa el tope del tipo".
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T13:05:51 | Tags: `carbon`, `numberinput`, `validacion`, `ui`*
+
+### La estimacion esta validada de punta a punta contr...
+
+> La estimacion esta validada de punta a punta contra un calculo independiente: un proyecto piloto de 4 componentes, 3 features, 1 integracion y 2 drivers adversos dio 26.8 MH, y el calculo a mano desde los coeficientes documentados (dev bruto 953.92 h, factor x1.48, nominal 1411.8 h) cuadra con un desvio del 0.5 % en la relacion P80/moda.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T13:05:50 | Tags: `validacion`, `estimacion`, `motor`, `e2e`*
 
 ### Measured within the Desharnais dataset (one compan...
 
@@ -464,12 +470,6 @@
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T05:03:54 | Tags: `calibracion`, `monte-carlo`, `convergencia`, `estimacion`*
 
-### Un proyecto cerrado sin alcance queda como REGISTR...
-
-> Un proyecto cerrado sin alcance queda como REGISTRO de la desviacion pero no recalibra nada: el backtest lo descarta porque no puede re-estimarlo. La interfaz lo marca por fila como calibra o solo registro.
-
-*Confidence: 1.0 | Status: active | Created: 2026-09-15T13:21:43 | Tags: `historico`, `calibracion`, `alcance`*
-
 ### Reason no es personalizable en procesos heredados de Azure DevOps
 
 > En Azure DevOps Cloud con proceso heredado el campo Reason NO es personalizable por transicion de estado: se autogenera como 'Moved to state X'. Los Reason configurables por transicion solo existian en procesos XML on-premise. Por tanto, para capturar la causa de un bloqueo o de una replanificacion hay que crear un campo de lista propio y marcarlo obligatorio mediante una regla de proceso heredado condicionada al estado o al cambio del campo disparador.
@@ -481,6 +481,12 @@
 > Cuando la frontera coste-duracion es plana, elegir el minimo coste es ruido: se recomienda el mas rapido dentro del 5 % del coste minimo. En el alcance de referencia eso cambio la respuesta de 9.5 personas y 16.8 meses a 13.5 personas y 11.8 meses al mismo coste.
 
 *Confidence: 0.95 | Status: active | Created: 2026-09-15T10:32:16 | Tags: `estimacion`, `frontera`, `equipo`*
+
+### Un proyecto cerrado sin alcance queda como REGISTR...
+
+> Un proyecto cerrado sin alcance queda como REGISTRO de la desviacion pero no recalibra nada: el backtest lo descarta porque no puede re-estimarlo. La interfaz lo marca por fila como calibra o solo registro.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T13:21:43 | Tags: `historico`, `calibracion`, `alcance`*
 
 ### Un force-push que reescribe la historia NO borra e...
 
@@ -524,17 +530,17 @@
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T10:32:14 | Tags: `calibracion`, `coeficientes`*
 
-### Monte Carlo sobre items independientes colapsa la ...
-
-> Monte Carlo sobre items independientes colapsa la varianza por el teorema central del limite y da una banda P50-P90 increiblemente estrecha. Hace falta un factor de riesgo comun lognormal (sigma ~0.18) aplicado por corrida.
-
-*Confidence: 1.0 | Status: active | Created: 2026-09-15T10:32:14 | Tags: `monte-carlo`, `riesgo`, `estadistica`*
-
 ### La configuracion de vitest vive en vitest.config.t...
 
 > La configuracion de vitest vive en vitest.config.ts aparte: importar de 'vitest/config' dentro de vite.config.ts hace que el contenedor de desarrollo no arranque porque la imagen no lleva vitest. Y un volumen anonimo sobre /app/node_modules sobrevive a los rebuilds sirviendo dependencias viejas.
 
 *Confidence: 1.0 | Status: active | Created: 2026-09-15T10:32:16 | Tags: `vitest`, `docker`, `configuracion`*
+
+### Monte Carlo sobre items independientes colapsa la ...
+
+> Monte Carlo sobre items independientes colapsa la varianza por el teorema central del limite y da una banda P50-P90 increiblemente estrecha. Hace falta un factor de riesgo comun lognormal (sigma ~0.18) aplicado por corrida.
+
+*Confidence: 1.0 | Status: active | Created: 2026-09-15T10:32:14 | Tags: `monte-carlo`, `riesgo`, `estadistica`*
 
 ### In PostgreSQL a column-level REVOKE does not narro...
 
