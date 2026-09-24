@@ -57,11 +57,6 @@ export function EstimationSummary({ estimacion, aviso }: EstimationSummaryProps)
             meses · arranque {un(equipo.arranqueSerialMeses)} m
           </span>
         </div>
-        <div className={styles.dato}>
-          <span className={styles.etiqueta}>Coste facturable</span>
-          <span className={styles.cifra}>{un(recomendado.mesesHombreFacturables)}</span>
-          <span className={styles.unidad}>meses-hombre de equipo</span>
-        </div>
       </div>
 
       <section className={styles.seccion}>
