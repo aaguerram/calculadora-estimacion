@@ -2,7 +2,7 @@ import { InlineNotification, Tag } from '@carbon/react'
 
 import { cx } from '@/shared/lib'
 
-import type { Estimacion } from '../model/types'
+import type { Estimacion, PuntoFrontera } from '../model/types'
 
 import styles from './EstimationSummary.module.scss'
 
@@ -13,6 +13,9 @@ interface EstimationSummaryProps {
 }
 
 const un = (valor: number, decimales = 1) => valor.toFixed(decimales)
+
+const composicion = (p: PuntoFrontera) =>
+  `${p.devs} dev · ${p.qa} QA · ${p.devops} ops · ${p.gestion} lead`
 
 export function EstimationSummary({ estimacion, aviso }: EstimationSummaryProps) {
   const { riesgo, equipo, contraste, esfuerzo, alertas } = estimacion
@@ -45,10 +48,7 @@ export function EstimationSummary({ estimacion, aviso }: EstimationSummaryProps)
         <div className={styles.dato}>
           <span className={styles.etiqueta}>Equipo óptimo</span>
           <span className={styles.cifra}>{recomendado.personas}</span>
-          <span className={styles.unidad}>
-            {recomendado.devs} dev · {recomendado.qa} QA · {recomendado.devops} ops ·{' '}
-            {recomendado.gestion} lead
-          </span>
+          <span className={styles.unidad}>{composicion(recomendado)}</span>
         </div>
         <div className={styles.dato}>
           <span className={styles.etiqueta}>Duración</span>
@@ -201,6 +201,7 @@ export function EstimationSummary({ estimacion, aviso }: EstimationSummaryProps)
             <thead>
               <tr>
                 <th>Personas</th>
+                <th>Composición</th>
                 <th>Duración (meses)</th>
                 <th>Coste (MH)</th>
                 <th>Coordinación</th>
@@ -223,6 +224,7 @@ export function EstimationSummary({ estimacion, aviso }: EstimationSummaryProps)
                       {punto.personas}
                       {negativa ? ' ⚠' : ''}
                     </td>
+                    <td>{composicion(punto)}</td>
                     <td>{un(punto.duracionMeses)}</td>
                     <td>{un(punto.mesesHombreFacturables)}</td>
                     <td>×{punto.factorCoordinacion.toFixed(2)}</td>
