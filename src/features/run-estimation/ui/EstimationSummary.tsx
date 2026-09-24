@@ -195,7 +195,7 @@ export function EstimationSummary({ estimacion, aviso }: EstimationSummaryProps)
       </section>
 
       <section className={styles.seccion}>
-        <h4 className={styles.titulo}>Frontera equipo · tiempo · coste</h4>
+        <h4 className={styles.titulo}>Frontera equipo · tiempo</h4>
         <div className={styles.tablaScroll}>
           <table className={styles.tabla}>
             <thead>
@@ -203,7 +203,6 @@ export function EstimationSummary({ estimacion, aviso }: EstimationSummaryProps)
                 <th>Personas</th>
                 <th>Composición</th>
                 <th>Duración (meses)</th>
-                <th>Coste (MH)</th>
                 <th>Coordinación</th>
               </tr>
             </thead>
@@ -226,7 +225,6 @@ export function EstimationSummary({ estimacion, aviso }: EstimationSummaryProps)
                     </td>
                     <td>{composicion(punto)}</td>
                     <td>{un(punto.duracionMeses)}</td>
-                    <td>{un(punto.mesesHombreFacturables)}</td>
                     <td>×{punto.factorCoordinacion.toFixed(2)}</td>
                   </tr>
                 )
@@ -235,8 +233,8 @@ export function EstimationSummary({ estimacion, aviso }: EstimationSummaryProps)
           </table>
         </div>
         <p className={styles.nota}>
-          Las filas en gris con ⚠ son la zona de rendimientos negativos: más personas,
-          más meses y más coste. Contraste COCOMO II: {un(contraste.mesesNominales)} meses
+          Las filas en gris con ⚠ son la zona de rendimientos negativos: más personas y
+          más meses. Contraste COCOMO II: {un(contraste.mesesNominales)} meses
           con {un(contraste.personasNominales)} personas (desviación{' '}
           {un(contraste.desviacionDuracion * 100, 0)} %).
         </p>
