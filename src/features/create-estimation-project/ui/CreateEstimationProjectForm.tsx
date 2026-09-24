@@ -114,7 +114,7 @@ export function CreateEstimationProjectForm({
         >
           <Select
             id="proyecto-compromiso"
-            labelText="Percentil comprometido"
+            labelText="Porcentaje de cumplimiento vs. incertidumbre"
             value={String(state.nivelCompromiso)}
             onChange={(e) =>
               dispatch({
