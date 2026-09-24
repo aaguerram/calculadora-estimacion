@@ -1,6 +1,6 @@
 import { Button, InlineNotification, Loading } from '@carbon/react'
 import { useCallback, useReducer } from 'react'
-import { Link } from 'react-router'
+import { useNavigate } from 'react-router'
 
 import { CreateEstimationProjectForm } from '@/features/create-estimation-project'
 import {
@@ -36,6 +36,12 @@ export function ProjectWizard() {
   const { catalogo } = useCatalogo()
   const alcance = state.alcance
   const { estimacion, coeficientes } = useEstimation(alcance ?? ALCANCE_VACIO, catalogo)
+
+  const navegar = useNavigate()
+  const alTerminar = useCallback(
+    (proyectoId: string) => navegar(`/proyecto/${proyectoId}`),
+    [navegar],
+  )
 
   const alCrear = useCallback((proyectoId: string) => {
     dispatch({ type: 'proyectoCreado', proyectoId })
@@ -88,9 +94,6 @@ export function ProjectWizard() {
             <>
               <EstimationSummary estimacion={estimacion} aviso={coeficientes.aviso} />
               <div className={styles.enlaces}>
-                <Button as={Link} to={`/proyecto/${paso.proyectoId}`}>
-                  Abrir en la pantalla de alcance
-                </Button>
                 <Button
                   kind="tertiary"
                   type="button"
@@ -104,7 +107,7 @@ export function ProjectWizard() {
         </>
       ) : null}
 
-      <NavegacionPasos state={paso} dispatch={dispatch} />
+      <NavegacionPasos state={paso} dispatch={dispatch} alTerminar={alTerminar} />
     </PageSection>
   )
 }

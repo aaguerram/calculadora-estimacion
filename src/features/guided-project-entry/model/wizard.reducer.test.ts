@@ -6,6 +6,7 @@ import {
   indiceDe,
   initialWizardState,
   puedeIrA,
+  puedeTerminar,
   wizardReducer,
 } from './wizard.reducer'
 import type { WizardState } from './wizard.reducer'
@@ -79,5 +80,13 @@ describe('catálogo de pasos', () => {
     expect(puedeIrA(initialWizardState, 'proyecto')).toBe(true)
     expect(puedeIrA(initialWizardState, 'features')).toBe(false)
     expect(puedeIrA(conProyecto, 'features')).toBe(true)
+  })
+})
+
+describe('puedeTerminar', () => {
+  it('solo en la revisión y con proyecto guardado', () => {
+    expect(puedeTerminar({ paso: 'revision', proyectoId: 'p1' })).toBe(true)
+    expect(puedeTerminar({ paso: 'revision', proyectoId: null })).toBe(false)
+    expect(puedeTerminar({ paso: 'drivers', proyectoId: 'p1' })).toBe(false)
   })
 })

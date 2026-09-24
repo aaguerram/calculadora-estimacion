@@ -87,6 +87,11 @@ export function puedeIrA(state: WizardState, paso: PasoGuiado): boolean {
   return paso === 'proyecto' || state.proyectoId !== null
 }
 
+/** Solo se termina desde la revisión y con un proyecto guardado que abrir. */
+export function puedeTerminar(state: WizardState): boolean {
+  return state.paso === 'revision' && state.proyectoId !== null
+}
+
 export function indiceDe(paso: PasoGuiado): number {
   return PASOS.indexOf(paso)
 }

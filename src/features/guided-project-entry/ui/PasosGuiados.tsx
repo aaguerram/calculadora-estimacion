@@ -5,6 +5,7 @@ import {
   PASOS,
   indiceDe,
   puedeIrA,
+  puedeTerminar,
 } from '../model/wizard.reducer'
 import type { WizardIntent, WizardState } from '../model/wizard.reducer'
 
@@ -51,8 +52,13 @@ export function PasosGuiados({ state, dispatch }: PasosGuiadosProps) {
   )
 }
 
+interface NavegacionPasosProps extends PasosGuiadosProps {
+  /** Qué hacer al pulsar «Terminar» en el último paso. Lo decide quien compone. */
+  alTerminar: (proyectoId: string) => void
+}
+
 /** Botones de avance. Separados para poder ponerlos al final del contenido. */
-export function NavegacionPasos({ state, dispatch }: PasosGuiadosProps) {
+export function NavegacionPasos({ state, dispatch, alTerminar }: NavegacionPasosProps) {
   const indice = indiceDe(state.paso)
   const ultimo = indice === PASOS.length - 1
 
@@ -69,13 +75,23 @@ export function NavegacionPasos({ state, dispatch }: PasosGuiadosProps) {
       <span className={styles.contador}>
         Paso {indice + 1} de {PASOS.length}
       </span>
-      <Button
-        type="button"
-        disabled={ultimo || !puedeIrA(state, PASOS[indice + 1])}
-        onClick={() => dispatch({ type: 'siguiente' })}
-      >
-        {ultimo ? 'Terminado' : 'Siguiente'}
-      </Button>
+      {ultimo ? (
+        <Button
+          type="button"
+          disabled={!puedeTerminar(state)}
+          onClick={() => state.proyectoId && alTerminar(state.proyectoId)}
+        >
+          Terminar
+        </Button>
+      ) : (
+        <Button
+          type="button"
+          disabled={!puedeIrA(state, PASOS[indice + 1])}
+          onClick={() => dispatch({ type: 'siguiente' })}
+        >
+          Siguiente
+        </Button>
+      )}
     </div>
   )
 }
